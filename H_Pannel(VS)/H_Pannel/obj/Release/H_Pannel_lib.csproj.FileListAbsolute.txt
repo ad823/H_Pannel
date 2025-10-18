@@ -513,12 +513,9 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\LadderUI.d
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\FontAwesome.Sharp.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\MeasureSystemUI.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\MVSDKUI.dll
-C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\SLDUI.dll
-C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\LeadShineUI.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\PortControlUI.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\LightControlUI.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\ZealTechUI.dll
-C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\HCGUI.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\SunnyUI.Common.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\TCP.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\CallBackUI.dll
@@ -587,3 +584,5 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_l
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_3color_select.resources
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_7color_select.resources
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\System.Windows.Forms.dll
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\Basic.xml
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\SQLUI.xml

@@ -256,7 +256,6 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\MyS
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\HIS_DB_Lib.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\zxing.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\MyUI.dll
-C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\CSkin.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\DrawingClass.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\Newtonsoft.Json.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Memory.dll
@@ -274,12 +273,9 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\Lad
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\FontAwesome.Sharp.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\MeasureSystemUI.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\MVSDKUI.dll
-C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\SLDUI.dll
-C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\LeadShineUI.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\PortControlUI.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\LightControlUI.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\ZealTechUI.dll
-C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\HCGUI.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\SunnyUI.Common.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\TCP.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\CallBackUI.dll
@@ -307,3 +303,11 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\Con
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleA.D471CFE7.Up2Date
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.exe
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.pdb
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\MyOffice.dll
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\NPOI.dll
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\NPOI.OOXML.dll
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\NPOI.OpenXml4Net.dll
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\NPOI.OpenXmlFormats.dll
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\stdole.dll
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\SQLUI.xml
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\Basic.xml
