@@ -318,3 +318,4 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Uplo
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.exe
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.pdb
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SQLUI.xml
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SQLUI.xml

@@ -27,12 +27,9 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\L
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\FontAwesome.Sharp.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\MeasureSystemUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\MVSDKUI.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\SLDUI.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\LeadShineUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\PortControlUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\LightControlUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\ZealTechUI.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\HCGUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\SunnyUI.Common.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\TCP.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\CallBackUI.dll
@@ -65,8 +62,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_IO測試.resources
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_LED_Setting.resources
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_燈數設定.resources
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_EPD730_顏色選擇.resources
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_RWB_顏色選擇.resources
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.DrawerUI_EPD_420.resources
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Resource1.resources
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.StorageUI_EPD_266.resources
@@ -586,3 +581,9 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_l
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\System.Windows.Forms.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\Basic.xml
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\SQLUI.xml
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\System.Windows.Forms.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\Basic.xml
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\SQLUI.xml
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_4color_select.resources
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_7color_select.resources
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_3color_select.resources

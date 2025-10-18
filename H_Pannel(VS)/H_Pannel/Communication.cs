@@ -8181,7 +8181,7 @@ namespace H_Pannel_lib
 
 
                         if ((_box.DRUGKIND.StringIsEmpty() == false && _box.DRUGKIND != "N")|| _box.IsAnesthetic || _box.IsShapeSimilar || _box.IsSoundSimilar
-                            || (_box.Picture1_Name.StringIsEmpty() == false && _box.Picture1_Name != "無") || (_box.Picture2_Name.StringIsEmpty() == false && _box.Picture2_Name != "無"))
+                            || (_box.Picture1_Name.StringIsEmpty() == false && _box.Picture1_Name != "無" && _box.Picture1_Name != "None") || (_box.Picture2_Name.StringIsEmpty() == false && _box.Picture2_Name != "無" && _box.Picture1_Name != "None"))
                         {
                             int temp_height = (int)g.MeasureString(_box.Name, _box.Name_font, new Size(10000, 10000), StringFormat.GenericDefault).Height;
                             int temp_x = 2;

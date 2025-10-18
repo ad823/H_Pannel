@@ -28,12 +28,9 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Rel
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\FontAwesome.Sharp.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\MeasureSystemUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\MVSDKUI.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\SLDUI.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\LeadShineUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\PortControlUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\LightControlUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\ZealTechUI.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\HCGUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\SunnyUI.Common.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\TCP.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\CallBackUI.dll
@@ -440,3 +437,10 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\NPOI
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\NPOI.OpenXmlFormats.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\stdole.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\SQLUI.xml
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\MyOffice.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\NPOI.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\NPOI.OOXML.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\NPOI.OpenXml4Net.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\NPOI.OpenXmlFormats.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\stdole.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel_Debug\bin\Release\SQLUI.xml
