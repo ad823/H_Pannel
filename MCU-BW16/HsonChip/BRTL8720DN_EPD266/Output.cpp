@@ -31,19 +31,21 @@ void MyOutput::Init(int PIN_Num ,DFRobot_MCP23017& mcp)
 
 #elif defined(MCP23008)
 #include "Adafruit_MCP23008.h"
-void MyOutput::Init(int PIN_Num ,Adafruit_MCP23008& mcp)
+void MyOutput::Init(int PIN_Num ,Adafruit_MCP23008& mcp  , bool flag_toogle)
 {
+   this -> flag_toogle = flag_toogle;
    this -> _mcp = &mcp;
    this -> PIN_NUM = PIN_Num ;
    if(PIN_Num == -1)return;
    this -> flag_mcp = true;
    printf("Adafruit_MCP23008 pinMode (Output): %d\n" , PIN_Num);
-   if(PIN_Num != -1) _mcp -> pinMode(PIN_Num , OUTPUT);
+   _mcp -> pinMode(PIN_Num , OUTPUT);
+   _mcp -> digitalWrite(PIN_Num , GetLogic(flag_toogle));
 }
 #endif
 
 
-void MyOutput::Init(int PIN_Num)
+void MyOutput::Init(int PIN_Num )
 {
    this -> PIN_NUM = PIN_Num ;
    if(PIN_Num != -1)pinMode(PIN_Num, OUTPUT);

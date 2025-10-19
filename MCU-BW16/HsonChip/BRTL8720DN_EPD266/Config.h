@@ -6,12 +6,20 @@
 #define NUM_OF_LEDS NUM_WS2812B_CRGB
 #define SYSTEM_LED_PIN PA30
 
+#define FADC
+
+
+
+#if defined(FADC)
+#define DC_MOTOR_OUTPUT 2
+#define LIGHT_SENSOR_INPUT 3
+#define BUTTON_EX_INPUT 4
+#define MCP23008
+#endif
+
+
 //#define BETTERY
 //#define WDT
-//#define DC_MOTOR
-//#define LIGHT_SENSOR
-//#define BUTTON_EX
-
 
 #if defined(BETTERY)
 #define BETTERY_OUTPUT 2
@@ -22,17 +30,7 @@
 #define WTD_OUTPUT 1
 #endif
 
-#if defined(DC_MOTOR)
-#define DC_MOTOR_OUTPUT 2
-#endif
 
-#if defined(LIGHT_SENSOR)
-#define LIGHT_SENSOR_INPUT 4
-#endif
-
-#if defined(BUTTON_EX)
-#define BUTTON_EX_INPUT 5
-#endif
 //#define MQTT
 //#define DHTSensor
 //#define HandSensor
@@ -41,7 +39,7 @@
 //#define EPD266
 //#define EPD290
 //#define EPD420
-#define EPD4IN20G
+//#define EPD4IN20G
 //#define EPD420_D
 //#define EPD583
 //#define EPD579G
@@ -49,11 +47,11 @@
 //#define DEPG0579RYT158FxX
 //#define EPD213_BRW_V0
 //#define EPD7IN3E
-//#define EPD3IN6E
+#define EPD3IN6E
 
 //#define OLCD_114
 //#define MCP23017
-//#define MCP23008
+
 
 #ifdef DHTSensor
 #define DHTPIN PA27

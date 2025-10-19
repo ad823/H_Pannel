@@ -55,7 +55,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Releas
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\System.ValueTuple.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.csproj.AssemblyReference.cache
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync.D40E2457.Up2Date
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.exe
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.pdb
 C:\Users\Andy\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\EInkSync213.exe.config
@@ -318,3 +317,4 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\SQLUI.x
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\Interop.SpeechLib.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\Basic.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\SQLUI.xml
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.csproj.CopyComplete

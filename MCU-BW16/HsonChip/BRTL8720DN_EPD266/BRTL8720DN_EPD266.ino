@@ -163,6 +163,13 @@ void loop()
    {
             
       sub_IO_Program();
+      #ifdef FADC
+      FADC_MotorTrigger();
+      if(!mcp.digitalRead(BUTTON_EX_INPUT) == true)
+      {
+         mySerial.println(F("mcp.digitalWrite(BUTTON_EX_INPUT , true);"));
+      }
+      #endif
       if(WiFi.status() != WL_CONNECTED)
       {
          wiFiConfig.WIFI_Connenct();
@@ -180,6 +187,8 @@ void loop()
           #endif
           sub_UDP_Send();
       } 
+
+      
       #if defined(BETTERY)  
       mcp.digitalWrite(BETTERY_OUTPUT , true);
       if(mcp.digitalRead(BETTERY_INPUT) == false)
@@ -206,18 +215,6 @@ void loop()
       wtd_count++;
       #endif
       
-      #if defined(LIGHT_SENSOR)  
-      if(mcp.digitalRead(LIGHT_SENSOR_INPUT) == false)
-      {
-         mySerial.println(F("mcp.digitalRead(LIGHT_SENSOR_INPUT)"));
-      }
-      #endif
-      #if defined(BUTTON_EX)  
-      if(mcp.digitalRead(BUTTON_EX_INPUT) == false)
-      {
-         mySerial.println(F("mcp.digitalRead(BUTTON_EX_INPUT)"));
-      }
-      #endif
       MyTimer_CheckWS2812.StartTickTime(30000);
 
       
@@ -298,6 +295,8 @@ void Core0Task2( void * pvParameters )
           #ifdef HandSensor
           serial2Event();
           #endif
+          
+          
        }
       delay(0);
     }

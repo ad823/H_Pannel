@@ -4,6 +4,11 @@
 DFRobot_MCP23017 mcp(Wire, /*addr =*/0x20);//constructor, change the Level of A2, A1, A0 via DIP switch to revise the I2C address within 0x20~0x27.
 #else if defined(MCP23008)
 Adafruit_MCP23008 mcp;
+
+  #if defined(FADC)
+  bool flag_FADC_motorTrigger = false;
+  #endif
+
 #endif
 
 

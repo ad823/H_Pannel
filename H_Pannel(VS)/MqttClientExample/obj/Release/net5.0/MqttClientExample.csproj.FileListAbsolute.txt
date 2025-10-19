@@ -29,10 +29,9 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.AssemblyInfoInputs.cache
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.AssemblyInfo.cs
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.sourcelink.json
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClie.83915F19.Up2Date
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\refint\MqttClientExample.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.pdb
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.genruntimeconfig.cache
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\ref\MqttClientExample.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\bin\Release\net5.0\ref\MqttClientExample.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.csproj.CopyComplete

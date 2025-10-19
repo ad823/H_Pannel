@@ -36,7 +36,7 @@ class MyOutput
    void Init(int PIN_Num ,DFRobot_MCP23017& mcp);
    #elif defined(MCP23008)
    Adafruit_MCP23008 *_mcp;
-   void Init(int PIN_Num ,Adafruit_MCP23008& mcp);
+   void Init(int PIN_Num ,Adafruit_MCP23008& mcp, bool flag_toogle = false);
    #endif
    bool flag_mcp = false;
    bool flag_toogle = false;

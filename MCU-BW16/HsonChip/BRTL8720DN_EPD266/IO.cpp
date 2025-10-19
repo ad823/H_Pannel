@@ -112,8 +112,7 @@ void IO_Init()
     Output_dir = wiFiConfig.Get_Output_dir();
     Set_Output_dir(Output_dir);
 
-    #if defined(MCP23017) || defined(MCP23008)
-    
+    #if defined(MCP23017) 
     MyOutput_PIN01.Init(OUTPUT_PIN01 ,mcp);
     MyOutput_PIN02.Init(OUTPUT_PIN02 ,mcp);
     MyOutput_PIN03.Init(OUTPUT_PIN03 ,mcp);
@@ -134,7 +133,14 @@ void IO_Init()
     MyInput_PIN07.Init(INPUT_PIN07 ,mcp);
     MyInput_PIN08.Init(INPUT_PIN08 ,mcp);
     MyInput_PIN09.Init(INPUT_PIN09);
-    MyInput_PIN10.Init(INPUT_PIN10);
+    MyInput_PIN10.Init(INPUT_PIN10);   
+    #elif defined(FADC)
+    mcp.pinMode(DC_MOTOR_OUTPUT , OUTPUT);
+    mcp.digitalWrite(DC_MOTOR_OUTPUT , true);
+    mcp.pinMode(LIGHT_SENSOR_INPUT , INPUT);
+    mcp.pullUp(LIGHT_SENSOR_INPUT , HIGH);
+    mcp.pinMode(BUTTON_EX_INPUT , INPUT);
+    mcp.pullUp(BUTTON_EX_INPUT ,HIGH);
     
     #else
     
@@ -169,7 +175,14 @@ bool flag_WL_CONNECTED = false;
 bool flag_WL_DISCONNECTED = false;
 void sub_IO_Program()
 {
-
+    
+    
+//    #if defined(BUTTON_EX)  
+//    if(mcp.digitalRead(BUTTON_EX_INPUT) == true)
+//    {
+//       mySerial.println(F("mcp.digitalRead(BUTTON_EX_INPUT)"));
+//    }
+//    #endif
     Input = GetInput();
     Output = GetOutput();
     Input_dir = Get_Input_dir();

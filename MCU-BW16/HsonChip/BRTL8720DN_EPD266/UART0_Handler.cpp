@@ -48,13 +48,11 @@ void serialEvent()
     }
     if (UART0_RX[0] == 'm' && UART0_RX[1] == 't' && UART0_len >= 2)
     {
-       flag_motor_debug = !flag_motor_debug;
-       #if defined(DC_MOTOR)  
-       mcp.digitalWrite(DC_MOTOR_OUTPUT , flag_motor_debug);
-       if(!flag_motor_debug) mySerial.print("motor on...\n");
-       if(flag_motor_debug) mySerial.print("motor off...\n");
+       #if defined(FADC)  
+       flag_FADC_motorTrigger = true;
+       mySerial.print("motor trigger...\n");
        #else
-       mySerial.print("DC_MOTOR not be define...\n");
+       mySerial.print("DC_MOTOR undefine...\n");
        #endif
        
     }
