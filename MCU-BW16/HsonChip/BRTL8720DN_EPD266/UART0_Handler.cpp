@@ -52,7 +52,17 @@ void serialEvent()
        flag_FADC_motorTrigger = true;
        mySerial.print("motor trigger...\n");
        #else
-       mySerial.print("DC_MOTOR undefine...\n");
+       mySerial.print("FADC undefine...\n");
+       #endif
+       
+    }
+    if (UART0_RX[0] == 'l' && UART0_RX[1] == 'o'&& UART0_RX[2] == 'c'&& UART0_RX[3] == 'k' && UART0_len >= 4)
+    {
+       #if defined(FADC)  
+       flag_FADC_lockerTrigger = true;
+       mySerial.print("locker trigger...\n");
+       #else
+       mySerial.print("FADC undefine...\n");
        #endif
        
     }

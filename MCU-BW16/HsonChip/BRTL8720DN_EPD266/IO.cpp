@@ -141,7 +141,10 @@ void IO_Init()
     mcp.pullUp(LIGHT_SENSOR_INPUT , HIGH);
     mcp.pinMode(BUTTON_EX_INPUT , INPUT);
     mcp.pullUp(BUTTON_EX_INPUT ,HIGH);
-    
+
+    mcp.pinMode(LOCKER_OUTPUT , OUTPUT);
+    mcp.pinMode(LOCKER_INPUT , INPUT);
+    mcp.pullUp(LOCKER_INPUT ,HIGH);
     #else
     
     MyOutput_PIN01.Init(INPUT_PIN01,OUTPUT_PIN01);
@@ -176,13 +179,6 @@ bool flag_WL_DISCONNECTED = false;
 void sub_IO_Program()
 {
     
-    
-//    #if defined(BUTTON_EX)  
-//    if(mcp.digitalRead(BUTTON_EX_INPUT) == true)
-//    {
-//       mySerial.println(F("mcp.digitalRead(BUTTON_EX_INPUT)"));
-//    }
-//    #endif
     Input = GetInput();
     Output = GetOutput();
     Input_dir = Get_Input_dir();

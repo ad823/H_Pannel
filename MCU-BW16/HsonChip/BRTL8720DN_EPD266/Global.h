@@ -29,9 +29,7 @@ extern DFRobot_MCP23017 mcp;//constructor, change the Level of A2, A1, A0 via DI
 #else if defined(MCP23008)
 #include "Adafruit_MCP23008.h"
 extern Adafruit_MCP23008 mcp;
-  #if defined(FADC)
-  extern bool flag_FADC_motorTrigger;
-  #endif
+
 #endif
 
 

@@ -3,6 +3,10 @@
 //UDP_Receive
 #include <Arduino.h>
 #include "Global.h"
+#include "Timer.h"
+#include "Config.h"
+#include "IO.h"
+
 
 #define UDP_BUFFER_SIZE 19000
 #define UDP_RX_BUFFER_SIZE 1500

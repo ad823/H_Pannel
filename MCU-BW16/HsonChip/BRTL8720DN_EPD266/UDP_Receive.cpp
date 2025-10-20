@@ -1,5 +1,7 @@
 #include "Arduino.h"
 #include "UDP_Receive.h"
+#include "Global.h"
+
 
 char* UdpRead;
 char* UdpRead_buf;
@@ -447,18 +449,29 @@ void onPacketCallBack()
           {    
               int value_L = *(UdpRead + 2);
               int value_H = *(UdpRead + 3);             
-              int value = value_L | (value_H << 8);              
+              int value = value_L | (value_H << 8);    
+              #ifdef FADC
+              flag_FADC_lockerTrigger = true;
+              Get_Checksum_UDP();
+              if(flag_udp_232back)printf("Set_FADCLockerTrigger");
+              #else
+                        
               if(flag_udp_232back)printf("Set_OutputTrigger : %d\n" , value);
               SetOutputTrigger(value);
               Get_Checksum_UDP();
+              #endif
+              
           }
           else if(*(UdpRead + 1) == 'Q')
-          {                  
-             #ifdef MCP23017
-
-             #else
+          {  
              int pin_num = *(UdpRead + 2);
-             int value = *(UdpRead + 3);
+             int value = *(UdpRead + 3);                
+             #ifdef FADC
+             flag_FADC_lockerTrigger = true;
+             Get_Checksum_UDP();
+             if(flag_udp_232back)printf("Set_FADCLockerTrigger");
+             #else
+             
              if(flag_udp_232back)printf("Set_OutputPINTrigger : [PIN Num]%d [value]%d\n" , pin_num , value);
              MyOutput_PIN01.ADC_Mode = false;
              SetOutputPINTrigger(pin_num , (value == 1));
@@ -468,19 +481,19 @@ void onPacketCallBack()
           }
           else if(*(UdpRead + 1) == '!')
           {
-             #ifdef MCP23017
-             
-             #else
              int pin_num = *(UdpRead + 2);
              int time_ms_L = *(UdpRead + 3);
              int time_ms_H = *(UdpRead + 4);
-             int time_ms = time_ms_L | (time_ms_H << 8);           
-             MyOutput_PIN01.ADC_Trigger(time_ms);
-
-             if(flag_udp_232back)printf("Set_ADCMotorTrigger : [PIN Num]%d [time_ms]%d\n" , pin_num , time_ms);
-             Get_Checksum_UDP();
-             #endif                  
+             int time_ms = time_ms_L | (time_ms_H << 8);     
              
+             #ifdef FADC
+             flag_FADC_motorTrigger = true;
+             FADC_motorDelayTime = time_ms;
+             #else      
+             MyOutput_PIN01.ADC_Trigger(time_ms);
+             #endif
+             if(flag_udp_232back)printf("Set_ADCMotorTrigger : [PIN Num]%d [time_ms]%d\n" , pin_num , time_ms);
+             Get_Checksum_UDP();                            
           }
           else if(*(UdpRead + 1) == 'R')
           {                  

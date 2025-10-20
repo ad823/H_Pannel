@@ -5,10 +5,6 @@ DFRobot_MCP23017 mcp(Wire, /*addr =*/0x20);//constructor, change the Level of A2
 #else if defined(MCP23008)
 Adafruit_MCP23008 mcp;
 
-  #if defined(FADC)
-  bool flag_FADC_motorTrigger = false;
-  #endif
-
 #endif
 
 

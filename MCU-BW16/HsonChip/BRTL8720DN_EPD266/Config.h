@@ -1,4 +1,4 @@
-#define VERSION "Ver 1.5.506"
+#define VERSION "Ver 1.6.000"
 #define RESOURCE "OTA_All.bin"  
 
 #define SPI_MOSI_PIN PA12
@@ -14,6 +14,8 @@
 #define DC_MOTOR_OUTPUT 2
 #define LIGHT_SENSOR_INPUT 3
 #define BUTTON_EX_INPUT 4
+#define LOCKER_OUTPUT 0
+#define LOCKER_INPUT 1
 #define MCP23008
 #endif
 
