@@ -1,5 +1,7 @@
 #include "Global.h"
 #include "FADC.h"
+
+#ifdef FADC
 bool flag_FADC_motorTrigger = false;
 bool flag_FADC_lockerTrigger = false;
 
@@ -146,3 +148,4 @@ void FADC_MotorTrigger()
        flag_FADC_motorTrigger = false;
     }
 }
+#endif
