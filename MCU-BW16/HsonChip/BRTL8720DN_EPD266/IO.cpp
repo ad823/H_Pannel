@@ -112,7 +112,7 @@ void IO_Init()
     Output_dir = wiFiConfig.Get_Output_dir();
     Set_Output_dir(Output_dir);
 
-    #if defined(MCP23017) 
+    #if defined(MCP23017) || defined(DrawerMCP23008)
     MyOutput_PIN01.Init(OUTPUT_PIN01 ,mcp);
     MyOutput_PIN02.Init(OUTPUT_PIN02 ,mcp);
     MyOutput_PIN03.Init(OUTPUT_PIN03 ,mcp);

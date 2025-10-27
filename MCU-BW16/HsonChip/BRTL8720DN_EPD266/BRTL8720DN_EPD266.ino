@@ -67,7 +67,6 @@ void loop()
       mySerial.println(VERSION);  
       
       #if defined(MCP23017) || defined(MCP23008)
-
       #if defined(MCP23017)
       while(mcp.begin() != 0)
       {
@@ -76,6 +75,7 @@ void loop()
       }
       delay(500); 
       #else if defined(MCP23008)
+      mySerial.println("Initialization of the MCP23008 chip ...");
       mcp.begin(0x00);
       delay(500); 
       #endif

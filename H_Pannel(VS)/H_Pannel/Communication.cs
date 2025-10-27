@@ -4030,7 +4030,7 @@ namespace H_Pannel_lib
                 }
                 System.Threading.Thread.Sleep(1);
             }
-            if (ConsoleWrite) Console.WriteLine($"{IP}:{uDP_Class.Port} : Set OutputPIN {string.Format(flag_OK ? "sucess" : "failed")}!");
+            if (ConsoleWrite) Console.WriteLine($"{IP}:{uDP_Class.Port} : Set_Output_dir {string.Format(flag_OK ? "sucess" : "failed")}!");
             return flag_OK;
         }
         static private bool Command_Set_RFID_Enable(UDP_Class uDP_Class, string IP, int index, bool value)

@@ -83,6 +83,7 @@ void EPD_Driver_Base::SendCommand(unsigned char command)
    #ifdef MCP23008
    if(PIN_DC_buf == true)
    {
+      mySerial->println("SendCommand >> define MCP23008 , set DC(GPA7) false...");
       _mcp ->digitalWrite(PIN_DC, false);
       PIN_DC_buf = false;
    }
@@ -96,6 +97,7 @@ void EPD_Driver_Base::SendData(unsigned char data)
    #ifdef MCP23008
    if(PIN_DC_buf != true)
    {
+      mySerial->println("SendData >> define MCP23008 , set DC(GPA7) false...");
       _mcp ->digitalWrite(PIN_DC, true);
       PIN_DC_buf = true;
    }
