@@ -1,12 +1,13 @@
 #include "Arduino.h"
 #include <SPI.h>
 #include "epd_driver_base.h"
-
+bool flag_epd_init = false;
 EPD_Driver_Base::~EPD_Driver_Base() {}
 void EPD_Driver_Base::Init(SemaphoreHandle_t mutex)
-{
+{  
+    if(flag_epd_init == true) return;
     xSpiMutex = mutex;
-    
+    mySerial->println("EPD device init ...");
     pinMode(this -> PIN_CS, OUTPUT);
     pinMode(this -> PIN_BUSY, INPUT);     
     digitalWrite(this -> PIN_CS , HIGH);
@@ -24,6 +25,9 @@ void EPD_Driver_Base::Init(SemaphoreHandle_t mutex)
     delay(20);
     melloc_init();
     this -> Wakeup();  
+    flag_epd_init = true;
+
+   
 }
 void EPD_Driver_Base::SendSPI(char* framebuffer ,int size, int offset)
 {
@@ -81,30 +85,38 @@ bool EPD_Driver_Base::GetReady()
 void EPD_Driver_Base::SendCommand(unsigned char command)
 {
    #ifdef MCP23008
-   if(PIN_DC_buf == true)
-   {
-      mySerial->println("SendCommand >> define MCP23008 , set DC(GPA7) false...");
-      _mcp ->digitalWrite(PIN_DC, false);
-      PIN_DC_buf = false;
-   }
+//   if(PIN_DC_buf == true)
+//   {
+//      mySerial->println("SendCommand >> define MCP23008 , set DC(GPA7) false...");
+//      _mcp ->digitalWrite(PIN_DC, false);
+//      PIN_DC_buf = false;
+//   }
+   _mcp ->digitalWrite(PIN_DC, LOW);
+   PIN_DC_buf = false;
+   SpiTransfer(command);
+   _mcp ->digitalWrite(PIN_DC, HIGH);
+   PIN_DC_buf = true;
    #else
    digitalWrite(this -> PIN_DC, LOW);
-   #endif 
    SpiTransfer(command);
+   #endif 
+   
 }
 void EPD_Driver_Base::SendData(unsigned char data)
 {
    #ifdef MCP23008
    if(PIN_DC_buf != true)
    {
-      mySerial->println("SendData >> define MCP23008 , set DC(GPA7) false...");
+      mySerial->println("SendData >> define MCP23008 , set DC(GPA7) true...");
       _mcp ->digitalWrite(PIN_DC, true);
       PIN_DC_buf = true;
    }
+   SpiTransfer(data);
    #else
    digitalWrite(this -> PIN_DC, HIGH);
-   #endif
    SpiTransfer(data);
+   #endif
+   
 }
 
 void EPD_Driver_Base::SPI_End()
@@ -123,10 +135,10 @@ void EPD_Driver_Base::HardwareReset()
    #ifdef MCP23008
    mySerial->println("define MCP23008 , set RST(6) LOW...");
    _mcp ->digitalWrite(PIN_RST, LOW);
-   delay(10);
+   delay(200);
    mySerial->println("define MCP23008 , set RST(6) HIGH...");
    _mcp ->digitalWrite(PIN_RST, HIGH);
-   delay(10);
+   delay(200);
    #else
    digitalWrite(this -> PIN_RST, LOW);
    delay(10);

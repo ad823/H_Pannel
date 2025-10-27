@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include <SPI.h>
 #include "EPD360E.h"
-
+bool flag_init = false;
 void EPD360E::melloc_init() 
 {
     mySerial->print("epd malloc : ");
@@ -11,21 +11,25 @@ void EPD360E::melloc_init()
     framebuffer = (byte*) malloc(60000);
     buffer_max = 60000;
 }
-void EPD360E::Show7Block(void)
+void EPD360E::Show7Block()
 {
-    SPI_Begin();
+    
     unsigned long j, k;
-    unsigned char const Color_seven[6] = 
-    {EPD_3IN6E_BLACK, EPD_3IN6E_YELLOW, EPD_3IN6E_RED, EPD_3IN6E_BLUE, EPD_3IN6E_GREEN, EPD_3IN6E_WHITE};
-
-    SendCommand(0x10);
-    for(k = 0 ; k < 6; k ++) {
-        for(j = 0 ; j < 20000; j ++) {
-            SendData((Color_seven[k]<<4) |Color_seven[k]);
+    unsigned char const Color_seven[6] = {EPD_3IN6E_BLACK, EPD_3IN6E_YELLOW, EPD_3IN6E_RED, EPD_3IN6E_BLUE, EPD_3IN6E_GREEN, EPD_3IN6E_WHITE};
+    Wakeup();
+    DrawFrame_BW();
+    SPI_Begin();
+    for(k = 0 ; k < 6; k ++) 
+    {
+        for(j = 0 ; j < 20000; j ++) 
+        {
+             SendData((Color_seven[k]<<4) |Color_seven[k]);
+//             SendData((EPD_3IN6E_WHITE) |EPD_3IN6E_WHITE);
         }
     }
-    RefreshCanvas();
     SPI_End();
+    RefreshCanvas();
+    
 }
 void EPD360E::Clear() 
 {
@@ -62,11 +66,13 @@ void EPD360E::RefreshCanvas()
     SPI_Begin();
     SendCommand(0x02); // POWER_OFF
     SendData(0X00);
+    
     WaitUntilIdle(); 
-
+    delay(500);
     SendCommand(0x04); // POWER_ON
+    
     WaitUntilIdle();
-    delay(200);
+    delay(500);
 
     //Second setting 
     SendCommand(0x06);
@@ -74,16 +80,20 @@ void EPD360E::RefreshCanvas()
     SendData(0x1F);
     SendData(0x17);
     SendData(0x27);
-    delay(200);
 
     SendCommand(0x12); // DISPLAY_REFRESH
     SendData(0x00);
+    
     WaitUntilIdle();
+    delay(500);
 
     SendCommand(0x02); // POWER_OFF
     SendData(0X00);
-    WaitUntilIdle();
     
+    WaitUntilIdle();
+    delay(500);
+    
+    SPI_End();
 }
 
 void EPD360E::Sleep() 
@@ -107,13 +117,20 @@ void EPD360E::RW_Command()
 void EPD360E::Wakeup() 
 {
     mySerial -> println("EPD3IN6E Init...");
+//    if(flag_init == false)
+//    {
+//       mySerial -> println("EPD360E init mode break...");
+//       flag_init = true;
+//       return;
+//    }
     this -> MyTimer_SleepWaitTime.TickStop();  
     this -> MyTimer_SleepWaitTime.StartTickTime(90000);
 //    mySerial -> println("Wake up!");
     this -> SetToSleep = false;    
     HardwareReset();
-    delay(20);
+    
     WaitUntilIdle();
+    delay(20);
     SPI_Begin();
     SendCommand(0xAA);    // CMDH
     SendData(0x49);
@@ -182,11 +199,11 @@ void EPD360E::Wakeup()
 
 
 void EPD360E::WaitUntilIdle() 
-{
+{    
     if(!digitalRead(this -> PIN_BUSY))
     {
        delay(10);
-       mySerial -> println("WaitUntilIdle....");
+       mySerial -> println("WaitUntilIdle OK....");
     }
 }
 

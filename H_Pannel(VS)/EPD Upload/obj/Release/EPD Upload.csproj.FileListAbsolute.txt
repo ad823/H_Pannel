@@ -319,3 +319,48 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Uplo
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.pdb
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SQLUI.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SQLUI.xml
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\EPD Upload.exe.config
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\EPD Upload.exe
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\EPD Upload.pdb
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\Basic.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\CSkin.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\DrawingClass.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\H_Pannel_lib.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\MyUI.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\Newtonsoft.Json.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SkiaSharp.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SLDUI.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SQLUI.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\System.Buffers.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\System.Memory.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\System.Numerics.Vectors.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\Interop.SpeechLib.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\HIS_DB_Lib.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\zxing.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\CallBackUI.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SunnyUI.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\PopupControl.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\System.ValueTuple.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\System.Threading.Tasks.Extensions.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SunnyUI.Common.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\Basic.xml
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\H_Pannel_lib.dll.config
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\Newtonsoft.Json.xml
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SkiaSharp.pdb
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SkiaSharp.xml
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SQLUI.xml
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\System.Buffers.xml
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\System.Memory.xml
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\System.Numerics.Vectors.xml
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\zxing.xml
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.csproj.AssemblyReference.cache
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD_Upload.Dialog_藥碼輸入.resources
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD_Upload.Form1.resources
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD_Upload.Properties.Resources.resources
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.csproj.GenerateResource.cache
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.csproj.CoreCompileInputs.cache
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.csproj.CopyComplete
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.exe
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.pdb

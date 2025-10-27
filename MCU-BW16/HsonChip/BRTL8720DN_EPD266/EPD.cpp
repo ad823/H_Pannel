@@ -1,15 +1,12 @@
 #include "EPD.h"
 #include "Arduino.h"
 #include <SPI.h>
+bool flag_epd_1_init = false;
 void EPD::Init(SemaphoreHandle_t mutex)
 {
+    if(flag_epd_1_init == true) return;
     xSpiMutex = mutex;
-    mySerial->print("epd malloc : ");
-    mySerial->print(EPD_WIDTH * EPD_HEIGHT);
-    mySerial->println(" bytes");
-
-    framebuffer = (byte*) malloc(EPD_WIDTH * EPD_HEIGHT);
-    buffer_max = EPD_WIDTH * EPD_HEIGHT;
+    
     
     pinMode(this -> PIN_CS, OUTPUT);
     pinMode(this -> PIN_BUSY, INPUT);     
@@ -19,18 +16,25 @@ void EPD::Init(SemaphoreHandle_t mutex)
     _mcp ->pinMode(PIN_RST , OUTPUT);
     _mcp ->pinMode(PIN_DC , OUTPUT);
     mySerial->println("define MCP23008 , set RST(GPA6),D/C(GPA7) PIN done!");
+    _mcp ->digitalWrite(PIN_DC, false);
+    PIN_DC_buf = false;
     #else
     pinMode(this -> PIN_RST, OUTPUT);
     pinMode(this -> PIN_DC, OUTPUT);
     #endif
     
     digitalWrite(this -> PIN_CS , HIGH);
-    _mcp ->digitalWrite(PIN_DC, false);
-    PIN_DC_buf = false;
+    
     
     delay(20);
+    mySerial->print("epd malloc : ");
+    mySerial->print(EPD_WIDTH * EPD_HEIGHT);
+    mySerial->println(" bytes");
 
+    framebuffer = (byte*) malloc(EPD_WIDTH * EPD_HEIGHT);
+    buffer_max = EPD_WIDTH * EPD_HEIGHT;
     this -> Wakeup();
+    flag_epd_1_init = true;
     
 }
 void EPD::SendSPI(char* framebuffer ,int size, int offset)
@@ -581,31 +585,32 @@ void EPD::RW_Command()
 void EPD::SendCommand(unsigned char command)
 {
    #ifdef MCP23008
-   if(PIN_DC_buf != false)
-   {
-      mySerial->println("define MCP23008 , set DC(GPA7) false...");
-      _mcp ->digitalWrite(PIN_DC, false);
-      PIN_DC_buf = false;
-   }
-   
+   _mcp ->digitalWrite(PIN_DC, LOW);
+   PIN_DC_buf = false;
+   SpiTransfer(command);
+   _mcp ->digitalWrite(PIN_DC, HIGH);
+   PIN_DC_buf = true;
    #else
    digitalWrite(this -> PIN_DC, LOW);
-   #endif 
    SpiTransfer(command);
+   #endif 
+   
 }
 void EPD::SendData(unsigned char data)
 {
    #ifdef MCP23008
    if(PIN_DC_buf != true)
    {
-      mySerial->println("define MCP23008 , set DC(GPA7) true...");
+      mySerial->println("SendData >> define MCP23008 , set DC(GPA7) true...");
       _mcp ->digitalWrite(PIN_DC, true);
       PIN_DC_buf = true;
    }
+   SpiTransfer(data);
    #else
    digitalWrite(this -> PIN_DC, HIGH);
-   #endif
    SpiTransfer(data);
+   #endif
+   
 }
 void EPD::SPI_Begin()
 {
@@ -629,11 +634,11 @@ void EPD::HardwareReset()
 {
    #ifdef MCP23008
    mySerial->println("define MCP23008 , set RST(GPA6) false...");
-   _mcp ->digitalWrite(PIN_RST, false);
-   delay(10);
+   _mcp ->digitalWrite(PIN_RST, LOW);
+   delay(100);
    mySerial->println("define MCP23008 , set RST(GPA6) true...");
-   _mcp ->digitalWrite(PIN_RST, true);
-   delay(10);
+   _mcp ->digitalWrite(PIN_RST, HIGH);
+   delay(100);
    #else
    digitalWrite(this -> PIN_RST, LOW);
    delay(10);

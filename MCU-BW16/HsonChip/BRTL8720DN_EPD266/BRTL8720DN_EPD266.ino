@@ -46,7 +46,6 @@ void setup()
 
 }
 bool flag_pb2 = true;
-
 void loop() 
 {
    if(MyTimer_OLCD_144_Init.IsTimeOut() && !flag_OLCD_144_boradInit)
@@ -148,13 +147,13 @@ void loop()
       delay(200);
       myWS2812.Init(NUM_WS2812B_CRGB , xSpiMutex);
       
-      if(Device == "EPD")
-      {
-        mySerial.println("EPD device init ...");
-        epd.Init(xSpiMutex); 
-        delay(200);
-      }
-     
+//      if(Device == "EPD")
+//      {
+//        mySerial.println("EPD device init ...");
+//        epd.Init(xSpiMutex); 
+//        delay(200);
+//      }
+//     
       xTaskCreate(Core0Task1,"Core0Task1", 1024,NULL,1,&Core0Task1Handle); 
       xTaskCreate(Core0Task2,"Core0Task2", 1024,NULL,1,&Core0Task2Handle);
       flag_boradInit = true;
@@ -173,6 +172,10 @@ void loop()
       }  
       if(WiFi.status() == WL_CONNECTED)
       {       
+          if(Device == "EPD")
+          {
+            epd.Init(xSpiMutex); 
+          }
           #ifdef MQTT
           wiFiConfig.MQTT_reconnect();        
           #else         

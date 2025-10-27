@@ -35,3 +35,5 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\ref\MqttClientExample.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\bin\Release\net5.0\ref\MqttClientExample.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.csproj.CopyComplete
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.dll
+C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\ref\MqttClientExample.dll
