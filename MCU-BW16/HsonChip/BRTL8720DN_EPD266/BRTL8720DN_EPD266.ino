@@ -1,7 +1,6 @@
 #include "Config.h"
 #include "Global.h"
 #include "EPD.h"
-
 #include "DHT.h"
 #include "OLCD114.h"
 #include <WiFi.h>
@@ -76,6 +75,7 @@ void loop()
       #else if defined(MCP23008)
       mySerial.println("Initialization of the MCP23008 chip ...");
       mcp.begin(0x00);
+      
       delay(500); 
       #endif
       #if defined(MCP23017)
@@ -171,10 +171,7 @@ void loop()
       }  
       if(WiFi.status() == WL_CONNECTED)
       {       
-          if(Device == "EPD")
-          {
-            epd.Init(xSpiMutex); 
-          }
+   
           #ifdef MQTT
           wiFiConfig.MQTT_reconnect();        
           #else         
@@ -242,6 +239,14 @@ void Core0Task2( void * pvParameters )
        
        if(flag_boradInit)
        {
+          if(WiFi.status() == WL_CONNECTED)
+          {
+            if(Device == "EPD")
+            {
+              epd.Init(xSpiMutex); 
+            }
+          }
+                 
           sub_IO_Program();
           #ifdef FADC
           FADC_MotorTrigger();

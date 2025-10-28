@@ -63,8 +63,25 @@ void serialEvent()
        mySerial.print("locker trigger...\n");
        #else
        mySerial.print("FADC undefine...\n");
-       #endif
-       
+       #endif      
+    }
+    if (UART0_RX[0] == 'b' && UART0_RX[1] == '1' && UART0_len >= 2)
+    {
+       #if defined(BETTERY)  
+       mcp.digitalWrite(BETTERY_OUTPUT , HIGH);
+       mySerial.print("BETTERY on...\n");
+       #else
+       mySerial.print("BETTERY undefine...\n");
+       #endif      
+    }
+    if (UART0_RX[0] == 'b' && UART0_RX[1] == '0' && UART0_len >= 2)
+    {
+       #if defined(BETTERY)  
+       mcp.digitalWrite(BETTERY_OUTPUT , LOW);
+       mySerial.print("BETTERY off...\n");
+       #else
+       mySerial.print("BETTERY undefine...\n");
+       #endif      
     }
     if (UART0_RX[0] == 'r' && UART0_len == 3)
     {

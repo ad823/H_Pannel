@@ -5,7 +5,7 @@
 
 #if defined(MCP23017)
 #include "DFRobot_MCP23017.h"
-void MyOutput::Init(int PIN_Num ,DFRobot_MCP23017& mcp)
+void MyOutput::Init(int PIN_Num ,DFRobot_MCP23017& mcp , bool flag_toogle)
 {
    this -> _mcp = &mcp;
    this -> PIN_NUM = PIN_Num ;
@@ -33,7 +33,7 @@ void MyOutput::Init(int PIN_Num ,DFRobot_MCP23017& mcp)
 #include "Adafruit_MCP23008.h"
 void MyOutput::Init(int PIN_Num ,Adafruit_MCP23008& mcp  , bool flag_toogle)
 {
-   this -> flag_toogle = flag_toogle;
+//   this -> flag_toogle = flag_toogle;
    this -> _mcp = &mcp;
    this -> PIN_NUM = PIN_Num ;
    if(PIN_Num == -1)return;

@@ -26,8 +26,8 @@
 #define OUTPUT_PIN10 -1
 #elif defined(MCP23008)
 #define INPUT_PIN01 3 // 抽屜input
-#define INPUT_PIN02 4 // FADC 對照
-#define INPUT_PIN03 5 // 外部按鈕/外部12V
+#define INPUT_PIN02 -1 // FADC 對照
+#define INPUT_PIN03 -1 // 外部按鈕/外部12V
 #define INPUT_PIN04 -1
 #define INPUT_PIN05 -1
 #define INPUT_PIN06 -1
@@ -37,8 +37,8 @@
 #define INPUT_PIN10 -1
 
 #define OUTPUT_PIN01 0 // 抽屜解鎖
-#define OUTPUT_PIN02 1 // FADC馬達/看們狗
-#define OUTPUT_PIN03 2 // 電池充電
+#define OUTPUT_PIN02 -1 // FADC馬達/看們狗
+#define OUTPUT_PIN03 -1 // 電池充電
 #define OUTPUT_PIN04 -1
 #define OUTPUT_PIN05 -1
 #define OUTPUT_PIN06 -1
@@ -111,9 +111,13 @@ void IO_Init()
     Set_Input_dir(Input_dir);
     Output_dir = wiFiConfig.Get_Output_dir();
     Set_Output_dir(Output_dir);
-
+    #if defined(BETTERY)
+    mcp.pinMode(BETTERY_OUTPUT , OUTPUT);
+    mcp.pinMode(BETTERY_INPUT , INPUT);
+    mcp.pullUp(BETTERY_INPUT ,HIGH);
+    #endif
     #if defined(MCP23017) || defined(DrawerMCP23008)
-    MyOutput_PIN01.Init(OUTPUT_PIN01 ,mcp);
+    MyOutput_PIN01.Init(OUTPUT_PIN01 ,mcp , true);
     MyOutput_PIN02.Init(OUTPUT_PIN02 ,mcp);
     MyOutput_PIN03.Init(OUTPUT_PIN03 ,mcp);
     MyOutput_PIN04.Init(OUTPUT_PIN04 ,mcp);

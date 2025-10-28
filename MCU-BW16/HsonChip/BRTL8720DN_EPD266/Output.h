@@ -33,7 +33,7 @@ class MyOutput
    public:
    #if defined(MCP23017)
    DFRobot_MCP23017 *_mcp;
-   void Init(int PIN_Num ,DFRobot_MCP23017& mcp);
+   void Init(int PIN_Num ,DFRobot_MCP23017& mcp, bool flag_toogle = false);
    #elif defined(MCP23008)
    Adafruit_MCP23008 *_mcp;
    void Init(int PIN_Num ,Adafruit_MCP23008& mcp, bool flag_toogle = false);

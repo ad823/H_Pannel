@@ -1,4 +1,4 @@
-#define VERSION "Ver 1.6.000"
+#define VERSION "Ver 1.6.001"
 #define RESOURCE "OTA_All.bin"  
 
 #define SPI_MOSI_PIN PA12
@@ -23,6 +23,8 @@
 
 #if defined(DrawerMCP23008)
 #define MCP23008
+#define LOCKER_OUTPUT 0
+#define LOCKER_INPUT 3
 #endif
 
 //#define BETTERY
