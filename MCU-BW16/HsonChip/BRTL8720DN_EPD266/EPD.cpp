@@ -204,6 +204,7 @@ void EPD::Clear()
       }
       else
       {
+          Wakeup();
           this -> BW_Command();
           for (int j = 0; j < EPD_HEIGHT; j++)
           {
@@ -635,10 +636,10 @@ void EPD::HardwareReset()
    #ifdef MCP23008
    mySerial->println("define MCP23008 , set RST(GPA6) false...");
    _mcp ->digitalWrite(PIN_RST, LOW);
-   delay(100);
+   delay(200);
    mySerial->println("define MCP23008 , set RST(GPA6) true...");
    _mcp ->digitalWrite(PIN_RST, HIGH);
-   delay(100);
+   delay(200);
    #else
    digitalWrite(this -> PIN_RST, LOW);
    delay(10);
@@ -722,9 +723,10 @@ void EPD::WaitUntilIdle()
       SPI_Begin();
       do
       {                
-         SendCommand(0x71);        
+         SendCommand(0x71); 
+         delay(1);       
          busy = digitalRead(this -> PIN_BUSY);
-      }
+      }    
       while(busy);    
       delay(200); 
       mySerial -> println("Wait EPD BUSY release!");

@@ -38,7 +38,7 @@ int wtd_count = 0;
 
 void setup() 
 {
-    MyTimer_BoardInit.StartTickTime(3000);          
+    MyTimer_BoardInit.StartTickTime(5000);          
     MyTimer_OLCD_144_Init.StartTickTime(5000);          
     MyTimer_CheckWIFI.StartTickTime(180000);   
     // 初始化互斥鎖
@@ -160,8 +160,7 @@ void loop()
    }
    if(flag_boradInit)
    {
-            
-      
+                 
       if(WiFi.status() != WL_CONNECTED)
       {
          wiFiConfig.WIFI_Connenct();
