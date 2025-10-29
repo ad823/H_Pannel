@@ -48,7 +48,7 @@
 //#define EPD266
 //#define EPD290
 //#define EPD420
-//#define EPD4IN20G
+#define EPD4IN20G
 //#define EPD420_D
 //#define EPD583
 //#define EPD579G
@@ -56,7 +56,7 @@
 //#define DEPG0579RYT158FxX
 //#define EPD213_BRW_V0
 //#define EPD7IN3E
-#define EPD3IN6E
+//#define EPD3IN6E
 
 //#define OLCD_114
 //#define MCP23017

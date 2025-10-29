@@ -873,7 +873,7 @@ namespace H_Pannel_lib
                 MyTimer myTimer = new MyTimer();
                 myTimer.StartTickTime(50000);
 
-                _bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                //_bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
 
                 int frameDIV = 12;
                 bool flag_OK;

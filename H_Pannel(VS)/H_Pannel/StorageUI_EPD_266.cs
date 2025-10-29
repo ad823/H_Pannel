@@ -223,8 +223,9 @@ namespace H_Pannel_lib
         {
             if (Get_Storage_bmpChangeEvent != null) return Get_Storage_bmpChangeEvent(storage);
 
-   
-            return Communication.Storage_GetBitmap(storage);
+            Bitmap bitmap = Communication.Storage_GetBitmap(storage);
+            bitmap.SetTag(storage.DeviceType.GetEnumName());
+            return bitmap;
 
         }
         static private void DrawStorageString(Graphics g, Storage storage, Device.ValueName valueName, float x, float y)

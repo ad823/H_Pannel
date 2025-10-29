@@ -153,11 +153,13 @@ void EPD420G::Wakeup()
 
 void EPD420G::WaitUntilIdle() 
 {
+    mySerial -> println("WaitUntilIdle....");
     while(!digitalRead(this -> PIN_BUSY))
     {
        delay(10);
-       mySerial -> println("WaitUntilIdle....");
+       
     }
+    mySerial -> println("WaitUntilIdle OK....");
 }
 
 void EPD420G::SPI_Begin() 
