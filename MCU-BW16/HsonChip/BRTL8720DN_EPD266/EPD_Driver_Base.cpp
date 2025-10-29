@@ -9,7 +9,7 @@ void EPD_Driver_Base::Init(SemaphoreHandle_t mutex)
     xSpiMutex = mutex;
     mySerial->println("EPD device init ...");
     pinMode(this -> PIN_CS, OUTPUT);
-    pinMode(this -> PIN_BUSY, INPUT);     
+    pinMode(this -> PIN_BUSY, INPUT_PULLUP);     
     digitalWrite(this -> PIN_CS , HIGH);
     #ifdef MCP23008
     mySerial->println("define MCP23008 , set RST(6),D/C(7) PIN mode...");
@@ -28,6 +28,11 @@ void EPD_Driver_Base::Init(SemaphoreHandle_t mutex)
     flag_epd_init = true;
 
    
+}
+void EPD_Driver_Base::Run()
+{
+
+  
 }
 void EPD_Driver_Base::SendSPI(char* framebuffer ,int size, int offset)
 {
@@ -135,10 +140,10 @@ void EPD_Driver_Base::HardwareReset()
    #ifdef MCP23008
    mySerial->println("define MCP23008 , set RST(6) LOW...");
    _mcp ->digitalWrite(PIN_RST, LOW);
-   delay(200);
+   delay(10);
    mySerial->println("define MCP23008 , set RST(6) HIGH...");
    _mcp ->digitalWrite(PIN_RST, HIGH);
-   delay(200);
+   delay(10);
    #else
    digitalWrite(this -> PIN_RST, LOW);
    delay(10);

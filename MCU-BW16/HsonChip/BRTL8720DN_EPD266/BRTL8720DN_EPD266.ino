@@ -37,6 +37,7 @@ int wtd_count = 0;
 
 void setup() 
 {
+    MyTimer_WIFIConected.StartTickTime(180000);          
     MyTimer_BoardInit.StartTickTime(5000);          
     MyTimer_OLCD_144_Init.StartTickTime(5000);          
     MyTimer_CheckWIFI.StartTickTime(180000);   
@@ -158,9 +159,15 @@ void loop()
       xTaskCreate(Core0Task2,"Core0Task2", 1024,NULL,1,&Core0Task2Handle);
       flag_boradInit = true;
    }
+   if(WiFi.status() != WL_CONNECTED)
+   {
+      MyTimer_WIFIConected.TickStop();
+      MyTimer_WIFIConected.StartTickTime(5000);
+   }
    if(flag_boradInit)
    {
                  
+     
       if(WiFi.status() != WL_CONNECTED)
       {
          wiFiConfig.WIFI_Connenct();
@@ -171,13 +178,27 @@ void loop()
       }  
       if(WiFi.status() == WL_CONNECTED)
       {       
-   
+          if(MyTimer_WIFIConected.IsTimeOut())
+          {
+            if(Device == "EPD")
+            {
+              epd.Init(xSpiMutex); 
+            }
+            sub_IO_Program();
+            #ifdef FADC
+            FADC_MotorTrigger();
+            FADC_LockerTrigger();
+            FADC_LockerInputRead();
+            FADC_ButtonInputRead();
+            #endif
+          }
+          
           #ifdef MQTT
           wiFiConfig.MQTT_reconnect();        
           #else         
           onPacketCallBack();
           #endif
-          sub_UDP_Send();
+          
       } 
       
       MyTimer_CheckWS2812.StartTickTime(30000);
@@ -239,22 +260,10 @@ void Core0Task2( void * pvParameters )
        
        if(flag_boradInit)
        {
-          if(WiFi.status() == WL_CONNECTED)
-          {
-            if(Device == "EPD")
-            {
-              epd.Init(xSpiMutex); 
-            }
-          }
-                 
-          sub_IO_Program();
-          #ifdef FADC
-          FADC_MotorTrigger();
-          FADC_LockerTrigger();
-          FADC_LockerInputRead();
-          FADC_ButtonInputRead();
-          #endif
           
+                 
+          
+          if( WiFi.status() == WL_CONNECTED )sub_UDP_Send();
           #ifdef DHTSensor
           dht_h = dht.readHumidity();
           // Read temperature as Celsius (the default)

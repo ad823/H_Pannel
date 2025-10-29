@@ -1,4 +1,4 @@
-#define VERSION "Ver 1.6.001"
+#define VERSION "Ver 1.6.002"
 #define RESOURCE "OTA_All.bin"  
 
 #define SPI_MOSI_PIN PA12
@@ -50,13 +50,13 @@
 //#define EPD420
 //#define EPD4IN20G
 //#define EPD420_D
-#define EPD583
+//#define EPD583
 //#define EPD579G
 //#define EPD579B
 //#define DEPG0579RYT158FxX
 //#define EPD213_BRW_V0
 //#define EPD7IN3E
-//#define EPD3IN6E
+#define EPD3IN6E
 
 //#define OLCD_114
 //#define MCP23017

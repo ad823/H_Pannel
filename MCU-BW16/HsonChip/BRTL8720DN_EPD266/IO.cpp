@@ -148,7 +148,7 @@ void IO_Init()
 
     mcp.pinMode(LOCKER_OUTPUT , OUTPUT);
     mcp.pinMode(LOCKER_INPUT , INPUT);
-    mcp.pullUp(LOCKER_INPUT ,HIGH);
+//    mcp.pullUp(LOCKER_INPUT ,HIGH);
     #else
     
     MyOutput_PIN01.Init(INPUT_PIN01,OUTPUT_PIN01);
@@ -182,11 +182,19 @@ bool flag_WL_CONNECTED = false;
 bool flag_WL_DISCONNECTED = false;
 void sub_IO_Program()
 {
-    
-    Input = GetInput();
-    Output = GetOutput();
     Input_dir = Get_Input_dir();
     Output_dir = Get_Output_dir();
+    #if defined(DrawerMCP23008)
+    bool lock_input = mcp.digitalRead(LOCKER_INPUT);
+    if(((Input_dir >> 0) % 2 ) ==  1) lock_input = !lock_input;
+    Input = lock_input ? 1 : 0 ;
+    
+    #else
+    Input = GetInput();
+    #endif
+    
+    Output = GetOutput();
+    
 
     Output_Blink();
     if(Input_buf != Input)
@@ -331,27 +339,27 @@ int Get_Output_dir()
 int GetInput()
 {
     int temp = 0;
-    MyInput_PIN01.GetState(10);
-    MyInput_PIN02.GetState(10);
-    MyInput_PIN03.GetState(10);
-    MyInput_PIN04.GetState(10);
-    MyInput_PIN05.GetState(10);
-    MyInput_PIN06.GetState(10);
-    MyInput_PIN07.GetState(10);
-    MyInput_PIN08.GetState(10);
-    MyInput_PIN09.GetState(10);
-    MyInput_PIN10.GetState(10);
+    MyInput_PIN01.GetState(0);
+//    MyInput_PIN02.GetState(10);
+//    MyInput_PIN03.GetState(10);
+//    MyInput_PIN04.GetState(10);
+//    MyInput_PIN05.GetState(10);
+//    MyInput_PIN06.GetState(10);
+//    MyInput_PIN07.GetState(10);
+//    MyInput_PIN08.GetState(10);
+//    MyInput_PIN09.GetState(10);
+//    MyInput_PIN10.GetState(10);
     
     if(MyInput_PIN01.State) temp += (1 << 0);
-    if(MyInput_PIN02.State) temp += (1 << 1);
-    if(MyInput_PIN03.State) temp += (1 << 2);
-    if(MyInput_PIN04.State) temp += (1 << 3);
-    if(MyInput_PIN05.State) temp += (1 << 4);
-    if(MyInput_PIN06.State) temp += (1 << 5);
-    if(MyInput_PIN07.State) temp += (1 << 6);
-    if(MyInput_PIN08.State) temp += (1 << 7);
-    if(MyInput_PIN09.State) temp += (1 << 8);
-    if(MyInput_PIN10.State) temp += (1 << 9);
+//    if(MyInput_PIN02.State) temp += (1 << 1);
+//    if(MyInput_PIN03.State) temp += (1 << 2);
+//    if(MyInput_PIN04.State) temp += (1 << 3);
+//    if(MyInput_PIN05.State) temp += (1 << 4);
+//    if(MyInput_PIN06.State) temp += (1 << 5);
+//    if(MyInput_PIN07.State) temp += (1 << 6);
+//    if(MyInput_PIN08.State) temp += (1 << 7);
+//    if(MyInput_PIN09.State) temp += (1 << 8);
+//    if(MyInput_PIN10.State) temp += (1 << 9);
   
     return temp;
 }

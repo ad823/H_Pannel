@@ -41,7 +41,6 @@ void MyInput::Init(int PIN_Num ,Adafruit_MCP23008& mcp)
    {
       printf("Adafruit_MCP23008 pinMode (Input): %d\n" , PIN_Num);
       _mcp -> pinMode(PIN_Num , INPUT);
-      _mcp -> pullUp(PIN_Num , HIGH);
    }
    
 }

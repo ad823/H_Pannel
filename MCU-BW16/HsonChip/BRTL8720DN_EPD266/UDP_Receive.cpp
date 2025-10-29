@@ -12,7 +12,6 @@ int UdpRead_len = 0;
 int UdpRead_len_buf = 0;
 long UDPcheck_len = 0;
 WiFiUDP Udp; 
-WiFiUDP Udp1; 
 bool flag_UDP_RX_BUFFER_Init = false;
 bool flag_UDP_RX_OK = false;
 bool flag_UDP_header = true;
@@ -58,11 +57,13 @@ void onPacketCallBack()
   {
      int packet_UDP0 = 0;
      int packet_UDP1 = 0;
-     if(flag_UDP1_packet ==false)
+     packet_UDP0 = Udp.parsePacket();
+     if(packet_UDP0 > 0) 
      {
-        packet_UDP0 = Udp.parsePacket();
-        if(packet_UDP0 > 0) flag_UDP0_packet = true;
+         remoteIP = Udp.remoteIP();
+         remotePort = Udp.remotePort(); 
      }
+
 
      if(packet_UDP0 > 0 || packet_UDP1 > 0)
      {
@@ -70,6 +71,13 @@ void onPacketCallBack()
         if(packet_UDP0 > 0)
         {               
             len = Udp.read(UdpRead_buf, UDP_RX_BUFFER_SIZE - 1);
+            mySerial.print("Received packet length(");
+            mySerial.print(len);
+            mySerial.print(")");
+            mySerial.print(Udp.remoteIP());
+            mySerial.print(":");
+            mySerial.print(Udp.remotePort());
+            mySerial.println("");
         }
         if(flag_UDP_header)
         {
@@ -102,10 +110,17 @@ void onPacketCallBack()
           {
              if(*(UdpRead + UdpRead_len - 1) == 3)
              {
-                remoteIP = Udp.remoteIP();
-                remotePort = Udp.remotePort();  
+                
                 flag_UDP_RX_OK = true;
-                if(flag_udp_232back)mySerial.println("Received End code!!");
+                if(flag_udp_232back)
+                {
+                   mySerial.print("Received End code ");
+                   mySerial.print(Udp.remoteIP());
+                   mySerial.print(":");
+                   mySerial.print(Udp.remotePort());
+                   mySerial.println("");
+                }
+                
                 break;
              }              
           }    
@@ -147,20 +162,20 @@ void onPacketCallBack()
         {
           if(*(UdpRead + 1) == 'a' && UdpRead_len == 3)
           {  
-            if(flag_udp_232back)printf("EPD Sleep\n");        
+            if(flag_udp_232back || true)printf("EPD Sleep\n");        
             epd.Sleep();
             Get_Checksum_UDP();          
           }        
           else if(*(UdpRead + 1) == 'b' && UdpRead_len == 3)
           {
-            if(flag_udp_232back)printf("EPD Wakeup\n");     
+            if(flag_udp_232back || true)printf("EPD Wakeup\n");     
             flag_WS2812B_breathing_Ex_lightOff = true;       
             epd.Wakeup();            
             Get_Checksum_UDP();                           
           }  
           else if(*(UdpRead + 1) == 'c' && UdpRead_len == 3)
           {
-            if(flag_udp_232back)printf("EPD DrawFrame_RW\n");
+            if(flag_udp_232back || true)printf("EPD DrawFrame_RW\n");
             flag_WS2812B_breathing_Ex_lightOff = true;
             epd.DrawFrame_RW();
             delay(10);
@@ -168,7 +183,7 @@ void onPacketCallBack()
           } 
           else if(*(UdpRead + 1) == 'd' && UdpRead_len == 3)
           {
-            if(flag_udp_232back)printf("EPD DrawFrame_BW\n");
+            if(flag_udp_232back || true)printf("EPD DrawFrame_BW\n");
             flag_WS2812B_breathing_Ex_lightOff = true;
             epd.DrawFrame_BW();
             delay(10);
@@ -177,7 +192,7 @@ void onPacketCallBack()
           
           else if(*(UdpRead + 1) == 'f' && UdpRead_len == 3)
           {
-            if(flag_udp_232back)printf("EPD RefreshCanvas\n");
+            if(flag_udp_232back || true)printf("EPD RefreshCanvas\n");
             Get_Checksum_UDP();
             epd.RefreshCanvas();
             delay(100);
@@ -675,7 +690,7 @@ void Get_Checksum_UDP()
    if(str0.length() < 3) str0 = "0" + str0;
    if(str0.length() < 3) str0 = "0" + str0;
    if(str0.length() < 3) str0 = "0" + str0;
-   if(flag_udp_232back)printf("Checksum String : %d\n",str0);
+   if(flag_udp_232back )printf("Checksum String : %d\n",str0);
    if(flag_udp_232back)printf("Checksum Byte : %d \n" , checksum);
    Send_StringTo(str0 ,remoteIP, remotePort);
  
@@ -684,7 +699,6 @@ void Connect_UDP(int localport)
 {
     printf("Connect UDP : %d \n" , localport);
     Udp.begin(localport);
-    Udp1.begin(29500);
 }
 void Send_Bytes(uint8_t *value ,int Size ,IPAddress RemoteIP ,int RemotePort)
 { 
@@ -700,7 +714,7 @@ void Send_String(String str ,int remoteUdpPort)
 }
 void Send_StringTo(String str ,IPAddress RemoteIP ,int RemotePort)
 {  
-  if(flag_udp_232back)
+  if(flag_udp_232back && false)
   {
      mySerial.print("send response to ");
      mySerial.print(RemoteIP);

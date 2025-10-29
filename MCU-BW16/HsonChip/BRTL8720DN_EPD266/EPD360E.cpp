@@ -91,7 +91,6 @@ void EPD360E::RefreshCanvas()
     SendData(0X00);
     
     WaitUntilIdle();
-    delay(500);
     
     SPI_End();
 }

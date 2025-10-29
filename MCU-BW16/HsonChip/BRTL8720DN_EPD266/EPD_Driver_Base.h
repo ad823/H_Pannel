@@ -61,6 +61,7 @@ public:
     virtual void SetCursor(int Xstart, int Ystart);
     virtual void SetWindows(int Xstart, int Ystart, int Xend, int Yend);
 
+    void Run();
     void SpiDelay(unsigned char xrate);
     void SpiTransfer(unsigned char value);
     void SendCommand(unsigned char command);
