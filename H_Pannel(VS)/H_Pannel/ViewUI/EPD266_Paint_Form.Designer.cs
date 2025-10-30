@@ -332,7 +332,7 @@ namespace H_Pannel_lib
             this.rJ_Pannel_設計.Padding = new System.Windows.Forms.Padding(20);
             this.rJ_Pannel_設計.ShadowColor = System.Drawing.Color.DimGray;
             this.rJ_Pannel_設計.ShadowSize = 3;
-            this.rJ_Pannel_設計.Size = new System.Drawing.Size(958, 575);
+            this.rJ_Pannel_設計.Size = new System.Drawing.Size(958, 620);
             this.rJ_Pannel_設計.TabIndex = 4;
             // 
             // groupBox2
@@ -621,7 +621,7 @@ namespace H_Pannel_lib
             this.panel7.Controls.Add(this.panel8);
             this.panel7.Controls.Add(this.rJ_Button_確定);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel7.Location = new System.Drawing.Point(20, 481);
+            this.panel7.Location = new System.Drawing.Point(20, 526);
             this.panel7.Name = "panel7";
             this.panel7.Padding = new System.Windows.Forms.Padding(5);
             this.panel7.Size = new System.Drawing.Size(918, 74);
@@ -962,7 +962,7 @@ namespace H_Pannel_lib
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(966, 975);
+            this.ClientSize = new System.Drawing.Size(966, 1020);
             this.ControlBox = true;
             this.Controls.Add(this.rJ_Pannel_設計);
             this.Controls.Add(this.panel1);

@@ -317,7 +317,6 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\SQLUI.x
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\Interop.SpeechLib.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\Basic.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\SQLUI.xml
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.csproj.CopyComplete
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\EInkSync213.exe.config
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\EInkSync213.exe
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\EInkSync213.pdb
@@ -380,3 +379,4 @@ C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSyn
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.csproj.CopyComplete
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.exe
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.pdb
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync.D40E2457.Up2Date
