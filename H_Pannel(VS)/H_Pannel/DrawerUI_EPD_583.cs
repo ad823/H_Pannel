@@ -533,6 +533,10 @@ namespace H_Pannel_lib
             {
                 return Communication.EPD_730F_DrawImage(uDP_Class, IP, bmp);
             }
+            if (deviceType == DeviceType.EPD730E || deviceType == DeviceType.EPD730E_lock)
+            {
+                return Communication.EPD_730E_DrawImage(uDP_Class, IP, bmp);
+            }
             if (deviceType == DeviceType.EPD583 || deviceType == DeviceType.EPD583_lock)
             {
                 return Communication.EPD_583_DrawImage(uDP_Class, IP, bmp);
@@ -714,6 +718,10 @@ namespace H_Pannel_lib
         static public Bitmap Get_Drawer_bmp(Drawer drawer)
         {
             if (drawer.DeviceType == DeviceType.EPD730F || drawer.DeviceType == DeviceType.EPD730F_lock)
+            {
+                return Communication.EPD730_GetBitmap(drawer);
+            }
+            if (drawer.DeviceType == DeviceType.EPD730E || drawer.DeviceType == DeviceType.EPD730E_lock)
             {
                 return Communication.EPD730_GetBitmap(drawer);
             }
@@ -1252,6 +1260,8 @@ namespace H_Pannel_lib
             設為EPD583無鎖控,
             設為EPD730有鎖控,
             設為EPD730無鎖控,
+            設為EPD730E有鎖控,
+            設為EPD730E無鎖控,
             設為EPD420有鎖控,
             設為EPD420無鎖控,
         }
@@ -1884,7 +1894,8 @@ namespace H_Pannel_lib
                         if (dialog_ContextMenuStrip.Value == ContextMenuStrip_面板格式.設為EPD420有鎖控.GetEnumName()) drawer.SetDeviceType(DeviceType.EPD420_D_lock);
                         if (dialog_ContextMenuStrip.Value == ContextMenuStrip_面板格式.設為EPD730有鎖控.GetEnumName()) drawer.SetDeviceType(DeviceType.EPD730F);
                         if (dialog_ContextMenuStrip.Value == ContextMenuStrip_面板格式.設為EPD730無鎖控.GetEnumName()) drawer.SetDeviceType(DeviceType.EPD730F_lock);
-
+                        if (dialog_ContextMenuStrip.Value == ContextMenuStrip_面板格式.設為EPD730E有鎖控.GetEnumName()) drawer.SetDeviceType(DeviceType.EPD730E);
+                        if (dialog_ContextMenuStrip.Value == ContextMenuStrip_面板格式.設為EPD730E無鎖控.GetEnumName()) drawer.SetDeviceType(DeviceType.EPD730E_lock);
                         taskList.Add(Task.Run(() =>
                         {
                             SQL_ReplaceDrawer(drawer);

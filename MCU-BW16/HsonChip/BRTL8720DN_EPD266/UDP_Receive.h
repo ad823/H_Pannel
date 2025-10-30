@@ -8,7 +8,7 @@
 #include "IO.h"
 
 
-#define UDP_BUFFER_SIZE 19000
+#define UDP_BUFFER_SIZE 15000
 #define UDP_RX_BUFFER_SIZE 1500
 
 extern char* UdpRead;

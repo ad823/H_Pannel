@@ -120,21 +120,19 @@ void loop()
       delay(200);
       IO_Init();
       delay(200);
-      if(EPD_TYPE == "EPD266" || EPD_TYPE == "EPD290" || EPD_TYPE == "EPD420")
-      {
-         wiFiConfig.Set_Serverport(30000);
-      }
-      if(EPD_TYPE == "EPD420_D")
-      {
-         wiFiConfig.Set_Localport(29005);
-         wiFiConfig.Set_Serverport(30005);
-      }
-      if(Device == "RowLED") wiFiConfig.Set_Serverport(30001);
-      if(Device == "OLCD114") 
-      {
-        wiFiConfig.Set_Localport(29008);
-        wiFiConfig.Set_Serverport(30008);
-      }
+
+      #if defined(B_Drawer)
+      wiFiConfig.Set_Localport(29005);
+      wiFiConfig.Set_Serverport(30005);
+      #elif defined(OLCD_114)
+      wiFiConfig.Set_Localport(29008);
+      wiFiConfig.Set_Serverport(30008);
+      #elif defined(RowLED_Device)
+      wiFiConfig.Set_Serverport(30001);
+      #else
+      wiFiConfig.Set_Serverport(30000);
+      #endif
+      
       #ifdef DHTSensor
       dht.begin();
       #endif
