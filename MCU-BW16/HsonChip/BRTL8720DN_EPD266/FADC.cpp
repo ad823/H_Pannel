@@ -27,6 +27,9 @@ void FADC_LockerInputRead()
      if(flag_FADC_lokerInput != flag_FADC_lokerInput_buf)
      {
         flag_FADC_lokerInput_buf = flag_FADC_lokerInput;
+        bool lock_input = flag_FADC_lokerInput_buf;
+        if(((Input_dir >> 0) % 2 ) ==  1) lock_input = !lock_input;
+        Input = lock_input ? 1 : 0 ; 
         flag_JsonSend = true;
         mySerial.println(String(F("(*)FADC_LockerInputRead,Input (")) + flag_FADC_lokerInput_buf + F(")"));
      }

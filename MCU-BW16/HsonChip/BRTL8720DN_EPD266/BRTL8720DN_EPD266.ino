@@ -188,6 +188,9 @@ void loop()
             FADC_LockerTrigger();
             FADC_LockerInputRead();
             FADC_ButtonInputRead();
+            
+            #else
+            
             #endif
           }
           

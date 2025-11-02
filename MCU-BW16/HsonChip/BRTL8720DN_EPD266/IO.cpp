@@ -148,7 +148,7 @@ void IO_Init()
 
     mcp.pinMode(LOCKER_OUTPUT , OUTPUT);
     mcp.pinMode(LOCKER_INPUT , INPUT);
-//    mcp.pullUp(LOCKER_INPUT ,HIGH);
+    mcp.pullUp(LOCKER_INPUT ,HIGH);
     #else
     
     MyOutput_PIN01.Init(INPUT_PIN01,OUTPUT_PIN01);
@@ -187,8 +187,7 @@ void sub_IO_Program()
     #if defined(DrawerMCP23008)
     bool lock_input = mcp.digitalRead(LOCKER_INPUT);
     if(((Input_dir >> 0) % 2 ) ==  1) lock_input = !lock_input;
-    Input = lock_input ? 1 : 0 ;
-    
+    Input = lock_input ? 1 : 0 ; 
     #else
     Input = GetInput();
     #endif

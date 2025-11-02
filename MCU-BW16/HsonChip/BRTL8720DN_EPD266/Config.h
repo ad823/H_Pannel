@@ -1,4 +1,4 @@
-#define VERSION "Ver 1.6.005"
+#define VERSION "Ver 1.6.006"
 #define RESOURCE "OTA_All.bin"  
 
 #define SPI_MOSI_PIN PA12
@@ -6,9 +6,9 @@
 #define NUM_OF_LEDS NUM_WS2812B_CRGB
 #define SYSTEM_LED_PIN PA30
 
-//#define FADC
-#define DrawerMCP23008
-#define B_Drawer
+#define FADC
+//#define DrawerMCP23008
+//#define B_Drawer
 
 
 
@@ -55,8 +55,8 @@
 //#define EPD579B
 //#define DEPG0579RYT158FxX
 //#define EPD213_BRW_V0
-#define EPD7IN3E
-//#define EPD3IN6E
+//#define EPD7IN3E
+#define EPD3IN6E
 
 //#define OLCD_114
 //#define MCP23017
