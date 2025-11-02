@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EinkSync579_wall", "EinkSyn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttClientExample", "MqttClientExample\MqttClientExample.csproj", "{F83CD0B4-2C98-496D-8B97-57FB9D96FD8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelRenderer", "LabelRenderer\LabelRenderer.csproj", "{AF8ADAEA-5F03-4D96-94CB-D324399D3C50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{F83CD0B4-2C98-496D-8B97-57FB9D96FD8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F83CD0B4-2C98-496D-8B97-57FB9D96FD8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F83CD0B4-2C98-496D-8B97-57FB9D96FD8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF8ADAEA-5F03-4D96-94CB-D324399D3C50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF8ADAEA-5F03-4D96-94CB-D324399D3C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF8ADAEA-5F03-4D96-94CB-D324399D3C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF8ADAEA-5F03-4D96-94CB-D324399D3C50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

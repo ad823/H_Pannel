@@ -283,7 +283,6 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\Mea
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\AxAltairUDrv.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\MVSDK.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Text.Json.xml
-C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\zxing.xml
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Memory.xml
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Text.Encodings.Web.xml
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.ValueTuple.xml

@@ -1,0 +1,6 @@
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_PanelComLibrary\bin\Release\H_PanelComLibrary.dll
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_PanelComLibrary\bin\Release\H_PanelComLibrary.pdb
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_PanelComLibrary\obj\Release\H_PanelComLibrary.csproj.AssemblyReference.cache
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_PanelComLibrary\obj\Release\H_PanelComLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_PanelComLibrary\obj\Release\H_PanelComLibrary.dll
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_PanelComLibrary\obj\Release\H_PanelComLibrary.pdb

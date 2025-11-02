@@ -254,3 +254,4 @@ C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\obj\Release\EinkSy
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\obj\Release\EinkSyncTest.csproj.CopyComplete
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\obj\Release\EinkSyncTest.exe
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\obj\Release\EinkSyncTest.pdb
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\zxing.dll
