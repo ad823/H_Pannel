@@ -110,15 +110,15 @@ namespace WT32_SC01
         
             this.storagePanel.SureClick += StoragePanel_SureClick;
 
-            this.storageUI_EPD_290.Init();
-            this.epD_290_Pannel.Init(this.storageUI_EPD_290.List_UDP_Local);
+            //this.storageUI_EPD_290.Init();
+            //this.epD_290_Pannel.Init(this.storageUI_EPD_290.List_UDP_Local);
 
-            this.drawerUI_EPD_420.Init();
-            this.epD_420_Pannel.Init(this.drawerUI_EPD_420.List_UDP_Local);
-            this.rJ_Button_EPD_420_填入測試畫面.MouseDownEvent += RJ_Button_EPD_420_填入測試畫面_MouseDownEvent;
+            //this.drawerUI_EPD_420.Init();
+            //this.epD_420_Pannel.Init(this.drawerUI_EPD_420.List_UDP_Local);
+            //this.rJ_Button_EPD_420_填入測試畫面.MouseDownEvent += RJ_Button_EPD_420_填入測試畫面_MouseDownEvent;
 
-            this.drawerUI_EPD_1020.Init();
-            this.epD_1020_Pannel.Init(this.drawerUI_EPD_1020.List_UDP_Local);
+            //this.drawerUI_EPD_1020.Init();
+            //this.epD_1020_Pannel.Init(this.drawerUI_EPD_1020.List_UDP_Local);
 
 
             this.rJ_Button_EPD_1020_填入測試畫面.MouseDownEvent += RJ_Button_EPD_1020_填入測試畫面_MouseDownEvent;
@@ -140,7 +140,7 @@ namespace WT32_SC01
         private void RJ_Button_lcD114_Panel_Write_MouseDownEvent(MouseEventArgs mevent)
         {
             Font font = new Font("標楷體", 80, FontStyle.Bold);
-            lcD114_Panel.DrawImage("192.168.40.200", 29000, index.ToString("000"), font, Color.White, Color.Red);
+            lcD114_Panel.DrawImage("192.168.40.150", 29008, index.ToString("000"), font, Color.White, Color.Red);
             index++;
         }
 

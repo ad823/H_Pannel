@@ -18,6 +18,14 @@ void OLCD114::Lcd_Init()
     this->framebuffer = (uint16_t*) malloc(LCD_W * LCD_H * sizeof(uint16_t));
     pinMode(dc,OUTPUT);//设置数字11
     pinMode(cs,OUTPUT);//设置数字12 
+    _mcp ->pinMode(_mcp ->eGPB0 , OUTPUT);
+    _mcp ->pinMode(_mcp ->eGPB1 , OUTPUT);
+    _mcp ->pinMode(_mcp ->eGPB2 , OUTPUT);
+    _mcp ->pinMode(_mcp ->eGPB3 , OUTPUT);
+    _mcp ->pinMode(_mcp ->eGPB4 , OUTPUT);
+    _mcp ->pinMode(_mcp ->eGPB5 , OUTPUT);
+    _mcp ->pinMode(_mcp ->eGPB6 , OUTPUT);
+    _mcp ->pinMode(_mcp ->eGPB7 , OUTPUT);
     #ifdef MCP23017
     _mcp ->digitalWrite(/*pin = */_mcp -> eGPB7, true);
     printf("(RST)mcp.eGPB7 'true' \n");
@@ -135,7 +143,7 @@ void OLCD114::OLED_CS_Clr()
   if(flag_LCD_init == false) SPI.beginTransaction(SPISettings(5000, MSBFIRST, SPI_MODE0));  // 开始 SPI 事务
   digitalWrite(cs, LOW); //CS 
   if (flag_LCD_init == false)return;
-  SPI.beginTransaction(SPISettings(80000000, MSBFIRST, SPI_MODE0));  // 开始 SPI 事务
+  SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));  // 开始 SPI 事务
   #ifdef MCP23017
   _mcp ->digitalWrite(_mcp ->eGPB0 , !(index == 0));
   _mcp ->digitalWrite(_mcp ->eGPB1 , !(index == 1));

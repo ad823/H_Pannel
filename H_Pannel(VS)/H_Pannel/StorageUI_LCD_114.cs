@@ -25,6 +25,7 @@ namespace H_Pannel_lib
             Y1,
             Y2,
             Y3,
+            Y4,
         }
         public List<UDP_READ> UDP_READs = new List<UDP_READ>();
         [Serializable]
@@ -92,10 +93,6 @@ namespace H_Pannel_lib
                 {
                     return Get_Input(0);
                 }
-                else if (point_name == "X4")
-                {
-                    return Get_Input(8);
-                }
                 else if (point_name == "Y0")
                 {
                     return Get_Input(4);
@@ -111,6 +108,10 @@ namespace H_Pannel_lib
                 else if (point_name == "Y3")
                 {
                     return Get_Input(7);
+                }
+                else if (point_name == "Y4")
+                {
+                    return Get_Input(8);
                 }
                 return false;
             }

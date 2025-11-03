@@ -150,9 +150,7 @@ void loop()
 //      }
 //     
       xTaskCreate(Core0Task1,"Core0Task1", 1024,NULL,1,&Core0Task1Handle); 
-      #if defined(HandSensor) || defined(DHTSensor)
       xTaskCreate(Core0Task2,"Core0Task2", 1024,NULL,1,&Core0Task2Handle);
-      #endif
       flag_boradInit = true;
       mySerial.print("borad init done... \n");  
    }
@@ -170,17 +168,17 @@ void loop()
          bool pb2 = !digitalRead(PB2);
          porta = ~porta;
          int temp = 0;
-         //X Sensor
-         if(pb2) temp |= 0x01 << 3;
-         temp |= ((porta >> 7) & 0x01) << 2;
-         temp |= ((porta >> 6) & 0x01) << 1;
-         temp |= ((porta >> 5) & 0x01) << 0;
-         temp |= ((porta >> 4) & 0x01) << 8;
          //Y Sensor
-         temp |= ((porta >> 0) & 0x01) << 4;
-         temp |= ((porta >> 1) & 0x01) << 5;
-         temp |= ((porta >> 2) & 0x01) << 6;
-         temp |= ((porta >> 3) & 0x01) << 7;
+         if(pb2) temp |= 0x01 << 4;
+         temp |= ((porta >> 7) & 0x01) << 5;
+         temp |= ((porta >> 6) & 0x01) << 6;
+         temp |= ((porta >> 5) & 0x01) << 7;
+         temp |= ((porta >> 4) & 0x01) << 8;
+         //X Sensor
+         temp |= ((porta >> 0) & 0x01) << 3;
+         temp |= ((porta >> 1) & 0x01) << 2;
+         temp |= ((porta >> 2) & 0x01) << 1;
+         temp |= ((porta >> 3) & 0x01) << 0;
          Input_buf = temp;
          if(Input_buf != Input)
          {

@@ -67,7 +67,7 @@ namespace H_Pannel_lib
                 int width = this.panel_paint.Width;
                 int height = this.panel_paint.Height;
 
-                int H_line_pixel = width / 5;
+                int H_line_pixel = width / 6;
                 int V_line_pixel = height / 5;
 
                 g.DrawLine(new Pen(new SolidBrush(uDP_READ.Get_Input(StorageUI_LCD_114.enum_InputName.X0) ? Color.Lime : Color.Gray), 6), new Point(0, V_line_pixel * 1), new Point(width, V_line_pixel * 1));
@@ -87,6 +87,8 @@ namespace H_Pannel_lib
                 g.DrawString("Y2", new Font("微軟正黑體", 16, FontStyle.Bold), new SolidBrush(Color.Black), new Point(H_line_pixel * 3, 0));
                 g.DrawLine(new Pen(new SolidBrush(uDP_READ.Get_Input(StorageUI_LCD_114.enum_InputName.Y3) ? Color.Lime : Color.Gray), 6), new Point(H_line_pixel * 4, 0), new Point(H_line_pixel * 4, height));
                 g.DrawString("Y3", new Font("微軟正黑體", 16, FontStyle.Bold), new SolidBrush(Color.Black), new Point(H_line_pixel * 4, 0));
+                g.DrawLine(new Pen(new SolidBrush(uDP_READ.Get_Input(StorageUI_LCD_114.enum_InputName.Y4) ? Color.Lime : Color.Gray), 6), new Point(H_line_pixel * 5, 0), new Point(H_line_pixel * 5, height));
+                g.DrawString("Y4", new Font("微軟正黑體", 16, FontStyle.Bold), new SolidBrush(Color.Black), new Point(H_line_pixel * 5, 0));
 
             }
             this.Invoke(new Action(delegate 

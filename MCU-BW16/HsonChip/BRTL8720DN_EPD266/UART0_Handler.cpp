@@ -115,6 +115,9 @@ void serialEvent()
       #elif defined(EPD7IN3E)
       mySerial.print("EPD7IN3E Clear..\n ");
       epd.Clear();      
+      #elif defined(OLCD_114)
+      oLCD114.LCD_Clear(RED);
+      mySerial.println("OLCD114 clear color RED ...");
       #else         
       mySerial.print("EPD Clear..\n ");
       epd.Clear();
