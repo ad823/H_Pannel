@@ -5,9 +5,16 @@
 #include "font.h"
 
 bool flag_LCD_init = true;
+bool flag_LCD_1_init = false;
 //OLED的初始化
 void OLCD114::Lcd_Init()
 { 
+    if(flag_LCD_1_init) return;
+    mySerial->println("OLCD114 device init ...");
+    mySerial->print("OLCD114 malloc : ");
+    mySerial->print(LCD_W * LCD_H * sizeof(uint16_t));
+    mySerial->println(" bytes");
+    
     this->framebuffer = (uint16_t*) malloc(LCD_W * LCD_H * sizeof(uint16_t));
     pinMode(dc,OUTPUT);//设置数字11
     pinMode(cs,OUTPUT);//设置数字12 
@@ -20,7 +27,7 @@ void OLCD114::Lcd_Init()
     OLED_CS_Clr();  
     #ifdef MCP23017
     _mcp ->digitalWrite(/*pin = */_mcp -> eGPB, /*Port Value = */0x80);
-    printf("(RST)/*pin = */_mcp -> eGPB, /*Port Value = */0x80 \n");
+    mySerial->print("(RST)/*pin = */_mcp -> eGPB, /*Port Value = */0x80 \n");
     #endif
     delay(300);
     //************* Start Initial Sequence **********// 
@@ -106,8 +113,14 @@ void OLCD114::Lcd_Init()
     OLED_CS_Set();
     #ifdef MCP23017
     _mcp ->digitalWrite(/*pin = */_mcp -> eGPB, /*Port Value = */0xFF);
+    mySerial->print("(RST)/*pin = */_mcp -> eGPB, /*Port Value = */0xFF \n");
     #endif
+    mySerial->println("OLCD114 device done ...");
+    delay(200);
+    mySerial->println("OLCD114 clear color GRAY ...");
+    LCD_Clear(GRAY);
     flag_LCD_init = true;
+    flag_LCD_1_init = true;
 }
 void OLCD114::OLED_DC_Clr()
 {

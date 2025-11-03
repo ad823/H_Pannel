@@ -12,7 +12,7 @@
 #define INPUT_PIN06 5
 #define INPUT_PIN07 6
 #define INPUT_PIN08 7
-#define INPUT_PIN09 -1
+#define INPUT_PIN09 PB2
 #define INPUT_PIN10 -1
 #define OUTPUT_PIN01 8
 #define OUTPUT_PIN02 9

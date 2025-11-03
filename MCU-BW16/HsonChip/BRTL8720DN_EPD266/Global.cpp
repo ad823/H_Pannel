@@ -86,6 +86,7 @@ MyTimer MyTimer_OLCD_144_Init;
 MyTimer MyTimer_CheckWS2812;
 MyTimer MyTimer_CheckWIFI;
 MyTimer MyTimer_WIFIConected;
+MyTimer MyTimer_IO_WR;
 
 bool flag_boradInit = false;
 bool flag_OLCD_144_boradInit = false;

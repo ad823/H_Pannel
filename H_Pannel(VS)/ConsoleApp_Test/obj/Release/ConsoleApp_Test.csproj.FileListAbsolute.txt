@@ -40,7 +40,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Re
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\AxAltairUDrv.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\MVSDK.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Text.Json.xml
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\zxing.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Memory.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Text.Encodings.Web.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.ValueTuple.xml

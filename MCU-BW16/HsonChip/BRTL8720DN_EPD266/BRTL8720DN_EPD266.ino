@@ -41,6 +41,7 @@ void setup()
     MyTimer_BoardInit.StartTickTime(5000);          
     MyTimer_OLCD_144_Init.StartTickTime(5000);          
     MyTimer_CheckWIFI.StartTickTime(180000);   
+    MyTimer_IO_WR.StartTickTime(1000);
     // 初始化互斥鎖
     xSpiMutex = xSemaphoreCreateMutex();
 
@@ -48,18 +49,6 @@ void setup()
 bool flag_pb2 = true;
 void loop() 
 {
-   if(MyTimer_OLCD_144_Init.IsTimeOut() && !flag_OLCD_144_boradInit)
-   {
-      if(Device == "OLCD_114")
-      {
-        mySerial.println("OLCD114 device init ...");
-        oLCD114.mySerial = &mySerial;
-        oLCD114.Lcd_Init();
-        delay(200);
-        oLCD114.LCD_Clear(GRAY);
-      }     
-      flag_OLCD_144_boradInit = true;
-   }
    if(MyTimer_BoardInit.IsTimeOut() && !flag_boradInit)
    {          
       mySerial.begin(115200);        
@@ -67,6 +56,7 @@ void loop()
       
       #if defined(MCP23017) || defined(MCP23008)
       #if defined(MCP23017)
+      mySerial.println("Initialization of the MCP23017 chip ...");
       while(mcp.begin() != 0)
       {
         mySerial.println("Initialization of the chip failed, please confirm that the chip connection is correct!");
@@ -108,14 +98,20 @@ void loop()
       oLCD114._mcp = &mcp;
       #endif
          
-      
+      #ifdef EPD_Device
       epd._mcp = &mcp;
+      #endif
+      
       mySerial.println("mcp.pinMode....ok");   
       delay(200);
       #endif
       
       wiFiConfig.mySerial = &mySerial;
+      #ifdef EPD_Device
       epd.mySerial = &mySerial;
+      #elif defined(OLCD_114)     
+      oLCD114.mySerial = &mySerial;     
+      #endif
       wiFiConfig.Init(VERSION);
       delay(200);
       IO_Init();
@@ -154,8 +150,11 @@ void loop()
 //      }
 //     
       xTaskCreate(Core0Task1,"Core0Task1", 1024,NULL,1,&Core0Task1Handle); 
+      #if defined(HandSensor) || defined(DHTSensor)
       xTaskCreate(Core0Task2,"Core0Task2", 1024,NULL,1,&Core0Task2Handle);
+      #endif
       flag_boradInit = true;
+      mySerial.print("borad init done... \n");  
    }
    if(WiFi.status() != WL_CONNECTED)
    {
@@ -163,9 +162,42 @@ void loop()
       MyTimer_WIFIConected.StartTickTime(5000);
    }
    if(flag_boradInit)
-   {
-                 
-     
+   {    
+      #ifdef DrawerHandSensor
+      if(MyTimer_IO_WR.IsTimeOut())
+      {
+         uint8_t porta = mcp.digitalRead(mcp.eGPA);
+         bool pb2 = !digitalRead(PB2);
+         porta = ~porta;
+         int temp = 0;
+         //X Sensor
+         if(pb2) temp |= 0x01 << 3;
+         temp |= ((porta >> 7) & 0x01) << 2;
+         temp |= ((porta >> 6) & 0x01) << 1;
+         temp |= ((porta >> 5) & 0x01) << 0;
+         temp |= ((porta >> 4) & 0x01) << 8;
+         //Y Sensor
+         temp |= ((porta >> 0) & 0x01) << 4;
+         temp |= ((porta >> 1) & 0x01) << 5;
+         temp |= ((porta >> 2) & 0x01) << 6;
+         temp |= ((porta >> 3) & 0x01) << 7;
+         Input_buf = temp;
+         if(Input_buf != Input)
+         {
+            mySerial.print("porta:");  
+            mySerial.print(Input_buf);   
+            mySerial.print("\n");  
+            Input = Input_buf;
+            flag_JsonSend = true;
+         }
+         
+         MyTimer_IO_WR.TickStop();
+         MyTimer_IO_WR.StartTickTime(50);
+      }    
+      #else
+      sub_IO_Program();
+      #endif     
+                
       if(WiFi.status() != WL_CONNECTED)
       {
          wiFiConfig.WIFI_Connenct();
@@ -178,17 +210,18 @@ void loop()
       {       
           if(MyTimer_WIFIConected.IsTimeOut())
           {
-            if(Device == "EPD")
-            {
-              epd.Init(xSpiMutex); 
-            }
-            sub_IO_Program();
+            #ifdef EPD_Device
+            epd.Init(xSpiMutex); 
+            #elif defined(OLCD_114)            
+            oLCD114.Lcd_Init();            
+            #endif
+            
+                            
             #ifdef FADC
             FADC_MotorTrigger();
             FADC_LockerTrigger();
             FADC_LockerInputRead();
-            FADC_ButtonInputRead();
-            
+            FADC_ButtonInputRead();       
             #else
             
             #endif
@@ -201,8 +234,9 @@ void loop()
           #endif
           
       } 
-      
+
       MyTimer_CheckWS2812.StartTickTime(30000);
+      delay(0);
 
       
    }    
@@ -230,8 +264,9 @@ void Core0Task1( void * pvParameters )
 //                 NVIC_SystemReset();
               }
           }
-          
+          #ifdef EPD_Device
           epd.Sleep_Check();
+          #endif
           if(flag_WS2812B_breathing_ON_OFF)
           {               
              WS2812B_breathing_ON_OFF();
@@ -260,10 +295,7 @@ void Core0Task2( void * pvParameters )
     {      
        
        if(flag_boradInit)
-       {
-          
-                 
-          
+       {                                 
           if( WiFi.status() == WL_CONNECTED )sub_UDP_Send();
           #ifdef DHTSensor
           dht_h = dht.readHumidity();
@@ -288,7 +320,7 @@ void Core0Task2( void * pvParameters )
           
           
        }
-      delay(0);
+       delay(10);
     }
     
 }

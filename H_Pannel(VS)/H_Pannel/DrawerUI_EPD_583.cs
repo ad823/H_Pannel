@@ -653,6 +653,7 @@ namespace H_Pannel_lib
                 else if (i == 1) lightSensorClass.V_Sensor_Check.Add("Y1");
                 else if (i == 2) lightSensorClass.V_Sensor_Check.Add("Y2");
                 else if (i == 3) lightSensorClass.V_Sensor_Check.Add("Y3");
+                else if (i == 4) lightSensorClass.V_Sensor_Check.Add("Y4");
             }
             for (int i = y; i < (y + height); i++)
             {
@@ -660,6 +661,7 @@ namespace H_Pannel_lib
                 else if (i == 2 || i == 3) lightSensorClass.H_Sensor_Check.Add("X1");
                 else if (i == 4 || i == 5) lightSensorClass.H_Sensor_Check.Add("X2");
                 else if (i == 6 || i == 7) lightSensorClass.H_Sensor_Check.Add("X3");
+                else if (i == 8 || i == 9) lightSensorClass.H_Sensor_Check.Add("X4");
             }
 
             lightSensorClass.V_Sensor_Check = (from temp in lightSensorClass.V_Sensor_Check

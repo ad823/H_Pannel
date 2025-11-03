@@ -92,6 +92,10 @@ namespace H_Pannel_lib
                 {
                     return Get_Input(0);
                 }
+                else if (point_name == "X4")
+                {
+                    return Get_Input(8);
+                }
                 else if (point_name == "Y0")
                 {
                     return Get_Input(4);

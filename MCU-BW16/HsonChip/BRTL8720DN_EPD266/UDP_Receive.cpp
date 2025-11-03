@@ -58,6 +58,7 @@ void onPacketCallBack()
      int packet_UDP0 = 0;
      int packet_UDP1 = 0;
      packet_UDP0 = Udp.parsePacket();
+     if(packet_UDP0 <= 0)break;
      if(packet_UDP0 > 0) 
      {
          remoteIP = Udp.remoteIP();

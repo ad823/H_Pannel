@@ -6,10 +6,10 @@
 #define NUM_OF_LEDS NUM_WS2812B_CRGB
 #define SYSTEM_LED_PIN PA30
 
-#define FADC
+//#define FADC
 //#define DrawerMCP23008
 //#define B_Drawer
-
+#define DrawerHandSensor
 
 
 #if defined(FADC)
@@ -19,6 +19,11 @@
 #define LOCKER_OUTPUT 0
 #define LOCKER_INPUT 3
 #define MCP23008
+#endif
+
+#if defined(DrawerHandSensor)
+#define OLCD_114
+#define MCP23017
 #endif
 
 #if defined(DrawerMCP23008)
@@ -56,7 +61,7 @@
 //#define DEPG0579RYT158FxX
 //#define EPD213_BRW_V0
 //#define EPD7IN3E
-#define EPD3IN6E
+//#define EPD3IN6E
 
 //#define OLCD_114
 //#define MCP23017

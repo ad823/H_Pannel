@@ -24,7 +24,6 @@ void EPD360E::Show7Block()
         for(j = 0 ; j < 20000; j ++) 
         {
              SendData((Color_seven[k]<<4) |Color_seven[k]);
-//             SendData((EPD_3IN6E_WHITE) |EPD_3IN6E_WHITE);
         }
     }
     SPI_End();
