@@ -26,6 +26,8 @@ extern bool flag_UDP_RX_OK;
 extern bool flag_UDP_header;
 extern bool flag_UDP0_packet;
 extern bool flag_UDP1_packet;
+
+extern bool flag_UDP_has_packet;
 extern MyTimer MyTimer_UDP;
 extern MyTimer MyTimer_UDP_RX_TimeOut;
 extern int ForeColor;
@@ -39,5 +41,6 @@ void Send_Bytes(uint8_t *value ,int Size ,IPAddress RemoteIP ,int RemotePort);
 void Send_String(String str ,int remoteUdpPort);
 void Send_StringTo(String str ,IPAddress RemoteIP ,int RemotePort);
 String IpAddress2String(const IPAddress& ipAddress);
+void HandleUdpCommand();
 
 #endif // UDP_RECEIVE_H

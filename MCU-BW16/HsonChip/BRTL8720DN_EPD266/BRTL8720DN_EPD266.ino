@@ -205,36 +205,19 @@ void loop()
          }                
       }  
       if(WiFi.status() == WL_CONNECTED)
-      {       
-          if(MyTimer_WIFIConected.IsTimeOut())
-          {
-            #ifdef EPD_Device
-            epd.Init(xSpiMutex); 
-            #elif defined(OLCD_114)            
-            oLCD114.Lcd_Init();            
-            #endif
-            
-                            
-            #ifdef FADC
-            FADC_MotorTrigger();
-            FADC_LockerTrigger();
-            FADC_LockerInputRead();
-            FADC_ButtonInputRead();       
-            #else
-            
-            #endif
-          }
+      {     
+           #ifdef MQTT
+           wiFiConfig.MQTT_reconnect();        
+           #else                   
+           onPacketCallBack();
+           #endif
+           
           
-          #ifdef MQTT
-          wiFiConfig.MQTT_reconnect();        
-          #else         
-          onPacketCallBack();
-          #endif
+          
           
       } 
 
       MyTimer_CheckWS2812.StartTickTime(30000);
-      delay(0);
 
       
    }    
@@ -294,7 +277,29 @@ void Core0Task2( void * pvParameters )
        
        if(flag_boradInit)
        {                                 
-          if( WiFi.status() == WL_CONNECTED )sub_UDP_Send();
+          if( WiFi.status() == WL_CONNECTED )
+          {
+              sub_UDP_Send();  
+              if(MyTimer_WIFIConected.IsTimeOut())
+              {
+                #ifdef EPD_Device
+                epd.Init(xSpiMutex); 
+                #elif defined(OLCD_114)            
+                oLCD114.Lcd_Init();            
+                #endif
+                
+                                
+                #ifdef FADC
+                FADC_MotorTrigger();
+                FADC_LockerTrigger();
+                FADC_LockerInputRead();
+                FADC_ButtonInputRead();       
+                #else
+                
+                #endif
+              }
+              HandleUdpCommand(); 
+          }
           #ifdef DHTSensor
           dht_h = dht.readHumidity();
           // Read temperature as Celsius (the default)
@@ -318,7 +323,7 @@ void Core0Task2( void * pvParameters )
           
           
        }
-       delay(10);
+       delay(0);
     }
     
 }

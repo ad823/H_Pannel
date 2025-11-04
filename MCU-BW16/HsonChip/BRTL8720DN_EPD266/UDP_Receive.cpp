@@ -17,6 +17,8 @@ bool flag_UDP_RX_OK = false;
 bool flag_UDP_header = true;
 bool flag_UDP0_packet = true;
 bool flag_UDP1_packet = true;
+bool flag_UDP_has_packet = false;
+
 MyTimer MyTimer_UDP;
 MyTimer MyTimer_UDP_RX_TimeOut;
 int ForeColor = 0;
@@ -45,6 +47,7 @@ void onPacketCallBack()
      
      flag_UDP_RX_BUFFER_Init = true;
   }
+  if(flag_UDP_RX_OK == true) return;
   flag_UDP_RX_OK = false;
   flag_UDP_header = true;
   flag_UDP0_packet = false;
@@ -58,7 +61,11 @@ void onPacketCallBack()
      int packet_UDP0 = 0;
      int packet_UDP1 = 0;
      packet_UDP0 = Udp.parsePacket();
-     if(packet_UDP0 <= 0)break;
+     if(packet_UDP0 <= 0)
+     {
+         flag_UDP_has_packet = false;
+         break;
+     }
      if(packet_UDP0 > 0) 
      {
          remoteIP = Udp.remoteIP();
@@ -143,6 +150,11 @@ void onPacketCallBack()
      }
   }
 
+}
+
+void HandleUdpCommand()
+{
+  
   if (flag_UDP_RX_OK)                     //如果有資料可用
   {
      if(flag_udp_232back) 
@@ -671,11 +683,12 @@ void onPacketCallBack()
         }
         
      }
-    
+     flag_UDP_RX_OK = false;
   }
 
    
 }
+
 void Clear_char_buf()
 {
     memset(UdpRead,0,4096);
