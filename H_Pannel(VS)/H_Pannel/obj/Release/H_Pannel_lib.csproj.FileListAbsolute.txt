@@ -644,7 +644,6 @@ C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\System.Tex
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\System.Text.Json.xml
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\System.Threading.Tasks.Extensions.xml
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\System.ValueTuple.xml
-C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.csproj.AssemblyReference.cache
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_4color_select.resources
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_DrawerHandSensorCheck.resources
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.Dialog_Pannel35.resources

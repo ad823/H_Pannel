@@ -207,7 +207,7 @@ void EPD360E::WaitUntilIdle()
 
 void EPD360E::SPI_Begin() 
 {
-    SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE0));
+    SPI.beginTransaction(SPISettings(20000000, MSBFIRST, SPI_MODE0));
 }
 
 void EPD360E::SetCursor(int Xstart, int Ystart)

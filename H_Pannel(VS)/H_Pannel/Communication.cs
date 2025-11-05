@@ -594,7 +594,7 @@ namespace H_Pannel_lib
 
             if (Chip_Type == ChipType.BW16)
             {
-                EPD583_frameDIV = 32;
+                EPD583_frameDIV = 8;
             }
             bool flag_OK;
 
@@ -665,7 +665,7 @@ namespace H_Pannel_lib
     
             if (Chip_Type == ChipType.BW16)
             {
-                EPD583_frameDIV = 40;
+                EPD583_frameDIV = 16;
             }
             bool flag_OK;
      

@@ -151,6 +151,7 @@ void loop()
 //     
       xTaskCreate(Core0Task1,"Core0Task1", 1024,NULL,1,&Core0Task1Handle); 
       xTaskCreate(Core0Task2,"Core0Task2", 1024,NULL,1,&Core0Task2Handle);
+      xTaskCreate(Core0Task3,"Core0Task3", 1024,NULL,1,&Core0Task3Handle);
       flag_boradInit = true;
       mySerial.print("borad init done... \n");  
    }
@@ -161,40 +162,7 @@ void loop()
    }
    if(flag_boradInit)
    {    
-      #ifdef DrawerHandSensor
-      if(MyTimer_IO_WR.IsTimeOut())
-      {
-         uint8_t porta = mcp.digitalRead(mcp.eGPA);
-         bool pb2 = !digitalRead(PB2);
-         porta = ~porta;
-         int temp = 0;
-         //Y Sensor
-         if(pb2) temp |= 0x01 << 4;
-         temp |= ((porta >> 7) & 0x01) << 5;
-         temp |= ((porta >> 6) & 0x01) << 6;
-         temp |= ((porta >> 5) & 0x01) << 7;
-         temp |= ((porta >> 4) & 0x01) << 8;
-         //X Sensor
-         temp |= ((porta >> 0) & 0x01) << 3;
-         temp |= ((porta >> 1) & 0x01) << 2;
-         temp |= ((porta >> 2) & 0x01) << 1;
-         temp |= ((porta >> 3) & 0x01) << 0;
-         Input_buf = temp;
-         if(Input_buf != Input)
-         {
-            mySerial.print("porta:");  
-            mySerial.print(Input_buf);   
-            mySerial.print("\n");  
-            Input = Input_buf;
-            flag_JsonSend = true;
-         }
-         
-         MyTimer_IO_WR.TickStop();
-         MyTimer_IO_WR.StartTickTime(50);
-      }    
-      #else
-      sub_IO_Program();
-      #endif     
+        
                 
       if(WiFi.status() != WL_CONNECTED)
       {
@@ -206,15 +174,13 @@ void loop()
       }  
       if(WiFi.status() == WL_CONNECTED)
       {     
+           
            #ifdef MQTT
            wiFiConfig.MQTT_reconnect();        
            #else                   
            onPacketCallBack();
-           #endif
            
-          
-          
-          
+           #endif        
       } 
 
       MyTimer_CheckWS2812.StartTickTime(30000);
@@ -270,15 +236,12 @@ void Core0Task1( void * pvParameters )
     }
     
 }
-void Core0Task2( void * pvParameters )
+void Core0Task3( void * pvParameters )
 {
     for(;;)
     {      
-       
-       if(flag_boradInit)
-       {                                 
-          if( WiFi.status() == WL_CONNECTED )
-          {
+        if( WiFi.status() == WL_CONNECTED )
+        {
               sub_UDP_Send();  
               if(MyTimer_WIFIConected.IsTimeOut())
               {
@@ -287,7 +250,41 @@ void Core0Task2( void * pvParameters )
                 #elif defined(OLCD_114)            
                 oLCD114.Lcd_Init();            
                 #endif
-                
+                HandleUdpCommand(); 
+                #ifdef DrawerHandSensor
+                if(MyTimer_IO_WR.IsTimeOut())
+                {
+                   uint8_t porta = mcp.digitalRead(mcp.eGPA);
+                   bool pb2 = !digitalRead(PB2);
+                   porta = ~porta;
+                   int temp = 0;
+                   //Y Sensor
+                   if(pb2) temp |= 0x01 << 4;
+                   temp |= ((porta >> 7) & 0x01) << 5;
+                   temp |= ((porta >> 6) & 0x01) << 6;
+                   temp |= ((porta >> 5) & 0x01) << 7;
+                   temp |= ((porta >> 4) & 0x01) << 8;
+                   //X Sensor
+                   temp |= ((porta >> 0) & 0x01) << 3;
+                   temp |= ((porta >> 1) & 0x01) << 2;
+                   temp |= ((porta >> 2) & 0x01) << 1;
+                   temp |= ((porta >> 3) & 0x01) << 0;
+                   Input_buf = temp;
+                   if(Input_buf != Input)
+                   {
+                      mySerial.print("porta:");  
+                      mySerial.print(Input_buf);   
+                      mySerial.print("\n");  
+                      Input = Input_buf;
+                      flag_JsonSend = true;
+                   }
+                   
+                   MyTimer_IO_WR.TickStop();
+                   MyTimer_IO_WR.StartTickTime(50);
+                }    
+                #else
+                sub_IO_Program();
+                #endif   
                                 
                 #ifdef FADC
                 FADC_MotorTrigger();
@@ -298,9 +295,23 @@ void Core0Task2( void * pvParameters )
                 
                 #endif
               }
-              serialEvent();
-              HandleUdpCommand(); 
-          }
+              
+              
+        }
+      
+       
+    }
+    
+}
+void Core0Task2( void * pvParameters )
+{
+    for(;;)
+    {      
+       
+       if(flag_boradInit)
+       {        
+          serialEvent();                         
+          
           #ifdef DHTSensor
           dht_h = dht.readHumidity();
           // Read temperature as Celsius (the default)
@@ -324,7 +335,7 @@ void Core0Task2( void * pvParameters )
           
           
        }
-       delay(0);
+       delay(10);
     }
     
 }

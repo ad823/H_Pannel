@@ -175,7 +175,7 @@ void EPD730E::WaitUntilIdle()
 
 void EPD730E::SPI_Begin() 
 {
-    SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE0));
+    SPI.beginTransaction(SPISettings(20000000, MSBFIRST, SPI_MODE0));
 }
 
 void EPD730E::SetCursor(int Xstart, int Ystart)

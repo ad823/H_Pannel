@@ -361,7 +361,6 @@ C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\NPO
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\NPOI.OpenXmlFormats.dll
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Text.Json.xml
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\SQLUI.xml
-C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\zxing.xml
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\Basic.xml
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Memory.xml
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Text.Encodings.Web.xml

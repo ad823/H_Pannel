@@ -177,7 +177,7 @@ namespace H_Pannel_lib
             }
         }
         private double WriteByteStartTime = 0;
-        public double WriteByteTime = 3;
+        public double WriteByteTime = 10;
         public UDP_Class(string IP, int port)
         {
             this.Port = port;
@@ -255,9 +255,10 @@ namespace H_Pannel_lib
                 List<byte[]> list_bytes = separateByte(value);
                 for (int i = 0; i < list_bytes.Count; i++)
                 {
-                    while (true)
+                    double start = stopwatch.Elapsed.TotalMilliseconds;
+                    while (stopwatch.Elapsed.TotalMilliseconds - start < 10)
                     {
-                        if ((stopwatch.Elapsed.TotalMilliseconds - WriteByteStartTime) >= WriteByteTime) break;
+                        Thread.Yield(); // 暫時讓出 CPU，避免死等
                     }
                     int recv = this.udpClient.Send(list_bytes[i], list_bytes[i].Length, remoteIP); //送出的資料跟目的 
                     //Console.WriteLine("{0}:{1}發送消息：{2}", IP, port, list_bytes[i].Length);
@@ -270,6 +271,8 @@ namespace H_Pannel_lib
             }
                  
         }
+
+
         public List<byte[]> separateByte(byte[] bytes)
         {
             List<byte[]> list_bytes_out = new List<byte[]>();
