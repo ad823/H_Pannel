@@ -1252,7 +1252,7 @@ namespace H_Pannel_lib
             設為大抽屜4X8,
             設為小抽屜3X8,
             設為大抽屜4X8_A,
-            設為小抽屜5X8_A,
+            設為大抽屜5X8_A,
             設為小抽屜1X8_ADC,
             設為小抽屜3X8_ADC,
         }
@@ -1926,7 +1926,7 @@ namespace H_Pannel_lib
                             if (dialog_ContextMenuStrip.Value == ContextMenuStrip_抽屜格式.設為大抽屜4X8.GetEnumName()) drawer.SetDrawerType(Drawer.Enum_DrawerType._4X8);
                             if (dialog_ContextMenuStrip.Value == ContextMenuStrip_抽屜格式.設為大抽屜4X8_A.GetEnumName()) drawer.SetDrawerType(Drawer.Enum_DrawerType._4X8_A);
                             if (dialog_ContextMenuStrip.Value == ContextMenuStrip_抽屜格式.設為小抽屜3X8.GetEnumName()) drawer.SetDrawerType(Drawer.Enum_DrawerType._3X8);
-                            if (dialog_ContextMenuStrip.Value == ContextMenuStrip_抽屜格式.設為小抽屜5X8_A.GetEnumName()) drawer.SetDrawerType(Drawer.Enum_DrawerType._4X8_A);
+                            if (dialog_ContextMenuStrip.Value == ContextMenuStrip_抽屜格式.設為大抽屜5X8_A.GetEnumName()) drawer.SetDrawerType(Drawer.Enum_DrawerType._5X8_A);
                             if (dialog_ContextMenuStrip.Value == ContextMenuStrip_抽屜格式.設為小抽屜1X8_ADC.GetEnumName()) drawer.SetDrawerType(Drawer.Enum_DrawerType._1X8_ADC);
                             if (dialog_ContextMenuStrip.Value == ContextMenuStrip_抽屜格式.設為小抽屜3X8_ADC.GetEnumName()) drawer.SetDrawerType(Drawer.Enum_DrawerType._3X8_ADC);
                             taskList.Add(Task.Run(() =>
