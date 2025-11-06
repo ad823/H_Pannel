@@ -37,6 +37,12 @@ void EPD::Init(SemaphoreHandle_t mutex)
     flag_epd_1_init = true;
     
 }
+void EPD::free_framebuffer()
+{
+    free(framebuffer);
+    framebuffer = nullptr;
+    mySerial->println("free_framebuffer...");
+}
 void EPD::SendSPI(char* framebuffer ,int size, int offset)
 {
   

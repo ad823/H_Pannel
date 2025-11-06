@@ -18,14 +18,14 @@ void OLCD114::Lcd_Init()
     this->framebuffer = (uint16_t*) malloc(LCD_W * LCD_H * sizeof(uint16_t));
     pinMode(dc,OUTPUT);//设置数字11
     pinMode(cs,OUTPUT);//设置数字12 
-    _mcp ->pinMode(_mcp ->eGPB0 , OUTPUT);
-    _mcp ->pinMode(_mcp ->eGPB1 , OUTPUT);
-    _mcp ->pinMode(_mcp ->eGPB2 , OUTPUT);
-    _mcp ->pinMode(_mcp ->eGPB3 , OUTPUT);
-    _mcp ->pinMode(_mcp ->eGPB4 , OUTPUT);
-    _mcp ->pinMode(_mcp ->eGPB5 , OUTPUT);
-    _mcp ->pinMode(_mcp ->eGPB6 , OUTPUT);
-    _mcp ->pinMode(_mcp ->eGPB7 , OUTPUT);
+//    _mcp ->pinMode(_mcp ->eGPB0 , OUTPUT);
+//    _mcp ->pinMode(_mcp ->eGPB1 , OUTPUT);
+//    _mcp ->pinMode(_mcp ->eGPB2 , OUTPUT);
+//    _mcp ->pinMode(_mcp ->eGPB3 , OUTPUT);
+//    _mcp ->pinMode(_mcp ->eGPB4 , OUTPUT);
+//    _mcp ->pinMode(_mcp ->eGPB5 , OUTPUT);
+//    _mcp ->pinMode(_mcp ->eGPB6 , OUTPUT);
+//    _mcp ->pinMode(_mcp ->eGPB7 , OUTPUT);
     #ifdef MCP23017
     _mcp ->digitalWrite(/*pin = */_mcp -> eGPB7, true);
     printf("(RST)mcp.eGPB7 'true' \n");
@@ -145,13 +145,13 @@ void OLCD114::OLED_CS_Clr()
   if (flag_LCD_init == false)return;
   SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));  // 开始 SPI 事务
   #ifdef MCP23017
-  _mcp ->digitalWrite(_mcp ->eGPB0 , !(index == 0));
-  _mcp ->digitalWrite(_mcp ->eGPB1 , !(index == 1));
-  _mcp ->digitalWrite(_mcp ->eGPB2 , !(index == 2));
-  _mcp ->digitalWrite(_mcp ->eGPB3 , !(index == 3));
-  _mcp ->digitalWrite(_mcp ->eGPB4 , !(index == 4));
-  _mcp ->digitalWrite(_mcp ->eGPB5 , !(index == 5));
-  _mcp ->digitalWrite(_mcp ->eGPB6 , !(index == 6));
+//  _mcp ->digitalWrite(_mcp ->eGPB0 , !(index == 0));
+//  _mcp ->digitalWrite(_mcp ->eGPB1 , !(index == 1));
+//  _mcp ->digitalWrite(_mcp ->eGPB2 , !(index == 2));
+//  _mcp ->digitalWrite(_mcp ->eGPB3 , !(index == 3));
+//  _mcp ->digitalWrite(_mcp ->eGPB4 , !(index == 4));
+//  _mcp ->digitalWrite(_mcp ->eGPB5 , !(index == 5));
+//  _mcp ->digitalWrite(_mcp ->eGPB6 , !(index == 6));
   #endif
 
   
@@ -161,13 +161,13 @@ void OLCD114::OLED_CS_Set()
    digitalWrite(cs,HIGH);//CS  
   if (flag_LCD_init == false)return;
   #ifdef MCP23017
-  _mcp ->digitalWrite(_mcp ->eGPB0 , (index == 0));
-  _mcp ->digitalWrite(_mcp ->eGPB1 , (index == 1));
-  _mcp ->digitalWrite(_mcp ->eGPB2 , (index == 2));
-  _mcp ->digitalWrite(_mcp ->eGPB3 , (index == 3));
-  _mcp ->digitalWrite(_mcp ->eGPB4 , (index == 4));
-  _mcp ->digitalWrite(_mcp ->eGPB5 , (index == 5));
-  _mcp ->digitalWrite(_mcp ->eGPB6 , (index == 6));
+//  _mcp ->digitalWrite(_mcp ->eGPB0 , (index == 0));
+//  _mcp ->digitalWrite(_mcp ->eGPB1 , (index == 1));
+//  _mcp ->digitalWrite(_mcp ->eGPB2 , (index == 2));
+//  _mcp ->digitalWrite(_mcp ->eGPB3 , (index == 3));
+//  _mcp ->digitalWrite(_mcp ->eGPB4 , (index == 4));
+//  _mcp ->digitalWrite(_mcp ->eGPB5 , (index == 5));
+//  _mcp ->digitalWrite(_mcp ->eGPB6 , (index == 6));
   #endif
   SPI.endTransaction();  // 结束 SPI 事务
 }

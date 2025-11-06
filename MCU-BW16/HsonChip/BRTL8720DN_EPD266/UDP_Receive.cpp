@@ -410,6 +410,7 @@ void HandleUdpCommand()
               mySerial.print(", port :");
               mySerial.println(8080);
               Get_Checksum_UDP();
+              epd.free_framebuffer();
               int ret = http_update_ota(serverIP_char_array, 8080, RESOURCE);
               printf("[%s] Update task exit\n\r", __FUNCTION__);
               if(!ret)

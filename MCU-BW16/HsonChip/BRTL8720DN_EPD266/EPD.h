@@ -63,7 +63,7 @@ class EPD
   void Sleep();
   void Wakeup();
   unsigned char Color_get(unsigned char color);
-  
+  void free_framebuffer();
   private: 
   MyTimer MyTimer_SleepWaitTime;
   void SpiDelay(unsigned char xrate);

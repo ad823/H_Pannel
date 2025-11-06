@@ -1,4 +1,4 @@
-#define VERSION "Ver 1.6.010"
+#define VERSION "Ver 1.6.020"
 #define RESOURCE "OTA_All.bin"  
 
 #define SPI_MOSI_PIN PA12
@@ -6,9 +6,9 @@
 #define NUM_OF_LEDS NUM_WS2812B_CRGB
 #define SYSTEM_LED_PIN PA30
 
-#define FADC
-//#define DrawerMCP23008
-//#define B_Drawer
+//#define FADC
+#define DrawerMCP23008
+#define B_Drawer
 //#define DrawerHandSensor
 
 

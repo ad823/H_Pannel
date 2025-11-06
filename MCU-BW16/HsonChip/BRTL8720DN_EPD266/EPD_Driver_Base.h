@@ -67,6 +67,7 @@ public:
     void SendCommand(unsigned char command);
     void SendData(unsigned char data);
     void HardwareReset();
+    void free_framebuffer();
     virtual void WaitUntilIdle();
     virtual void SPI_Begin();
     void SPI_End();

@@ -29,6 +29,12 @@ void EPD_Driver_Base::Init(SemaphoreHandle_t mutex)
 
    
 }
+void EPD_Driver_Base::free_framebuffer()
+{
+    free(framebuffer);
+    framebuffer = nullptr;
+    mySerial->println("free_framebuffer...");
+}
 void EPD_Driver_Base::Run()
 {
 

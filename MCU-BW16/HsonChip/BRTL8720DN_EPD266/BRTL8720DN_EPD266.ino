@@ -123,9 +123,11 @@ void loop()
       #elif defined(OLCD_114)
       wiFiConfig.Set_Localport(29008);
       wiFiConfig.Set_Serverport(30008);
-      #elif defined(RowLED_Device)
+      #elif defined(RowLED_Device)'
+      wiFiConfig.Set_Localport(30000);
       wiFiConfig.Set_Serverport(30001);
       #else
+      wiFiConfig.Set_Localport(29000);
       wiFiConfig.Set_Serverport(30000);
       #endif
       
