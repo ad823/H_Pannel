@@ -42,6 +42,7 @@ void setup()
     MyTimer_OLCD_144_Init.StartTickTime(5000);          
     MyTimer_CheckWIFI.StartTickTime(180000);   
     MyTimer_IO_WR.StartTickTime(1000);
+    MyTimer_BoardInitDelay.StartTickTime(1000);
     // 初始化互斥鎖
     xSpiMutex = xSemaphoreCreateMutex();
 
@@ -112,8 +113,10 @@ void loop()
       #elif defined(OLCD_114)     
       oLCD114.mySerial = &mySerial;     
       #endif
+      
       wiFiConfig.Init(VERSION);
       delay(200);
+      mySerial.print("IO_Init... \n"); 
       IO_Init();
       delay(200);
 
@@ -123,7 +126,7 @@ void loop()
       #elif defined(OLCD_114)
       wiFiConfig.Set_Localport(29008);
       wiFiConfig.Set_Serverport(30008);
-      #elif defined(RowLED_Device)'
+      #elif defined(RowLED_Device)
       wiFiConfig.Set_Localport(30000);
       wiFiConfig.Set_Serverport(30001);
       #else
@@ -132,8 +135,10 @@ void loop()
       #endif
       
       #ifdef DHTSensor
+      mySerial.print("DHTSensor begin... \n"); 
       dht.begin();
       #endif
+      
       Localport = wiFiConfig.Get_Localport();
       Serverport = wiFiConfig.Get_Serverport();
       ServerIp = wiFiConfig.Get_Server_IPAdressClass();
@@ -143,17 +148,16 @@ void loop()
       SPI.begin(); //SCLK, MISO, MOSI, SS
       delay(200);
       myWS2812.Init(NUM_WS2812B_CRGB , xSpiMutex);
-      
-//      if(Device == "EPD")
-//      {
-//        mySerial.println("EPD device init ...");
-//        epd.Init(xSpiMutex); 
-//        delay(200);
-//      }
-//     
+         
+      mySerial.print("Core0Task1 xTaskCreate... \n"); 
       xTaskCreate(Core0Task1,"Core0Task1", 1024,NULL,1,&Core0Task1Handle); 
+      mySerial.print("Core0Task2 xTaskCreate... \n"); 
       xTaskCreate(Core0Task2,"Core0Task2", 1024,NULL,1,&Core0Task2Handle);
+      mySerial.print("Core0Task3 xTaskCreate... \n"); 
       xTaskCreate(Core0Task3,"Core0Task3", 1024,NULL,1,&Core0Task3Handle);
+
+      MyTimer_BoardInitDelay.TickStop();
+      MyTimer_BoardInitDelay.StartTickTime(1000);
       flag_boradInit = true;
       mySerial.print("borad init done... \n");  
    }
@@ -242,16 +246,21 @@ void Core0Task3( void * pvParameters )
 {
     for(;;)
     {      
+        if(flag_boradInit && MyTimer_BoardInitDelay.IsTimeOut())
+        {
+            serialEvent();
+            #ifdef EPD_Device
+            epd.Init(xSpiMutex); 
+            #elif defined(OLCD_114)            
+            oLCD114.Lcd_Init();            
+            #endif
+        }
         if( WiFi.status() == WL_CONNECTED )
         {
               sub_UDP_Send();  
               if(MyTimer_WIFIConected.IsTimeOut())
               {
-                #ifdef EPD_Device
-                epd.Init(xSpiMutex); 
-                #elif defined(OLCD_114)            
-                oLCD114.Lcd_Init();            
-                #endif
+                
                 HandleUdpCommand(); 
                 #ifdef DrawerHandSensor
                 if(MyTimer_IO_WR.IsTimeOut())
@@ -312,7 +321,7 @@ void Core0Task2( void * pvParameters )
        
        if(flag_boradInit)
        {        
-          serialEvent();                         
+                                   
           
           #ifdef DHTSensor
           dht_h = dht.readHumidity();

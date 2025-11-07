@@ -117,6 +117,7 @@ extern MyTimer MyTimer_CheckWS2812;
 extern MyTimer MyTimer_CheckWIFI;
 extern MyTimer MyTimer_WIFIConected;
 extern MyTimer MyTimer_IO_WR;
+extern MyTimer MyTimer_BoardInitDelay;
 
 extern bool flag_boradInit;
 extern bool flag_OLCD_144_boradInit;
