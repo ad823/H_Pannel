@@ -257,6 +257,7 @@ void Core0Task3( void * pvParameters )
         }
         if( WiFi.status() == WL_CONNECTED )
         {
+              epd.melloc_init();
               sub_UDP_Send();  
               if(MyTimer_WIFIConected.IsTimeOut())
               {

@@ -42,7 +42,7 @@ public:
     int PIN_RST = PA25;
     int PIN_DC = PA26;
     #endif
-    
+    bool flag_melloc_init = false;
     long buffer_max = 0;
     int sleep_check_time = 90000;
     void Init(SemaphoreHandle_t mutex);

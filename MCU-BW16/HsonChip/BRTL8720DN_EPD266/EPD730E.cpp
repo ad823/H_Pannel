@@ -4,12 +4,14 @@
 
 void EPD730E::melloc_init() 
 {
+    if(flag_melloc_init)return;
     mySerial->print("epd malloc : ");
     mySerial->print(96000);
     mySerial->println(" bytes");
 
     framebuffer = (byte*) malloc(96000);
     buffer_max = 96000;
+    flag_melloc_init = true;
 }
 
 void EPD730E::Clear() 

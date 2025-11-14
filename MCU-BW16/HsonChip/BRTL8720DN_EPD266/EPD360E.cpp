@@ -4,12 +4,14 @@
 bool flag_init = false;
 void EPD360E::melloc_init() 
 {
+    if(flag_melloc_init)return;
     mySerial->print("epd malloc : ");
     mySerial->print(60000);
     mySerial->println(" bytes");
 
     framebuffer = (byte*) malloc(60000);
     buffer_max = 60000;
+    flag_melloc_init = true;
 }
 void EPD360E::Show7Block()
 {

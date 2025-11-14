@@ -4,12 +4,14 @@
 
 void EPD420G::melloc_init() 
 {
+    if(flag_melloc_init)return;
     mySerial->print("epd malloc : ");
     mySerial->print(30000);
     mySerial->println(" bytes");
 
     framebuffer = (byte*) malloc(30000);
     buffer_max = 30000;
+    flag_melloc_init = true;
 }
 
 void EPD420G::Clear() 

@@ -27,15 +27,21 @@ void EPD::Init(SemaphoreHandle_t mutex)
     
     
     delay(20);
+    
+    this -> Wakeup();
+    flag_epd_1_init = true;
+    
+}
+void EPD::melloc_init() 
+{
+    if(flag_melloc_init)return;
     mySerial->print("epd malloc : ");
     mySerial->print(EPD_WIDTH * EPD_HEIGHT);
     mySerial->println(" bytes");
 
     framebuffer = (byte*) malloc(EPD_WIDTH * EPD_HEIGHT);
     buffer_max = EPD_WIDTH * EPD_HEIGHT;
-    this -> Wakeup();
-    flag_epd_1_init = true;
-    
+    flag_melloc_init = true;
 }
 void EPD::free_framebuffer()
 {

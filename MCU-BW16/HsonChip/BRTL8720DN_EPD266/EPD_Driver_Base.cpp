@@ -23,7 +23,7 @@ void EPD_Driver_Base::Init(SemaphoreHandle_t mutex)
     
     
     delay(20);
-    melloc_init();
+//    melloc_init();
     this -> Wakeup();  
     flag_epd_init = true;
 

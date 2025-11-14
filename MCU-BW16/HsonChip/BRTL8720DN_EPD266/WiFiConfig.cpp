@@ -189,7 +189,23 @@ void WiFiConfig::WIFI_Connenct()
 {
     WiFi.disablePowerSave();
     
-    
+    wifi_on(RTW_MODE_STA);
+    uint8_t chnpln;     // Default channel plan 0x7F
+    uint8_t chntgt = 0x76; 
+    if (wifi_get_channel_plan(&chnpln) == RTW_SUCCESS) 
+    {
+      printf("WiFi Channel Plan: 0x%x\r\n", chnpln);
+      if (chnpln != chntgt) {
+        if (wifi_set_channel_plan(chntgt) == RTW_SUCCESS) {
+          wifi_set_country(chntgt);
+          printf("WiFi Set Channel Plan OK\r\n");
+          wifi_get_channel_plan(&chnpln);
+          printf("WiFi Channel Plan: 0x%x\r\n", chnpln);
+        } else {
+          printf("WiFi Set Channel Plan Failed\r\n");
+        }
+      }
+    }
     byte* ipAdress_ptr = this -> Get_IPAdress();
     byte* gateway_ptr = this -> Get_Gateway();
     byte* subnet_ptr = this -> Get_Subnet();

@@ -44,7 +44,7 @@ class EPD
   #endif
 
   bool PIN_DC_buf = false;
-  
+  bool flag_melloc_init = false;
   long buffer_max = 0;
   void Init(SemaphoreHandle_t mutex);
   void Clear();
@@ -53,6 +53,7 @@ class EPD
   void SPI_Begin();
   void SPI_End();
   void SendSPI(char* framebuffer , int size, int offset);
+  void melloc_init();
   void DrawFrame_BW();
   void DrawFrame_RW();
   void RefreshCanvas();
