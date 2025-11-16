@@ -1,4 +1,4 @@
-#define VERSION "Ver 1.6.025(X)"
+#define VERSION "Ver 1.6.027"
 #define RESOURCE "OTA_All.bin"  
 
 #define SPI_MOSI_PIN PA12
@@ -7,9 +7,9 @@
 #define SYSTEM_LED_PIN PA30
 
 //#define FADC
-#define DrawerMCP23008
+//#define DrawerMCP23008
 //#define B_Drawer
-//#define DrawerHandSensor
+#define DrawerHandSensor
 //#define MCP23008
 
 #if defined(FADC)
@@ -53,7 +53,7 @@
 //#define EPD266ˋ
 //#define EPD290
 //#define EPD420
-#define EPD4IN20G
+//#define EPD4IN20G
 //#define EPD420_D
 //#define EPD583
 //#define EPD579G

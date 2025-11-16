@@ -36,7 +36,7 @@ extern int BackColor;
 void onPacketCallBack();
 void Clear_char_buf();
 void Get_Checksum_UDP();
-void Connect_UDP(int localport);
+bool Connect_UDP(int localport);
 void Send_Bytes(uint8_t *value ,int Size ,IPAddress RemoteIP ,int RemotePort);
 void Send_String(String str ,int remoteUdpPort);
 void Send_StringTo(String str ,IPAddress RemoteIP ,int RemotePort);

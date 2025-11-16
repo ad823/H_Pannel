@@ -175,7 +175,8 @@ void loop()
          wiFiConfig.WIFI_Connenct();
          if(WiFi.status() == WL_CONNECTED) 
          {
-           Connect_UDP(Localport);
+           delay(500);
+           Connect_UDP(wiFiConfig.Get_Localport());
          }                
       }  
       if(WiFi.status() == WL_CONNECTED)

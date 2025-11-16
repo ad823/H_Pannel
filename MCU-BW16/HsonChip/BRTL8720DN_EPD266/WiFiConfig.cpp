@@ -228,7 +228,7 @@ void WiFiConfig::WIFI_Connenct()
     WiFi.begin(_ssid, _password);
     if(!this -> flag_Init)printf("connecting.");
     int retry = 0;
-    while (WiFi.status() != WL_CONNECTED) //等待网络连接成功
+    while (WiFi.status() != WL_CONNECTED) 
     {
       if( retry >= 5)
       {

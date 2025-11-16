@@ -711,10 +711,28 @@ void Get_Checksum_UDP()
    Send_StringTo(str0 ,remoteIP, remotePort);
  
 }
-void Connect_UDP(int localport)
+bool upd_connected = false;
+bool Connect_UDP(int localport)
 {
-    printf("Connect UDP : %d \n" , localport);
-    Udp.begin(localport);
+    if(upd_connected) return true;
+
+    for(int i=0;i<5;i++)
+    {
+        printf("[UDP] Try bind port %d (attempt %d)\n", localport, i+1);
+
+        if(Udp.begin(localport) == 1)
+        {
+            upd_connected = true;
+            printf("[UDP] Bind success\n");
+            return true;
+        }
+
+        printf("[UDP] Bind failed, retry...\n");
+        delay(200); // 非常重要
+    }
+
+    printf("[UDP] Bind failed after retries\n");
+    return false;
 }
 void Send_Bytes(uint8_t *value ,int Size ,IPAddress RemoteIP ,int RemotePort)
 { 

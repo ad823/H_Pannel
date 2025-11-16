@@ -7832,7 +7832,18 @@ namespace H_Pannel_lib
                     g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     g.CompositingQuality = CompositingQuality.HighQuality;
                     g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
-                    storage.BackColor = storage.IsWarning ? Color.Red : Color.White;
+                    if (storage.DeviceType == DeviceType.EPD420G)
+                    {
+                        if(storage.BackColor != Color.Yellow)
+                        {
+                            storage.BackColor = storage.IsWarning ? Color.Red : Color.White;
+                        }
+
+                    }
+                    else
+                    {
+                        storage.BackColor = storage.IsWarning ? Color.Red : Color.White;
+                    }
 
                     Rectangle rect = new Rectangle(0, 0, Pannel_Width, Pannel_Height);
                     int Line_Height = (Pannel_Height / 3) * 2;

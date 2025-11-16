@@ -161,6 +161,10 @@ namespace H_Pannel_lib
             {
                 return Communication.Storage_GetBitmap(storage, scale);
             }
+            if (storage.DeviceType == DeviceType.EPD420G || storage.DeviceType == DeviceType.EPD420G_lock)
+            {
+                return Communication.Storage_GetBitmap(storage, scale);
+            }
             if (storage.DeviceType == DeviceType.EPD360E || storage.DeviceType == DeviceType.EPD360E_lock)
             {
                 return Communication.Storage_GetBitmap(storage, scale);
