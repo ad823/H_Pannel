@@ -7834,7 +7834,7 @@ namespace H_Pannel_lib
                     g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
                     if (storage.DeviceType == DeviceType.EPD420G)
                     {
-                        if(storage.BackColor != Color.Yellow)
+                        if (storage.BackColor.ToArgb() != Color.Yellow.ToArgb())
                         {
                             storage.BackColor = storage.IsWarning ? Color.Red : Color.White;
                         }
