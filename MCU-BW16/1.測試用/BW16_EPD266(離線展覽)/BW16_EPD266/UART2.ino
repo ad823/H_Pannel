@@ -11,6 +11,10 @@ bool LASER_ON = false;
 bool LASER_ON_buf = false;
 bool flag_UART1_Init = false;
 int LASER_ON_num = 0;
+
+#define LASER_D_MIN 30
+#define LASER_D_MAX 60
+
 void serial2Event()
 {
   if(!flag_UART1_Init)

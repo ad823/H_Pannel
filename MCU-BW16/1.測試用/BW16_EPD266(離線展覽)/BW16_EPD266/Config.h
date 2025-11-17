@@ -23,8 +23,7 @@
 #endif
 
 
-#define LASER_D_MIN 20
-#define LASER_D_MAX 115
+
 
 
 #ifdef EPD266
