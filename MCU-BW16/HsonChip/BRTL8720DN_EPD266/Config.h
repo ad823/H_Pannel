@@ -6,10 +6,11 @@
 #define NUM_OF_LEDS NUM_WS2812B_CRGB
 #define SYSTEM_LED_PIN PA30
 
-//#define FADC
-#define DrawerMCP23008
-#define B_Drawer
-//#define DrawerHandSensor
+#define PowerReset
+//#define FADC 
+//#define DrawerMCP23008 //MCP23008刷紙板本(包含IO)
+//#define B_Drawer //大抽屜模式
+//#define DrawerHandSensor //抽屜手勢感測
 //#define MCP23008
 
 #if defined(FADC)
@@ -51,7 +52,7 @@
 //#define RowLED_Device
 //#define EPD213
 //#define EPD266ˋ
-//#define EPD290
+#define EPD290
 //#define EPD420
 //#define EPD4IN20G
 //#define EPD420_D
@@ -60,7 +61,7 @@
 //#define EPD579B
 //#define DEPG0579RYT158FxX
 //#define EPD213_BRW_V0
-#define EPD7IN3E
+//#define EPD7IN3E
 //#define EPD3IN6E
 
 //#define OLCD_114
