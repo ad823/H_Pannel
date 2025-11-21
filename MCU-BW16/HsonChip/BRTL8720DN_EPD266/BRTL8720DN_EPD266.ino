@@ -43,6 +43,9 @@ void setup()
     MyTimer_CheckWIFI.StartTickTime(180000);   
     MyTimer_IO_WR.StartTickTime(1000);
     MyTimer_BoardInitDelay.StartTickTime(1000);
+    #if defined(PowerReset)
+    MyTimer_PowerReset.StartTickTime(1000);
+    #endif
     // 初始化互斥鎖
     xSpiMutex = xSemaphoreCreateMutex();
 
@@ -158,9 +161,26 @@ void loop()
 
       MyTimer_BoardInitDelay.TickStop();
       MyTimer_BoardInitDelay.StartTickTime(1000);
+
+      #if defined(PowerReset)
+      MyTimer_PowerReset.TickStop();
+      MyTimer_PowerReset.StartTickTime(2000);
+      #endif
+      
+      
       flag_boradInit = true;
       mySerial.print("borad init done... \n");  
    }
+   #if defined(PowerReset)
+   if(flag_boradInit)
+   {
+     if(flag_PowerReset == false && MyTimer_PowerReset.IsTimeOut())
+     {
+         SetOutputPINTrigger(1 , true);
+         flag_PowerReset = true;
+     }
+   }
+   #endif
    if(WiFi.status() != WL_CONNECTED)
    {
       MyTimer_WIFIConected.TickStop();

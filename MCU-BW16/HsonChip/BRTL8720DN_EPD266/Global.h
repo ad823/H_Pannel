@@ -119,6 +119,9 @@ extern MyTimer MyTimer_WIFIConected;
 extern MyTimer MyTimer_IO_WR;
 extern MyTimer MyTimer_BoardInitDelay;
 
+extern MyTimer MyTimer_PowerReset;
+extern bool flag_PowerReset;
+
 extern bool flag_boradInit;
 extern bool flag_OLCD_144_boradInit;
 

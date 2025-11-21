@@ -89,6 +89,11 @@ MyTimer MyTimer_WIFIConected;
 MyTimer MyTimer_IO_WR;
 MyTimer MyTimer_BoardInitDelay;
 
+#if defined(PowerReset)
+MyTimer MyTimer_PowerReset;
+bool flag_PowerReset = false;
+#endif
+
 bool flag_boradInit = false;
 bool flag_OLCD_144_boradInit = false;
 

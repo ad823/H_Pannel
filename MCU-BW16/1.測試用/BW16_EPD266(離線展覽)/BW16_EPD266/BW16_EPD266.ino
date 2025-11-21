@@ -288,7 +288,20 @@ void loop()
           onPacketCallBack();
           #endif
       } 
-
+      if(flag_WS2812B_breathing_ON_OFF)
+      {               
+         WS2812B_breathing_ON_OFF();
+      }
+      else if(flag_WS2812B_breathing_Ex_ON_OFF)
+      {
+         WS2812B_breathing_Ex_ON_OFF();
+      }
+      else if(flag_WS2812B_Refresh)
+      {
+           myWS2812.Show();
+           flag_JsonSend = true;
+           flag_WS2812B_Refresh = false;
+      }
       
       MyTimer_CheckWS2812.StartTickTime(30000);
 
@@ -320,20 +333,7 @@ void Core0Task1( void * pvParameters )
           }
           
           epd.Sleep_Check();
-          if(flag_WS2812B_breathing_ON_OFF)
-          {               
-             WS2812B_breathing_ON_OFF();
-          }
-          else if(flag_WS2812B_breathing_Ex_ON_OFF)
-          {
-             WS2812B_breathing_Ex_ON_OFF();
-          }
-          else if(flag_WS2812B_Refresh)
-          {
-               myWS2812.Show();
-               flag_JsonSend = true;
-               flag_WS2812B_Refresh = false;
-          }
+       
             
        }
           
