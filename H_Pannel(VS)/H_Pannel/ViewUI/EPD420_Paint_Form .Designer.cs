@@ -339,7 +339,7 @@ namespace H_Pannel_lib
             this.rJ_Pannel_設計.IsSelected = false;
             this.rJ_Pannel_設計.Location = new System.Drawing.Point(4, 547);
             this.rJ_Pannel_設計.Name = "rJ_Pannel_設計";
-            this.rJ_Pannel_設計.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
+            this.rJ_Pannel_設計.Padding = new System.Windows.Forms.Padding(20);
             this.rJ_Pannel_設計.ShadowColor = System.Drawing.Color.DimGray;
             this.rJ_Pannel_設計.ShadowSize = 3;
             this.rJ_Pannel_設計.Size = new System.Drawing.Size(1237, 469);
@@ -623,7 +623,7 @@ namespace H_Pannel_lib
             this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel7.Location = new System.Drawing.Point(20, 375);
             this.panel7.Name = "panel7";
-            this.panel7.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.panel7.Padding = new System.Windows.Forms.Padding(5);
             this.panel7.Size = new System.Drawing.Size(1197, 74);
             this.panel7.TabIndex = 7;
             // 

@@ -163,6 +163,7 @@ namespace H_Pannel_lib
         {
             InitializeComponent();
             currentStorage = _storage;
+            this.Text = _storage.DeviceType.GetEnumName();
 
             this.pictureBox_paint.Paint += PictureBox_paint_Paint;
             this.pictureBox_paint.MouseDown += PictureBox_paint_MouseDown;

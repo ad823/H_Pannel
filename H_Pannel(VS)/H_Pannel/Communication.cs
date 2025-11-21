@@ -7838,7 +7838,6 @@ namespace H_Pannel_lib
                         {
                             storage.BackColor = storage.IsWarning ? Color.Red : Color.White;
                         }
-
                     }
                     else
                     {
@@ -7877,7 +7876,9 @@ namespace H_Pannel_lib
 
                     float posy = 0;
 
-                    if ((storage.DRUGKIND.StringIsEmpty() == false && storage.DRUGKIND != "N") || storage.IsAnesthetic || storage.IsShapeSimilar || storage.IsSoundSimilar)
+                    if ((storage.DRUGKIND.StringIsEmpty() == false && storage.DRUGKIND != "N") || storage.IsAnesthetic || storage.IsShapeSimilar || storage.IsSoundSimilar
+                         || (storage.Picture1_Name.StringIsEmpty() == false && storage.Picture1_Name != "無" && storage.Picture1_Name != "None") || (storage.Picture2_Name.StringIsEmpty() == false && storage.Picture2_Name != "無" && storage.Picture1_Name != "None"))
+
                     {
                         int temp_x = 0;
                         g.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, Pannel_Width, 30));
@@ -7899,6 +7900,16 @@ namespace H_Pannel_lib
                         if (storage.IsSoundSimilar)
                         {
                             DrawSquareText(g, new Point(temp_x, 0), 30, "音", new Font("Arial", 14), Color.Black, Color.Black, Color.White);
+                            temp_x += 40;
+                        }
+                        if (storage.Picture1_Name.StringIsEmpty() == false && storage.Picture1_Name != "無")
+                        {
+                            DrawPicture(g, storage.Picture1_Name, new Rectangle(temp_x, 0, 30, 30));
+                            temp_x += 40;
+                        }
+                        if (storage.Picture2_Name.StringIsEmpty() == false && storage.Picture2_Name != "無")
+                        {
+                            DrawPicture(g, storage.Picture2_Name, new Rectangle(temp_x, 0, 30, 30));
                             temp_x += 40;
                         }
 
@@ -8066,7 +8077,8 @@ namespace H_Pannel_lib
                         _box.SetValue(Device.ValueName.庫存, Device.ValueType.BackColor, backgroundColor);
 
 
-                        if ((_box.DRUGKIND.StringIsEmpty() == false && _box.DRUGKIND != "N") || _box.IsAnesthetic || _box.IsShapeSimilar || _box.IsSoundSimilar)
+                        if ((_box.DRUGKIND.StringIsEmpty() == false && _box.DRUGKIND != "N") || _box.IsAnesthetic || _box.IsShapeSimilar || _box.IsSoundSimilar
+                            || (_box.Picture1_Name.StringIsEmpty() == false && _box.Picture1_Name != "無" && _box.Picture1_Name != "None") || (_box.Picture2_Name.StringIsEmpty() == false && _box.Picture2_Name != "無" && _box.Picture1_Name != "None"))
                         {
                             int temp_height = (int)g.MeasureString(_box.Name, _box.Name_font, new Size(10000, 10000), StringFormat.GenericDefault).Height;
                             int temp_x = 2;
@@ -8091,6 +8103,16 @@ namespace H_Pannel_lib
                             {
                                 DrawSquareText(g, new Point(rect.X + temp_x, rect.Y + (int)posy), (int)temp_height, "音", new Font("Arial", _box.Name_font.Size), Color.Black, Color.Black, Color.White);
                                 temp_x += ((int)temp_height + 5);
+                            }
+                            if (_box.Picture1_Name.StringIsEmpty() == false && _box.Picture1_Name != "無")
+                            {
+                                DrawPicture(g, _box.Picture1_Name, new Rectangle(rect.X + temp_x, rect.Y + (int)posy, temp_height, temp_height));
+                                temp_x += (temp_height + 5);
+                            }
+                            if (_box.Picture2_Name.StringIsEmpty() == false && _box.Picture2_Name != "無")
+                            {
+                                DrawPicture(g, _box.Picture2_Name, new Rectangle(rect.X + temp_x, rect.Y + (int)posy, temp_height, temp_height));
+                                temp_x += (temp_height + 5);
                             }
                             posy += (int)temp_height;
                         }
@@ -8316,33 +8338,53 @@ namespace H_Pannel_lib
 
 
 
-                        if ((_box.DRUGKIND.StringIsEmpty() == false && _box.DRUGKIND != "N") || _box.IsAnesthetic || _box.IsShapeSimilar || _box.IsSoundSimilar)
+                        if ((_box.DRUGKIND.StringIsEmpty() == false && _box.DRUGKIND != "N") || _box.IsAnesthetic || _box.IsShapeSimilar || _box.IsSoundSimilar
+                             || (_box.Picture1_Name.StringIsEmpty() == false && _box.Picture1_Name != "無" && _box.Picture1_Name != "None") || (_box.Picture2_Name.StringIsEmpty() == false && _box.Picture2_Name != "無" && _box.Picture1_Name != "None"))
                         {
                             int temp_height = (int)g.MeasureString(_box.Name, _box.Name_font, new Size(10000, 10000), StringFormat.GenericDefault).Height;
                             int temp_x = 2;
                             posy += 2;
-                            g.FillRectangle(new SolidBrush(Color.White), new Rectangle(rect.X + temp_x, rect.Y + (int)posy, rect.Width, (int)temp_height));
-                            if ((_box.DRUGKIND.StringIsEmpty() == false && _box.DRUGKIND != "N"))
+
+                            // 背景白底
+                            g.FillRectangle(Brushes.White, new Rectangle(rect.X + temp_x, rect.Y + (int)posy, rect.Width, temp_height));
+
+                            Font labelFont = new Font("Arial", _box.Name_font.Size);
+
+                            // 管制藥
+                            if (_box.DRUGKIND.StringIsEmpty() == false && _box.DRUGKIND != "N")
                             {
-                                DrawHexagonText(g, new Point(rect.X + temp_x, rect.Y + (int)posy), (int)temp_height, _box.DRUGKIND, new Font("Arial", _box.Name_font.Size), Color.White, Color.Black, Color.Red);
-                                temp_x += ((int)temp_height + 5);
+                                DrawDrugKindHexagon(g, new Point(rect.X + temp_x, rect.Y + (int)posy), temp_height, _box.DRUGKIND, labelFont);
+                                temp_x += (temp_height + 5);
                             }
+                            // 麻醉藥
                             if (_box.IsAnesthetic)
                             {
-                                DrawCircleText(g, new Point(rect.X + temp_x, rect.Y + (int)posy), (int)temp_height, "麻", new Font("Arial", _box.Name_font.Size), Color.White, Color.Black, Color.Red);
-                                temp_x += ((int)temp_height + 5);
+                                DrawAnestheticCircle(g, new Point(rect.X + temp_x, rect.Y + (int)posy), temp_height, labelFont);
+                                temp_x += (temp_height + 5);
                             }
+                            // 形似藥
                             if (_box.IsShapeSimilar)
                             {
-                                DrawSquareText(g, new Point(rect.X + temp_x, rect.Y + (int)posy), (int)temp_height, "形", new Font("Arial", _box.Name_font.Size), Color.Black, Color.Black, Color.White);
-                                temp_x += ((int)temp_height + 5);
+                                DrawShapeSimilarSquare(g, new Point(rect.X + temp_x, rect.Y + (int)posy), temp_height, labelFont);
+                                temp_x += (temp_height + 5);
                             }
+                            // 音似藥
                             if (_box.IsSoundSimilar)
                             {
-                                DrawSquareText(g, new Point(rect.X + temp_x, rect.Y + (int)posy), (int)temp_height, "音", new Font("Arial", _box.Name_font.Size), Color.Black, Color.Black, Color.White);
-                                temp_x += ((int)temp_height + 5);
+                                DrawSoundSimilarSquare(g, new Point(rect.X + temp_x, rect.Y + (int)posy), temp_height, labelFont);
+                                temp_x += (temp_height + 5);
                             }
-                            posy += (int)temp_height;
+                            if (_box.Picture1_Name.StringIsEmpty() == false && _box.Picture1_Name != "無")
+                            {
+                                DrawPicture(g, _box.Picture1_Name, new Rectangle(rect.X + temp_x, rect.Y + (int)posy, temp_height, temp_height));
+                                temp_x += (temp_height + 5);
+                            }
+                            if (_box.Picture2_Name.StringIsEmpty() == false && _box.Picture2_Name != "無")
+                            {
+                                DrawPicture(g, _box.Picture2_Name, new Rectangle(rect.X + temp_x, rect.Y + (int)posy, temp_height, temp_height));
+                                temp_x += (temp_height + 5);
+                            }
+                            posy += temp_height;
                         }
 
                         SizeF size_Name = g.MeasureString(_box.Name, _box.Name_font, new Size(rect.Width, rect.Height), StringFormat.GenericDefault);
