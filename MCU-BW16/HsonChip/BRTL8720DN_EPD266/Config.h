@@ -1,4 +1,4 @@
-#define VERSION "Ver 1.6.028"
+#define VERSION "Ver 1.6.029"
 #define RESOURCE "OTA_All.bin"  
 
 #define SPI_MOSI_PIN PA12
