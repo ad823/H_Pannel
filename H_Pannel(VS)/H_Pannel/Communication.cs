@@ -534,6 +534,11 @@ namespace H_Pannel_lib
         }
         static public bool Set_WS2812B_breathing(UDP_Class uDP_Class, string IP, byte WS2812B_breathing_onAddVal, byte WS2812B_breathing_offSubVal, Color color)
         {
+            if (!Basic.Net.Ping(IP, 2, 150))
+            {
+                Console.WriteLine($"Set_WS2812_Buffer {DateTime.Now.ToDateTimeString()} : Ping Failed {IP} ");
+                return false;
+            }
             return Command_Set_WS2812B_breathing(uDP_Class, IP, WS2812B_breathing_onAddVal, WS2812B_breathing_offSubVal, color);
         }
 
@@ -868,42 +873,44 @@ namespace H_Pannel_lib
                 Console.WriteLine($"EPD_420G_DrawImage start {DateTime.Now.ToDateTimeString()} : Ping Failed {IP}");
                 return false;
             }
-            using (Bitmap _bmp = bmp.DeepClone())
+            using (Bitmap inputBmp = ScaleImage(bmp, 400, 300))
             {
-                MyTimer myTimer = new MyTimer();
-                myTimer.StartTickTime(50000);
-
-                //_bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
-
-                int frameDIV = 12;
-                bool flag_OK;
-                int width = _bmp.Width;
-                int height = _bmp.Height;
-                byte[] bytes = new byte[(width / 4) * height];
-
-          
-
-                H_Pannel_lib.Communication.BitmapToByte(_bmp, ref bytes, H_Pannel_lib.EPD_Type.EPD420G);
-                myTimer.StartTickTime(50000);
-                flag_OK = EPD_DrawFramebuffer(uDP_Class, IP, bytes, (width / 4) * height / frameDIV);
-                if(!flag_OK)
+                using (Bitmap _bmp = inputBmp)
                 {
-                    return false;
+                    MyTimer myTimer = new MyTimer();
+                    myTimer.StartTickTime(50000);
+
+                    //_bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+
+                    int frameDIV = 12;
+                    bool flag_OK;
+                    int width = _bmp.Width;
+                    int height = _bmp.Height;
+                    byte[] bytes = new byte[(width / 4) * height];
+
+
+
+                    H_Pannel_lib.Communication.BitmapToByte(_bmp, ref bytes, H_Pannel_lib.EPD_Type.EPD420G);
+                    myTimer.StartTickTime(50000);
+                    flag_OK = EPD_DrawFramebuffer(uDP_Class, IP, bytes, (width / 4) * height / frameDIV);
+                    if (!flag_OK)
+                    {
+                        return false;
+                    }
+                    flag_OK = EPD_DrawFrame_BW(uDP_Class, IP);
+                    if (!flag_OK)
+                    {
+                        return false;
+                    }
+                    flag_OK = EPD_RefreshCanvas(uDP_Class, IP);
+                    if (!flag_OK)
+                    {
+                        return false;
+                    }
+                    if (ConsoleWrite) Console.WriteLine($"{IP}:{uDP_Class.Port} : EPD 420G DrawImage {string.Format(flag_OK ? "sucess" : "failed")}!   Time : {myTimer.GetTickTime().ToString("0.000")} ms");
+                    return flag_OK;
                 }
-                flag_OK = EPD_DrawFrame_BW(uDP_Class, IP);
-                if (!flag_OK)
-                {
-                    return false;
-                }
-                flag_OK = EPD_RefreshCanvas(uDP_Class, IP);
-                if (!flag_OK)
-                {
-                    return false;
-                }
-                if (ConsoleWrite) Console.WriteLine($"{IP}:{uDP_Class.Port} : EPD 420G DrawImage {string.Format(flag_OK ? "sucess" : "failed")}!   Time : {myTimer.GetTickTime().ToString("0.000")} ms");
-                return flag_OK;
             }
-
 
         }
 
@@ -8014,7 +8021,7 @@ namespace H_Pannel_lib
                             bitmap_barcode.Dispose();
                         }
                     }
-                    bitmap_buf = Communication.ScaleImage(bitmap, (int)(storage.PanelSize.Width * scale), (int)(storage.PanelSize.Height * scale));
+                     bitmap_buf = Communication.ScaleImage(bitmap, (int)(storage.PanelSize.Width * scale), (int)(storage.PanelSize.Height * scale));
                 
 
                 }
@@ -8900,21 +8907,27 @@ namespace H_Pannel_lib
             switch (ePD_Type)
             {
                 case EPD_Type.EPD730F:
+                    Console.WriteLine("[BitmapToByte] ConvertToEPD730F..");
                     ConvertToEPD730F(SrcPtr, width, height, stride, list_bytes);
                     break;
                 case EPD_Type.EPD730E:
+                    Console.WriteLine("[BitmapToByte] ConvertToEPD730E..");
                     ConvertToEPD730E(SrcPtr, width, height, stride, list_bytes);
                     break;
                 case EPD_Type.EPD360E:
+                    Console.WriteLine("[BitmapToByte] ConvertToEPD360E..");
                     ConvertToEPD360E(SrcPtr, width, height, stride, list_bytes);
                     break;
                 case EPD_Type.EPD420G:
+                    Console.WriteLine("[BitmapToByte] ConvertToEPD420G..");
                     ConvertToEPD420G(SrcPtr, width, height, stride, list_bytes);
                     break;
                 case EPD_Type.EPD579G:
+                    Console.WriteLine("[BitmapToByte] ConvertToEPD579G..");
                     ConvertToEPD579G(SrcPtr, width, height, stride, list_bytes);
                     break;
                 case EPD_Type.EPD213_BRW_V0:
+                    Console.WriteLine("[BitmapToByte] ConvertToEPD213_BRW..");
                     ConvertToEPD213_BRW(SrcPtr, width, height, stride, list_bytes);
                     break;
             }
@@ -9325,6 +9338,37 @@ namespace H_Pannel_lib
             return bmp;
         }
 
+        private static readonly Color[] Palette_4Colors = new Color[]
+        {
+                Color.Black,                             // index 0
+                Color.White,                             // index 1
+                Color.FromArgb(255, 243, 56),            // Yellow (index 2)
+                Color.FromArgb(191, 0, 0),               // Red (index 3)
+        };
+        private static byte GetNearestColorIndex_420G(int r, int g, int b)
+        {
+            int minDiff = int.MaxValue;
+            int bestIndex = 0;
+
+            for (int i = 0; i < Palette_4Colors.Length; i++)
+            {
+                Color c = Palette_4Colors[i];
+                int dr = r - c.R;
+                int dg = g - c.G;
+                int db = b - c.B;
+                int diff = dr * dr + dg * dg + db * db;
+
+                if (diff < minDiff)
+                {
+                    minDiff = diff;
+
+                    // 模仿 C++ 的跳號處理
+                    bestIndex = (i > 3) ? (byte)(i + 1) : (byte)i;
+                }
+            }
+
+            return (byte)bestIndex;
+        }
         private static unsafe void ConvertToEPD420G(byte* SrcPtr, int width, int height, int ByteOfWidth, List<byte> list_bytes)
         {
             int SrcWidthxY, SrcIndex;
@@ -9342,7 +9386,7 @@ namespace H_Pannel_lib
                         B[m] = SrcPtr[SrcIndex + m * 3];
                         G[m] = SrcPtr[SrcIndex + m * 3 + 1];
                         R[m] = SrcPtr[SrcIndex + m * 3 + 2];
-                        temp_bytes[m] = GetEPD420GColorByte(R[m], G[m], B[m]);
+                        temp_bytes[m] = GetNearestColorIndex_420G(R[m], G[m], B[m]);
                     }
                     temp = (byte)((temp_bytes[0] << 6) | (temp_bytes[1] << 4) | (temp_bytes[2] << 2) | temp_bytes[3]);
                     list_bytes.Add(temp);
@@ -9351,9 +9395,9 @@ namespace H_Pannel_lib
         }
         private static byte GetEPD420GColorByte(int r, int g, int b)
         {
+            if (IsEqualColor(Color.Red, r, g, b)) return (byte)EPDColors.EPD_4IN20G_RED;
             if (IsEqualColor(Color.White, r, g, b)) return (byte)EPDColors.EPD_4IN20G_WHITE;
             if (IsEqualColor(Color.Black, r, g, b)) return (byte)EPDColors.EPD_4IN20G_BLACK;
-            if (IsEqualColor(Color.Red, r, g, b)) return (byte)EPDColors.EPD_4IN20G_RED;
             if (IsEqualColor(Color.Yellow, r, g, b)) return (byte)EPDColors.EPD_4IN20G_YELLOW;
             return 0;
         }
@@ -9901,27 +9945,27 @@ namespace H_Pannel_lib
                     break;
 
                 case enum_PictureType.高警訊_1:
-                    bitmap = Resource1.Alarm_filled_red;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.Alarm_filled_red, DitheringProcessor.DitheringMode.None);
                     break;
 
                 case enum_PictureType.高警訊_2:
-                    bitmap = Resource1.高警訊_2;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_2, DitheringProcessor.DitheringMode.None);
                     break;
 
                 case enum_PictureType.高警訊_3:
-                    bitmap = Resource1.高警訊_3;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_3, DitheringProcessor.DitheringMode.None);
                     break;
 
                 case enum_PictureType.高警訊_4:
-                    bitmap = Resource1.高警訊_4;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_4, DitheringProcessor.DitheringMode.None);
                     break;
 
                 case enum_PictureType.LASA_1:
-                    bitmap = Resource1.LASA圖標;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LASA圖標, DitheringProcessor.DitheringMode.None);
                     break;
 
                 case enum_PictureType.LASA_2:
-                    bitmap = Resource1.LASA_2;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LASA_2, DitheringProcessor.DitheringMode.None);
                     break;
 
                 default:
@@ -10004,27 +10048,27 @@ namespace H_Pannel_lib
                     break;
 
                 case enum_PictureType.高警訊_1:
-                    bitmap = Resource1.Alarm_filled_red;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.Alarm_filled_red, DitheringProcessor.DitheringMode.None);
                     break;
 
                 case enum_PictureType.高警訊_2:
-                    bitmap = Resource1.高警訊_2;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_2, DitheringProcessor.DitheringMode.None);
                     break;
 
                 case enum_PictureType.高警訊_3:
-                    bitmap = Resource1.高警訊_3;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_3, DitheringProcessor.DitheringMode.None);
                     break;
 
                 case enum_PictureType.高警訊_4:
-                    bitmap = Resource1.高警訊_4;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_4, DitheringProcessor.DitheringMode.None);
                     break;
 
                 case enum_PictureType.LASA_1:
-                    bitmap = Resource1.LASA圖標;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LASA圖標, DitheringProcessor.DitheringMode.None);
                     break;
 
                 case enum_PictureType.LASA_2:
-                    bitmap = Resource1.LASA_2;
+                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LASA_2, DitheringProcessor.DitheringMode.None);
                     break;
 
                 default:

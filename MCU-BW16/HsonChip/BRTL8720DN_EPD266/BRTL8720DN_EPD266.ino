@@ -215,7 +215,14 @@ void loop()
       
    }    
 }
-
+bool checkInternet() 
+{
+    IPAddress gateway = WiFi.gatewayIP();
+    if (Ping.ping(gateway, 1)) {
+        return true;
+    }
+    return false;
+}
 void Core0Task1( void * pvParameters )
 {
     for(;;)

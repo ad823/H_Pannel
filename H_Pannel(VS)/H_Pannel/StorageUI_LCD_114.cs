@@ -79,19 +79,19 @@ namespace H_Pannel_lib
             {
                 if (point_name == "X0")
                 {
-                    return Get_Input(3);
+                    return Get_Input(0);
                 }
                 else if (point_name == "X1")
                 {
-                    return Get_Input(2);
+                    return Get_Input(1);
                 }
                 else if (point_name == "X2")
                 {
-                    return Get_Input(1);
+                    return Get_Input(2);
                 }
                 else if (point_name == "X3")
                 {
-                    return Get_Input(0);
+                    return Get_Input(3);
                 }
                 else if (point_name == "Y0")
                 {
