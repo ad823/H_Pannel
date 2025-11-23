@@ -181,7 +181,7 @@ void loop()
      }
    }
    #endif
-   if(WiFi.status() != WL_CONNECTED)
+   if(isConnectedInternal() == false)
    {
       MyTimer_WIFIConected.TickStop();
       MyTimer_WIFIConected.StartTickTime(5000);
@@ -190,16 +190,16 @@ void loop()
    {    
         
                 
-      if(WiFi.status() != WL_CONNECTED)
+      if(isConnectedInternal() == false)
       {
          wiFiConfig.WIFI_Connenct();
-         if(WiFi.status() == WL_CONNECTED) 
+         if(isConnectedInternal()) 
          {
            delay(500);
            Connect_UDP(wiFiConfig.Get_Localport());
          }                
       }  
-      if(WiFi.status() == WL_CONNECTED)
+      if(isConnectedInternal() == true)
       {     
            
            #ifdef MQTT
@@ -233,7 +233,7 @@ void Core0Task1( void * pvParameters )
           
                     
           MyLED_IS_Connented.Blink();
-          if( WiFi.status() == WL_CONNECTED  )
+          if( isConnectedInternal()  )
           {
               MyLED_IS_Connented.BlinkTime = 100;      
           }
@@ -380,6 +380,23 @@ void Core0Task2( void * pvParameters )
        delay(10);
     }
     
+}
+bool isConnectedInternal() 
+{
+    if (WiFi.status() != WL_CONNECTED)
+        return false;
+
+    int rssi = WiFi.RSSI();
+
+    // RTL8720 假連線情況：RSSI 回 0 或 -200
+    if (rssi == 0 || rssi == -200)
+        return false;
+
+    // 訊號太弱也視為不穩定
+    if (rssi < -85)
+        return false;
+
+    return true;
 }
 
 
