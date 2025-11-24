@@ -187,9 +187,7 @@ void loop()
       MyTimer_WIFIConected.StartTickTime(5000);
    }
    if(flag_boradInit)
-   {    
-        
-                
+   {                         
       if(isConnectedInternal() == false)
       {
          wiFiConfig.WIFI_Connenct();
@@ -206,7 +204,7 @@ void loop()
            wiFiConfig.MQTT_reconnect();        
            #else                   
            onPacketCallBack();
-           
+          
            #endif        
       } 
 
@@ -215,14 +213,7 @@ void loop()
       
    }    
 }
-bool checkInternet() 
-{
-    IPAddress gateway = WiFi.gatewayIP();
-    if (Ping.ping(gateway, 1)) {
-        return true;
-    }
-    return false;
-}
+
 void Core0Task1( void * pvParameters )
 {
     for(;;)

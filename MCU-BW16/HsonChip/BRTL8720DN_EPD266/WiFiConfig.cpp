@@ -185,73 +185,111 @@ void WiFiConfig::WIFI_Disconnenct()
 {
     WiFi.disconnect();
 }
+
+bool WIFI_Init_Done = false;
+
 void WiFiConfig::WIFI_Connenct()
 {
-    WiFi.disablePowerSave();
-    
-    wifi_on(RTW_MODE_STA);
-    uint8_t chnpln;     // Default channel plan 0x7F
-    uint8_t chntgt = 0x76; 
-    if (wifi_get_channel_plan(&chnpln) == RTW_SUCCESS) 
+    static bool firstInit = true;
+
+    mySerial->println("\n=== [WiFi 初始化開始] ===");
+    mySerial->print("[Free Heap] = ");
+    mySerial->println(xPortGetFreeHeapSize());
+
+    // ---------------------------------------------------------
+    // 第一次初始化 WiFi driver
+    // ---------------------------------------------------------
+    if (firstInit)
     {
-      printf("WiFi Channel Plan: 0x%x\r\n", chnpln);
-      if (chnpln != chntgt) {
-        if (wifi_set_channel_plan(chntgt) == RTW_SUCCESS) {
-          wifi_set_country(chntgt);
-          printf("WiFi Set Channel Plan OK\r\n");
-          wifi_get_channel_plan(&chnpln);
-          printf("WiFi Channel Plan: 0x%x\r\n", chnpln);
-        } else {
-          printf("WiFi Set Channel Plan Failed\r\n");
-        }
-      }
-    }
-    byte* ipAdress_ptr = this -> Get_IPAdress();
-    byte* gateway_ptr = this -> Get_Gateway();
-    byte* subnet_ptr = this -> Get_Subnet();
-    byte* dns_ptr = this -> Get_DNS();
-    IPAddress ipAdress(*(ipAdress_ptr + 0 ),*(ipAdress_ptr + 1 ),*(ipAdress_ptr + 2 ),*(ipAdress_ptr + 3 ));
-    IPAddress gateway(*(gateway_ptr + 0 ),*(gateway_ptr + 1 ),*(gateway_ptr + 2 ),*(gateway_ptr + 3 ));
-    IPAddress subnet(*(subnet_ptr + 0 ),*(subnet_ptr + 1 ),*(subnet_ptr + 2 ),*(subnet_ptr + 3 ));
-    IPAddress dns1(168,95,1,1);
-    IPAddress dns2(*(dns_ptr + 0 ),*(dns_ptr + 1 ),*(dns_ptr + 2 ),*(dns_ptr + 3 ));
-    
-    WiFi.config(ipAdress ,dns2 ,gateway ,subnet );
-    setMacAddress();
-    String _SSID =  this -> Get_SSID_Str();
-    char _ssid[sizeof(_SSID)];
-    _SSID.toCharArray(_ssid , sizeof(_SSID) );
-    
-    String _Password =  this -> Get_Password_Str();
-    char _password[sizeof(_Password)];
-    _Password.toCharArray(_password , sizeof(_Password));
-    WiFi.begin(_ssid, _password);
-    if(!this -> flag_Init)printf("connecting.");
-    int retry = 0;
-    while (WiFi.status() != WL_CONNECTED) 
-    {
-      if( retry >= 5)
-      {
-         break;
-      }
-      delay(500);
-      if(!this -> flag_Init)printf(".");
-      retry++;
-    }
-     if(!this -> flag_Init)printf("\n\r");
-    this -> IsConnected = (WiFi.status() == WL_CONNECTED);
-    if( this -> IsConnected)
-    {
-      if(!this -> flag_Init)printf("WiFi connected!\n");
-      if(!this -> flag_Init)printf("IP address: %d\n",WiFi.localIP());
+        mySerial->println("[第一次啟動 WiFi driver]");
+        WiFi.disablePowerSave();
+        wifi_on(RTW_MODE_STA);    // ★ 只能呼叫一次
+        firstInit = false;
+        delay(200);
     }
     else
     {
-      if(!this -> flag_Init)printf("WiFi connect failed!\n");      
+        mySerial->println("[WiFi driver 已啟動，跳過重新初始化]");
+        // 不要 wifi_off()
+        // 不要 wifi_on()
+        // 不要 WiFi.disconnect()
     }
-    this -> flag_Init = true;
+
+    // ---------------------------------------------------------
+    // 設定 IP (可重複呼叫，安全)
+    // ---------------------------------------------------------
+    byte* ipAdress_ptr = this->Get_IPAdress();
+    byte* gateway_ptr  = this->Get_Gateway();
+    byte* subnet_ptr   = this->Get_Subnet();
+    byte* dns_ptr      = this->Get_DNS();
+
+    IPAddress ipAdress(ipAdress_ptr[0], ipAdress_ptr[1], ipAdress_ptr[2], ipAdress_ptr[3]);
+    IPAddress gateway(gateway_ptr[0], gateway_ptr[1], gateway_ptr[2], gateway_ptr[3]);
+    IPAddress subnet(subnet_ptr[0], subnet_ptr[1], subnet_ptr[2], subnet_ptr[3]);
+    IPAddress dns2(dns_ptr[0], dns_ptr[1], dns_ptr[2], dns_ptr[3]);
+
+    WiFi.config(ipAdress, dns2, gateway, subnet);
+
+    // ---------------------------------------------------------
+    // SSID / Password (char[] 無 malloc)
+    // ---------------------------------------------------------
+    char ssid[33] = {0};
+    char password[65] = {0};
     
+    // ★ 保護性截斷：永不溢位
+    String s1 = this->Get_SSID_Str();
+    String s2 = this->Get_Password_Str();
+    
+    if (s1.length() > 32) s1 = s1.substring(0, 32);
+    if (s2.length() > 64) s2 = s2.substring(0, 64);
+    
+    s1.toCharArray(ssid, 33);
+    s2.toCharArray(password, 65);
+    
+    // ★ 檢查是否有無效 byte
+    for (int i = 0; i < 33; i++) {
+        if ((uint8_t)ssid[i] == 0xFF || (uint8_t)ssid[i] == 0xFE) {
+            mySerial->println("[ERROR] SSID 有 0xFF 或 0xFE，資料來源錯誤！");
+            mySerial->print("位置：");
+            mySerial->println(i);
+            delay(1000);
+            return;
+        }
+    }
+
+    // ---------------------------------------------------------
+    // 不重啟 WiFi，只重新 WiFi.begin()
+    // ---------------------------------------------------------
+    mySerial->println("[開始 WiFi.begin()]");
+    WiFi.begin(ssid, password);
+
+    int retry = 0;
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        if (retry >= 20) break;
+        mySerial->print(".");
+        delay(500);
+        retry++;
+    }
+    mySerial->println();
+
+    this->IsConnected = (WiFi.status() == WL_CONNECTED);
+
+    if (this->IsConnected)
+    {
+        mySerial->println("WiFi 連線成功！");
+        mySerial->print("IP: ");
+        mySerial->println(WiFi.localIP());
+    }
+    else
+    {
+        mySerial->println("WiFi 連線失敗");
+    }
+
+    mySerial->print("[Free Heap After] = ");
+    mySerial->println(xPortGetFreeHeapSize());
 }
+
 
 void WiFiConfig::Set_IPAdress(byte IP0 ,byte IP1 ,byte IP2 ,byte IP3)
 {
