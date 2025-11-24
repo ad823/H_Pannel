@@ -46,6 +46,7 @@ namespace H_Pannel_lib
         EPD583,
         EPD290_V2,
         EPD290_V3,
+        EPD290G,
         EPD420,
         EPD420G,
         EPD1020,
@@ -838,7 +839,54 @@ namespace H_Pannel_lib
                 return flag_OK;
             }
         }
-    
+        static public bool EPD_290G_DrawImage(UDP_Class uDP_Class, string IP, Bitmap bmp)
+        {
+            if (!Basic.Net.Ping(IP, 2, 150))
+            {
+                Console.WriteLine($"EPD_290G_DrawImage start {DateTime.Now.ToDateTimeString()} : Ping Failed {IP}");
+                return false;
+            }
+            using (Bitmap inputBmp = ScaleImage(bmp, 296, 128))
+            {
+                using (Bitmap _bmp = inputBmp)
+                {
+                    MyTimer myTimer = new MyTimer();
+                    myTimer.StartTickTime(50000);
+
+                    _bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+
+                    int frameDIV = 4;
+                    bool flag_OK;
+                    int width = _bmp.Width;
+                    int height = _bmp.Height;
+                    byte[] bytes = new byte[(width / 4) * height];
+
+
+
+                    H_Pannel_lib.Communication.BitmapToByte(_bmp, ref bytes, H_Pannel_lib.EPD_Type.EPD290G);
+                    myTimer.StartTickTime(50000);
+                    flag_OK = EPD_DrawFramebuffer(uDP_Class, IP, bytes, (width / 4) * height / frameDIV);
+                    if (!flag_OK)
+                    {
+                        return false;
+                    }
+                    flag_OK = EPD_DrawFrame_BW(uDP_Class, IP);
+                    if (!flag_OK)
+                    {
+                        return false;
+                    }
+                    flag_OK = EPD_RefreshCanvas(uDP_Class, IP);
+                    if (!flag_OK)
+                    {
+                        return false;
+                    }
+                    if (ConsoleWrite) Console.WriteLine($"{IP}:{uDP_Class.Port} : EPD 290G DrawImage {string.Format(flag_OK ? "sucess" : "failed")}!   Time : {myTimer.GetTickTime().ToString("0.000")} ms");
+                    return flag_OK;
+                }
+            }
+
+        }
+
         static public bool EPD_420_DrawImage(UDP_Class uDP_Class, string IP, Bitmap bmp)
         {
             if (!Basic.Net.Ping(IP, 2, 150))
@@ -7815,6 +7863,11 @@ namespace H_Pannel_lib
             EPD_4IN20G_YELLOW = 0x2,
             EPD_4IN20G_RED = 0x3,
 
+            EPD_2IN9G_BLACK = 0x0,
+            EPD_2IN9G_WHITE = 0x1,
+            EPD_2IN9G_YELLOW = 0x2,
+            EPD_2IN9G_RED = 0x3,
+
             EPD_5IN79G_BLACK = 0x0,
             EPD_5IN79G_WHITE = 0x1,
             EPD_5IN79G_YELLOW = 0x2,
@@ -7839,7 +7892,7 @@ namespace H_Pannel_lib
                     g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     g.CompositingQuality = CompositingQuality.HighQuality;
                     g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
-                    if (storage.DeviceType == DeviceType.EPD420G)
+                    if (storage.DeviceType.GetEnumName().Contains("G"))
                     {
                         if (storage.BackColor.ToArgb() != Color.Yellow.ToArgb())
                         {
@@ -8918,6 +8971,10 @@ namespace H_Pannel_lib
                     Console.WriteLine("[BitmapToByte] ConvertToEPD360E..");
                     ConvertToEPD360E(SrcPtr, width, height, stride, list_bytes);
                     break;
+                case EPD_Type.EPD290G:
+                    Console.WriteLine("[BitmapToByte] ConvertToEPD290G..");
+                    ConvertToEPD290G(SrcPtr, width, height, stride, list_bytes);
+                    break;
                 case EPD_Type.EPD420G:
                     Console.WriteLine("[BitmapToByte] ConvertToEPD420G..");
                     ConvertToEPD420G(SrcPtr, width, height, stride, list_bytes);
@@ -9401,6 +9458,64 @@ namespace H_Pannel_lib
             if (IsEqualColor(Color.Yellow, r, g, b)) return (byte)EPDColors.EPD_4IN20G_YELLOW;
             return 0;
         }
+
+        private static byte GetNearestColorIndex_290G(int r, int g, int b)
+        {
+            int minDiff = int.MaxValue;
+            int bestIndex = 0;
+
+            for (int i = 0; i < Palette_4Colors.Length; i++)
+            {
+                Color c = Palette_4Colors[i];
+                int dr = r - c.R;
+                int dg = g - c.G;
+                int db = b - c.B;
+                int diff = dr * dr + dg * dg + db * db;
+
+                if (diff < minDiff)
+                {
+                    minDiff = diff;
+
+                    // 模仿 C++ 的跳號處理
+                    bestIndex = (i > 3) ? (byte)(i + 1) : (byte)i;
+                }
+            }
+
+            return (byte)bestIndex;
+        }
+        private static unsafe void ConvertToEPD290G(byte* SrcPtr, int width, int height, int ByteOfWidth, List<byte> list_bytes)
+        {
+            int SrcWidthxY, SrcIndex;
+            int[] R = new int[4], G = new int[4], B = new int[4];
+            byte[] temp_bytes = new byte[4];
+            byte temp;
+            for (int y = 0; y < height; y++)
+            {
+                SrcWidthxY = ByteOfWidth * y;
+                for (int x = 0; x < (width / 4); x++)
+                {
+                    SrcIndex = SrcWidthxY + x * 12;
+                    for (int m = 0; m < 4; m++)
+                    {
+                        B[m] = SrcPtr[SrcIndex + m * 3];
+                        G[m] = SrcPtr[SrcIndex + m * 3 + 1];
+                        R[m] = SrcPtr[SrcIndex + m * 3 + 2];
+                        temp_bytes[m] = GetNearestColorIndex_290G(R[m], G[m], B[m]);
+                    }
+                    temp = (byte)((temp_bytes[0] << 6) | (temp_bytes[1] << 4) | (temp_bytes[2] << 2) | temp_bytes[3]);
+                    list_bytes.Add(temp);
+                }
+            }
+        }
+        private static byte GetEPD290GColorByte(int r, int g, int b)
+        {
+            if (IsEqualColor(Color.Red, r, g, b)) return (byte)EPDColors.EPD_2IN9G_RED;
+            if (IsEqualColor(Color.White, r, g, b)) return (byte)EPDColors.EPD_2IN9G_WHITE;
+            if (IsEqualColor(Color.Black, r, g, b)) return (byte)EPDColors.EPD_2IN9G_BLACK;
+            if (IsEqualColor(Color.Yellow, r, g, b)) return (byte)EPDColors.EPD_2IN9G_YELLOW;
+            return 0;
+        }
+
 
         private static unsafe void ConvertToEPD579G(byte* SrcPtr, int width, int height, int ByteOfWidth, List<byte> list_bytes)
         {

@@ -8,7 +8,7 @@
 
 //#define FADC
 //#define DrawerMCP23008
-#define B_Drawer
+//#define B_Drawer
 //#define DrawerHandSensor
 //#define MCP23008
 
@@ -52,6 +52,7 @@
 //#define EPD213
 //#define EPD266
 //#define EPD290
+#define EPD2IN9G
 //#define EPD420
 //#define EPD4IN20G
 //#define EPD420_D
@@ -60,7 +61,7 @@
 //#define EPD579B
 //#define DEPG0579RYT158FxX
 //#define EPD213_BRW_V0
-#define EPD7IN3E
+//#define EPD7IN3E
 //#define EPD3IN6E
 
 //#define OLCD_114
@@ -87,6 +88,12 @@
 #define EPD_WIDTH 16
 #define EPD_HEIGHT 296
 #define EPD_TYPE "EPD290"
+#define EPD_Device
+
+#elif defined(EPD2IN9G)
+#define EPD_WIDTH 32
+#define EPD_HEIGHT 296
+#define EPD_TYPE "EPD290G"
 #define EPD_Device
 
 #elif defined(EPD213)

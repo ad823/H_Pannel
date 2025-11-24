@@ -162,6 +162,14 @@ namespace H_Pannel_lib
                         return flag_ok;
                     }
                 }
+                if (bmt_tag.StringIsEmpty() == false)
+                {
+                    if (bmt_tag.Contains("EPD290G"))
+                    {
+                        flag_ok = Communication.EPD_290G_DrawImage(uDP_Class, IP, bitmap);
+                        return flag_ok;
+                    }
+                }
                 if (bitmap.Width == 250 && bitmap.Height == 122)
                 {
                     flag_ok = Communication.EPD_213_DrawImage(uDP_Class, IP, bitmap);
@@ -266,7 +274,6 @@ namespace H_Pannel_lib
         {
             清除畫布,
             測試資訊,
-            繪製面板,
             
         }
         private enum ContextMenuStrip_DeviceTable_IO設定
@@ -297,6 +304,8 @@ namespace H_Pannel_lib
             設為EPD266無鎖控,
             設為EPD290有鎖控,
             設為EPD290無鎖控,
+            設為EPD290G有鎖控,
+            設為EPD290G無鎖控,
             設為EPD420有鎖控,
             設為EPD420無鎖控,
             設為EPD420G有鎖控,
@@ -633,37 +642,7 @@ namespace H_Pannel_lib
                         }
                         Task allTask = Task.WhenAll(taskList);
                     }
-                    else if (dialog_ContextMenuStrip.Value == ContextMenuStrip_DeviceTable_畫面設置.繪製面板.GetEnumName())
-                    {
-                        List<Task> taskList = new List<Task>();
-                        for (int i = 0; i < iPEndPoints.Count; i++)
-                        {
-                            string IP = iPEndPoints[i].Address.ToString();
-                            int Port = iPEndPoints[i].Port;
-                            Storage storage = this.SQL_GetStorage(IP);
-                            if (storage != null)
-                            {
-                                Bitmap bmp = Get_Storage_bmp(storage);
-                                bmp.SetTag(storage.DeviceType.GetEnumName());
-                                int width = bmp.Width;
-                                int height = bmp.Height;
-                                bmp.RotateFlip(RotateFlipType.Rotate90FlipXY);
-                                byte[] bytes_BW = new byte[(height / 8) * width];
-                                byte[] bytes_RW = new byte[(height / 8) * width];
-                                Communication.BitmapToByte(bmp, ref bytes_BW, ref bytes_RW, EPD_Type.EPD290_V2);
-                                string jsonString_RW = ByteToStringHex(bytes_RW);
-                                string jsonString_BW = ByteToStringHex(bytes_BW);
-                               
-                                taskList.Add(Task.Run(() =>
-                                {
-                                    DrawToEpd_UDP(IP, Port, bmp);
-                                    bmp.Dispose();
-                                }));
-                            }
-
-                        }
-                        Task allTask = Task.WhenAll(taskList);
-                    }
+               
                 }
             }
             else if (selectedText == ContextMenuStrip_Main.IO設定.GetEnumName())
@@ -963,6 +942,8 @@ namespace H_Pannel_lib
                     { ContextMenuStrip_UDP_DataReceive_面板種類.設為EPD266無鎖控, DeviceType.EPD266 },
                     { ContextMenuStrip_UDP_DataReceive_面板種類.設為EPD290有鎖控, DeviceType.EPD290_lock },
                     { ContextMenuStrip_UDP_DataReceive_面板種類.設為EPD290無鎖控, DeviceType.EPD290 },
+                     { ContextMenuStrip_UDP_DataReceive_面板種類.設為EPD290G有鎖控, DeviceType.EPD290G_lock },
+                    { ContextMenuStrip_UDP_DataReceive_面板種類.設為EPD290G無鎖控, DeviceType.EPD290G },
                     { ContextMenuStrip_UDP_DataReceive_面板種類.設為EPD420有鎖控, DeviceType.EPD420_lock },
                     { ContextMenuStrip_UDP_DataReceive_面板種類.設為EPD420無鎖控, DeviceType.EPD420 },
                     { ContextMenuStrip_UDP_DataReceive_面板種類.設為EPD360E有鎖控, DeviceType.EPD360E_lock },

@@ -1506,6 +1506,8 @@ namespace H_Pannel_lib
         EPD360E = 23,
         EPD420G = 24,
         EPD420G_lock = 25,
+        EPD290G_lock = 26,
+        EPD290G = 27,
         EPD213 = 118,
     }
     public enum HorizontalAlignment
@@ -1590,6 +1592,10 @@ namespace H_Pannel_lib
                     return new Size(296, 152);
                 }
                 if (DeviceType == DeviceType.EPD290 || DeviceType == DeviceType.EPD290_lock)
+                {
+                    return new Size(296, 128);
+                }
+                if (DeviceType == DeviceType.EPD290G || DeviceType == DeviceType.EPD290G_lock)
                 {
                     return new Size(296, 128);
                 }

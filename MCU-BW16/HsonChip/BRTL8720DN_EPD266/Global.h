@@ -18,6 +18,7 @@
 #include "./MyWS2812.h"
 #include "./Timer.h"
 #include "./LED.h"
+#include "./EPD290G.h"
 #include "./EPD730E.h"
 #include "./EPD360E.h"
 #include "./EPD420G.h"
@@ -50,6 +51,8 @@ extern bool flag_writeMode;
     extern EPD epd;
 #elif defined(EPD290)
     extern EPD epd;
+#elif defined(EPD2IN9G)
+    extern EPD290G epd;    
 #elif defined(EPD213)
     extern EPD epd;
 #elif defined(EPD420)

@@ -112,6 +112,9 @@ void serialEvent()
       #elif defined(EPD4IN20G)
       mySerial.print("EPD4IN20G Clear..\n ");
       epd.Clear();
+      #elif defined(EPD2IN9G)
+      mySerial.print("EPD2IN9G Clear..\n ");
+      epd.Clear();
       #elif defined(EPD7IN3E)
       mySerial.print("EPD7IN3E Clear..\n ");
       epd.Clear();      
