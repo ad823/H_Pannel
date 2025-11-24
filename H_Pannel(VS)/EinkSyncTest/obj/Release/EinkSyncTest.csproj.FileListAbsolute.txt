@@ -52,7 +52,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Relea
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\System.ValueTuple.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\obj\Release\EinkSyncTest.csproj.AssemblyReference.cache
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\obj\Release\EinkSyncTest.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\obj\Release\EinkSync.49CA9DC0.Up2Date
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\obj\Release\EinkSyncTest.exe
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\obj\Release\EinkSyncTest.pdb
 C:\venice\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\EinkSyncTest.exe.config
@@ -195,7 +194,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Relea
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\NPOI.OOXML.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\NPOI.OpenXml4Net.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\NPOI.OpenXmlFormats.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\stdole.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\Basic.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\SQLUI.xml
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\EinkSyncTest.exe.config
@@ -257,3 +255,4 @@ C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\obj\Release\EinkSy
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\zxing.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\zxing.dll
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\bin\Release\zxing.dll
+C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EinkSyncTest\obj\Release\EinkSyncTest.csproj.CopyComplete

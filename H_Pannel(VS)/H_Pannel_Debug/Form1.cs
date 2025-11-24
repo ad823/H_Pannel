@@ -80,6 +80,8 @@ namespace WT32_SC01
             this.MyThread_Program.Add_Method(this.sub_H_RFID);
             this.MyThread_Program.Trigger();
 
+            pictureBox_test.Click += PictureBox_test_Click;
+
             this.rJ_Button_WT32_上傳畫面.MouseDownEvent += RJ_Button_WT32_上傳畫面_MouseDownEvent;
             this.rJ_Button_WT32_測試.MouseDownEvent += RJ_Button_WT32_測試_MouseDownEvent;
 
@@ -134,7 +136,10 @@ namespace WT32_SC01
             this.rJ_Button_lcD114_Panel_Write.MouseDownEvent += RJ_Button_lcD114_Panel_Write_MouseDownEvent;
         }
 
-   
+        private void PictureBox_test_Click(object sender, EventArgs e)
+        {
+            pictureBox_test.Image = Communication.EPD730E_GetBitmap("192.168.40.10");
+        }
 
         int index = 0;
         private void RJ_Button_lcD114_Panel_Write_MouseDownEvent(MouseEventArgs mevent)

@@ -97,7 +97,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Rele
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Release\NPOI.OOXML.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Release\NPOI.OpenXml4Net.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Release\NPOI.OpenXmlFormats.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Release\stdole.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Release\Basic.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Release\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Release\System.Buffers.xml
@@ -111,7 +110,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Rele
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Release\SQLUI.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.csproj.AssemblyReference.cache
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRen.AACE8D66.Up2Date
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.exe
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.pdb
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Release\LabelRenderer.exe.config
@@ -171,3 +169,4 @@ C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\Label
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.csproj.CopyComplete
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.exe
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.pdb
+C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.csproj.CopyComplete

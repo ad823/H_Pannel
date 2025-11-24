@@ -201,10 +201,10 @@
     <Compile Include="DrawerUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DrawerUI_EPD_420.cs">
+    <Compile Include="淘汰\DrawerUI_EPD_420.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DrawerUI_EPD_1020.cs">
+    <Compile Include="淘汰\DrawerUI_EPD_1020.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="DrawerUI_EPD_583.cs">
@@ -269,19 +269,19 @@
     <Compile Include="ViewUI\EPD266_Paint_Form.Designer.cs">
       <DependentUpon>EPD266_Paint_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="H_RFID_UI.cs">
+    <Compile Include="淘汰\H_RFID_UI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="RFID_UI.cs">
+    <Compile Include="淘汰\RFID_UI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="RFID_UI.Designer.cs">
+    <Compile Include="淘汰\RFID_UI.Designer.cs">
       <DependentUpon>RFID_UI.cs</DependentUpon>
     </Compile>
     <Compile Include="RowsLEDUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="StorageUI_EPD_290.cs">
+    <Compile Include="淘汰\StorageUI_EPD_290.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ViewUI\EPD_420_Pannel.cs">
@@ -334,14 +334,14 @@
       <DependentUpon>DeviceBasicUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Class\StorageClass.cs" />
-    <Compile Include="StorageUI.cs">
+    <Compile Include="淘汰\StorageUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Communication.cs" />
     <Compile Include="StorageUI_EPD_266.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="StorageUI_WT32.cs">
+    <Compile Include="淘汰\StorageUI_WT32.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Class\UDP_Class.cs" />
@@ -392,7 +392,7 @@
     <EmbeddedResource Include="Dialog\Dialog_RWB_顏色選擇.resx">
       <DependentUpon>Dialog_3color_select.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DrawerUI_EPD_420.resx">
+    <EmbeddedResource Include="淘汰\DrawerUI_EPD_420.resx">
       <DependentUpon>DrawerUI_EPD_420.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource1.resx">
@@ -411,13 +411,13 @@
     <EmbeddedResource Include="ViewUI\EPD266_Paint_Form.resx">
       <DependentUpon>EPD266_Paint_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RFID_UI.resx">
+    <EmbeddedResource Include="淘汰\RFID_UI.resx">
       <DependentUpon>RFID_UI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RowsLEDUI.resx">
       <DependentUpon>RowsLEDUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StorageUI_WT32.resx">
+    <EmbeddedResource Include="淘汰\StorageUI_WT32.resx">
       <DependentUpon>StorageUI_WT32.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewUI\EPD360E_Paint_Form.resx">
@@ -523,6 +523,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\高警訊.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LOGO.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets')" />

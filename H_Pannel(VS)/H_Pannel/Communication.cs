@@ -8497,7 +8497,42 @@ namespace H_Pannel_lib
             g.Dispose();
             return bitmap;
         }
+        static public Bitmap EPD730E_GetBitmap(string IP)
+        {
+            Bitmap bitmap = new Bitmap(800, 480);
+            using(Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                g.FillRectangle(new SolidBrush(Color.White), new RectangleF(0, 0, bitmap.Width, bitmap.Height));
+         
+                using (Bitmap bitmap_text = Communication.TextToBitmap("鴻森智能科技股份有限公司", new Font("標楷體", 30), 1.0, 600, 200, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Center))
+                {
+                    g.DrawImage(bitmap_text, 200, (bitmap.Height - bitmap_text.Height) / 2, bitmap_text.Width, bitmap_text.Height);
+                }
+                using (Bitmap bitmap_text = Communication.TextToBitmap("HONGSEN Intelligent Technology Co.,Ltd.", new Font("微軟正黑體", 14), 1.0, 600, 50, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Center))
+                {
+                    g.DrawImage(bitmap_text, 200,250, bitmap_text.Width, bitmap_text.Height);
+                }
+                using (Bitmap bitmap_text = Communication.TextToBitmap(IP, new Font("微軟正黑體", 14 , FontStyle.Bold), 1.0, 600, 50, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Left))
+                {
+                    g.DrawImage(bitmap_text, 20, bitmap.Height - 50, bitmap_text.Width, bitmap_text.Height);
+                }
+                g.DrawImage(DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LOGO, DitheringProcessor.DitheringMode.None), 50, (bitmap.Height - 200) / 2, 200, 200);
 
+                g.FillRectangle(new SolidBrush(Color.Red), new RectangleF(800 - (50 * 1), 480 - (50 * 1), 50, 50));
+                g.FillRectangle(new SolidBrush(Color.Green), new RectangleF(800 - (50 * 2), 480 - (50 * 1), 50, 50));
+                g.FillRectangle(new SolidBrush(Color.Blue), new RectangleF(800 - (50 * 3), 480 - (50 * 1), 50, 50));
+                g.FillRectangle(new SolidBrush(Color.Yellow), new RectangleF(800 - (50 * 4), 480 - (50 * 1), 50, 50));
+                g.FillRectangle(new SolidBrush(Color.Black), new RectangleF(800 - (50 * 5), 480 - (50 * 1), 50, 50));
+
+                g.Dispose();
+            }
+          
+            return bitmap;
+        }
         static public List<byte[]> SplitImage(List<byte> image, int Size)
         {
             List<byte[]> list_byte_image_array = new List<byte[]>();
@@ -9357,7 +9392,6 @@ namespace H_Pannel_lib
                 }
             }
         }
-
         public static Bitmap EPD_6Color_BytesToBitmap(byte[] data, int width, int height)
         {
             if (width % 2 != 0) throw new ArgumentException("寬度必須為偶數");

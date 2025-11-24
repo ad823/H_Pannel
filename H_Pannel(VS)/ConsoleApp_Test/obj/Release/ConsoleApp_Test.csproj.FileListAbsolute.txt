@@ -49,10 +49,8 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Re
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Buffers.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.csproj.AssemblyReference.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.csproj.SuggestedBindingRedirects.cache
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.exe.config
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleA.D471CFE7.Up2Date
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.exe
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.pdb
 C:\Users\Andy\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\ConsoleApp_Test.exe.config
@@ -310,7 +308,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Re
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\NPOI.OOXML.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\NPOI.OpenXml4Net.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\NPOI.OpenXmlFormats.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\stdole.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\SQLUI.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\Basic.xml
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\ConsoleApp_Test.exe.config
@@ -376,3 +373,4 @@ C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\Con
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.csproj.CopyComplete
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.exe
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.pdb
+C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.csproj.CopyComplete

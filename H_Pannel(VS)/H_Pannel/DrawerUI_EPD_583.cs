@@ -1795,13 +1795,26 @@ namespace H_Pannel_lib
                         {
                             string IP = iPEndPoints[i].Address.ToString();
                             int Port = iPEndPoints[i].Port;
-                            taskList.Add(Task.Run(() =>
+                            Drawer drawer = this.SQL_GetDrawer(IP);
+                            if (drawer == null) continue;
+                            if (drawer.DeviceType.GetEnumName().Contains("730E"))
                             {
-                                using (Bitmap bitmap = this.DrawTestImage(IP, Port))
+                                Bitmap bmp = null;
+                                bmp = Communication.EPD730E_GetBitmap(IP);
+                                Graphics g = Graphics.FromImage(bmp);
+                                g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
+                                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                g.CompositingQuality = CompositingQuality.HighQuality;
+                                g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                                g.Dispose();
+
+                                taskList.Add(Task.Run(() =>
                                 {
-                                    this.DrawToEpd_UDP(IP, Port, bitmap);
-                                }
-                            }));
+                                    DrawToEpd_UDP(IP, Port, bmp , DeviceType.EPD730E);
+                                    bmp.Dispose();
+                                }));
+                            }
+                   
                         }
                         Task allTask = Task.WhenAll(taskList);
 

@@ -24,7 +24,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\System.Threading.Tasks.Extensions.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SunnyUI.Common.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\Basic.xml
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\H_Pannel_lib.pdb
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\H_Pannel_lib.dll.config
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\Newtonsoft.Json.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SkiaSharp.pdb
@@ -40,7 +39,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD_Upload.Properties.Resources.resources
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.csproj.GenerateResource.cache
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.csproj.Up2Date
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.exe
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.pdb
 C:\Users\Andy\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\EPD Upload.exe.config
@@ -367,3 +365,5 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SQLUI.dl
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\H_Pannel_lib.pdb
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\H_Pannel_lib.dll
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SQLUI.dll
+C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.csproj.CopyComplete
+C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\H_Pannel_lib.pdb

@@ -274,7 +274,7 @@ namespace H_Pannel_lib
         {
             清除畫布,
             測試資訊,
-            
+
         }
         private enum ContextMenuStrip_DeviceTable_IO設定
         {
@@ -602,22 +602,45 @@ namespace H_Pannel_lib
                             int Port = iPEndPoints[i].Port;
                             Storage storage = this.SQL_GetStorage(IP);
                             if (storage == null) continue;
-                            Bitmap bmp = null;
-                            bmp = new Bitmap(storage.PanelSize.Width, storage.PanelSize.Height);
-                            Graphics g = Graphics.FromImage(bmp);
-                            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-                            g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
-                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                            g.CompositingQuality = CompositingQuality.HighQuality;
-                            g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
-                            g.FillRectangle(new SolidBrush(Color.Red), rect);
-                            g.Dispose();
-                   
-                            taskList.Add(Task.Run(() =>
+                            if(storage.DeviceType.GetEnumName().Contains("730E"))
                             {
-                                DrawToEpd_UDP(IP, Port, bmp);
-                                bmp.Dispose();
-                            }));
+                                Bitmap bmp = null;
+                                bmp = Communication.EPD730E_GetBitmap(IP);
+                                Graphics g = Graphics.FromImage(bmp);
+                                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                                g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
+                                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                g.CompositingQuality = CompositingQuality.HighQuality;
+                                g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                                g.FillRectangle(new SolidBrush(Color.Red), rect);
+                                g.Dispose();
+
+                                taskList.Add(Task.Run(() =>
+                                {
+                                    DrawToEpd_UDP(IP, Port, bmp);
+                                    bmp.Dispose();
+                                }));
+                            }
+                            else
+                            {
+                                Bitmap bmp = null;
+                                bmp = new Bitmap(storage.PanelSize.Width, storage.PanelSize.Height);
+                                Graphics g = Graphics.FromImage(bmp);
+                                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                                g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
+                                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                g.CompositingQuality = CompositingQuality.HighQuality;
+                                g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                                g.FillRectangle(new SolidBrush(Color.Red), rect);
+                                g.Dispose();
+
+                                taskList.Add(Task.Run(() =>
+                                {
+                                    DrawToEpd_UDP(IP, Port, bmp);
+                                    bmp.Dispose();
+                                }));
+                            }
+                         
                         }
                         Task allTask = Task.WhenAll(taskList);
                     }

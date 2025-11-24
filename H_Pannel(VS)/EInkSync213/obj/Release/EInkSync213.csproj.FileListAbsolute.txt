@@ -44,7 +44,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Releas
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\MeasureSystemFunction.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\AxAltairUDrv.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\MVSDK.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\stdole.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\System.Buffers.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\System.Memory.xml
@@ -379,4 +378,4 @@ C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSyn
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.csproj.CopyComplete
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.exe
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.pdb
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync.D40E2457.Up2Date
+C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.csproj.CopyComplete
