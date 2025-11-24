@@ -138,7 +138,7 @@ namespace WT32_SC01
 
         private void PictureBox_test_Click(object sender, EventArgs e)
         {
-            pictureBox_test.Image = Communication.EPD730E_GetBitmap("192.168.40.10");
+            pictureBox_test.Image = Communication.EPD290_GetBitmap("192.168.40.10");
         }
 
         int index = 0;

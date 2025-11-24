@@ -103,6 +103,16 @@ namespace H_Pannel_lib {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap LOGO_BR {
+            get {
+                object obj = ResourceManager.GetObject("LOGO_BR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap 高警訊_2 {
             get {
                 object obj = ResourceManager.GetObject("高警訊_2", resourceCulture);

@@ -8533,6 +8533,72 @@ namespace H_Pannel_lib
           
             return bitmap;
         }
+        static public Bitmap EPD420_GetBitmap(string IP)
+        {
+            Bitmap bitmap = new Bitmap(400, 300);
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                g.FillRectangle(new SolidBrush(Color.White), new RectangleF(0, 0, bitmap.Width, bitmap.Height));
+
+                using (Bitmap bitmap_text = Communication.TextToBitmap("鴻森智能科技股份有限公司", new Font("標楷體", 14), 1.0, 400, 300, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Center))
+                {
+                    g.DrawImage(bitmap_text, 50, (bitmap.Height - bitmap_text.Height) / 2, bitmap_text.Width, bitmap_text.Height);
+                }
+                using (Bitmap bitmap_text = Communication.TextToBitmap("HONGSEN Intelligent Technology Co.,Ltd.", new Font("微軟正黑體", 9), 1.0, 400, 30, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Center))
+                {
+                    g.DrawImage(bitmap_text, 50, 160, bitmap_text.Width, bitmap_text.Height);
+                }
+                using (Bitmap bitmap_text = Communication.TextToBitmap(IP, new Font("微軟正黑體", 10, FontStyle.Bold), 1.0, 600, 50, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Left))
+                {
+                    g.DrawImage(bitmap_text, 10, bitmap.Height - 50, bitmap_text.Width, bitmap_text.Height);
+                }
+                g.DrawImage(DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LOGO_BR, DitheringProcessor.DitheringMode.ThreeColor), 20, (bitmap.Height - 100) / 2, 100, 100);
+
+                g.FillRectangle(new SolidBrush(Color.Red), new RectangleF(400 - (30 * 1), 300 - (30 * 1), 30, 30));
+                g.FillRectangle(new SolidBrush(Color.Black), new RectangleF(400 - (30 * 2), 300 - (30 * 1), 30, 30));
+
+                g.Dispose();
+            }
+
+            return bitmap;
+        }
+        static public Bitmap EPD290_GetBitmap(string IP)
+        {
+            Bitmap bitmap = new Bitmap(296, 128);
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                g.FillRectangle(new SolidBrush(Color.White), new RectangleF(0, 0, bitmap.Width, bitmap.Height));
+
+                using (Bitmap bitmap_text = Communication.TextToBitmap("鴻森智能科技股份有限公司", new Font("標楷體", 12), 1.0, 296, 30, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Center))
+                {
+                    g.DrawImage(bitmap_text, 30, (bitmap.Height - bitmap_text.Height) / 2 -10, bitmap_text.Width, bitmap_text.Height);
+                }
+                using (Bitmap bitmap_text = Communication.TextToBitmap("HONGSEN Intelligent Technology Co.,Ltd.", new Font("微軟正黑體", 7), 1.0, 200, 10, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Center))
+                {
+                    g.DrawImage(bitmap_text, 75, 65, bitmap_text.Width, bitmap_text.Height);
+                }
+                using (Bitmap bitmap_text = Communication.TextToBitmap(IP, new Font("微軟正黑體", 10, FontStyle.Bold), 1.0, 296, 30, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Left))
+                {
+                    g.DrawImage(bitmap_text, 10, bitmap.Height - 30, bitmap_text.Width, bitmap_text.Height);
+                }
+                g.DrawImage(DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LOGO_BR, DitheringProcessor.DitheringMode.ThreeColor), 15, (bitmap.Height - 70) / 2, 60, 60);
+
+                g.FillRectangle(new SolidBrush(Color.Red), new RectangleF(296 - (20 * 1), 128 - (20 * 1), 20, 20));
+                g.FillRectangle(new SolidBrush(Color.Black), new RectangleF(296 - (20 * 2), 128 - (20 * 1), 20, 20));
+
+                g.Dispose();
+            }
+
+            return bitmap;
+        }
         static public List<byte[]> SplitImage(List<byte> image, int Size)
         {
             List<byte[]> list_byte_image_array = new List<byte[]>();
@@ -8897,24 +8963,23 @@ namespace H_Pannel_lib
                             }
                             else if (ePD_Type == EPD_Type.EPD420)
                             {
-    
-                                if (R[i] > 0 && G[i] <= 128 && B[i] <= 128)
+                                Color color = Palette_3Colors[GetNearestColorIndex_420(R[i], G[i], B[i])];
+                                if (color.R == 191)
                                 {
                                     temp_BW |= (byte)(0x00);
                                     temp_RW |= (byte)(0x01);
                                 }
-                                else if (R[i] > 0 && G[i] > 0 && B[i] >= 0)
+                                else if (color.R > 0 && color.G > 0 && color.B >= 0)
                                 {
                                     temp_BW |= (byte)(0x01);
                                     temp_RW |= (byte)(0x00);
                                 }
-                                else if (R[i] == 0 && G[i] == 0 && B[i] == 0)
+                                else if (color.R == 0 && color.G == 0 && color.B == 0)
                                 {
                                     temp_BW |= (byte)(0x00);
                                     temp_RW |= (byte)(0x00);
                                 }
-
-                           
+                         
 
                             }
                             else if (ePD_Type == EPD_Type.EPD290_V2)
@@ -9436,6 +9501,38 @@ namespace H_Pannel_lib
                 Color.FromArgb(255, 243, 56),            // Yellow (index 2)
                 Color.FromArgb(191, 0, 0),               // Red (index 3)
         };
+        private static readonly Color[] Palette_3Colors = new Color[]
+        {
+                    Color.Black,                             // index 0
+                    Color.White,                             // index 1
+                    Color.FromArgb(191, 0, 0),               // Red (index 3)
+        };
+        private static byte GetNearestColorIndex_420(int r, int g, int b)
+        {
+            int minDiff = int.MaxValue;
+            int bestIndex = 0;
+
+            for (int i = 0; i < Palette_3Colors.Length; i++)
+            {
+                Color c = Palette_3Colors[i];
+                int dr = r - c.R;
+                int dg = g - c.G;
+                int db = b - c.B;
+                int diff = dr * dr + dg * dg + db * db;
+
+                if (diff < minDiff)
+                {
+                    minDiff = diff;
+
+                    // 模仿 C++ 的跳號處理
+                    bestIndex = (i > 3) ? (byte)(i + 1) : (byte)i;
+                }
+            }
+
+            return (byte)bestIndex;
+        }
+
+
         private static byte GetNearestColorIndex_420G(int r, int g, int b)
         {
             int minDiff = int.MaxValue;
