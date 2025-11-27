@@ -192,24 +192,25 @@ void WiFiConfig::WIFI_Connenct()
 {
     static bool firstInit = true;
 
-    mySerial->println("\n=== [WiFi 初始化開始] ===");
-    mySerial->print("[Free Heap] = ");
-    mySerial->println(xPortGetFreeHeapSize());
+//    mySerial->println("\n=== [WiFi 初始化開始] ===");
+//    mySerial->print("[Free Heap] = ");
+//    mySerial->println(xPortGetFreeHeapSize());
 
     // ---------------------------------------------------------
     // 第一次初始化 WiFi driver
     // ---------------------------------------------------------
     if (firstInit)
     {
-        mySerial->println("[第一次啟動 WiFi driver]");
+//        mySerial->println("[第一次啟動 WiFi driver]");
         WiFi.disablePowerSave();
         wifi_on(RTW_MODE_STA);    // ★ 只能呼叫一次
+        
         firstInit = false;
         delay(200);
     }
     else
     {
-        mySerial->println("[WiFi driver 已啟動，跳過重新初始化]");
+//        mySerial->println("[WiFi driver 已啟動，跳過重新初始化]");
         // 不要 wifi_off()
         // 不要 wifi_on()
         // 不要 WiFi.disconnect()
@@ -222,14 +223,29 @@ void WiFiConfig::WIFI_Connenct()
     byte* gateway_ptr  = this->Get_Gateway();
     byte* subnet_ptr   = this->Get_Subnet();
     byte* dns_ptr      = this->Get_DNS();
-
+    uint8_t chnpln;     // Default channel plan 0x7F
+    uint8_t chntgt = 0x76; 
+    if (wifi_get_channel_plan(&chnpln) == RTW_SUCCESS) 
+    {
+      printf("WiFi Channel Plan: 0x%x\r\n", chnpln);
+      if (chnpln != chntgt) {
+        if (wifi_set_channel_plan(chntgt) == RTW_SUCCESS) {
+          wifi_set_country(chntgt);
+          printf("WiFi Set Channel Plan OK\r\n");
+          wifi_get_channel_plan(&chnpln);
+          printf("WiFi Channel Plan: 0x%x\r\n", chnpln);
+        } else {
+          printf("WiFi Set Channel Plan Failed\r\n");
+        }
+      }
+    }
     IPAddress ipAdress(ipAdress_ptr[0], ipAdress_ptr[1], ipAdress_ptr[2], ipAdress_ptr[3]);
     IPAddress gateway(gateway_ptr[0], gateway_ptr[1], gateway_ptr[2], gateway_ptr[3]);
     IPAddress subnet(subnet_ptr[0], subnet_ptr[1], subnet_ptr[2], subnet_ptr[3]);
     IPAddress dns2(dns_ptr[0], dns_ptr[1], dns_ptr[2], dns_ptr[3]);
 
     WiFi.config(ipAdress, dns2, gateway, subnet);
-
+    setMacAddress();
     // ---------------------------------------------------------
     // SSID / Password (char[] 無 malloc)
     // ---------------------------------------------------------
@@ -249,9 +265,9 @@ void WiFiConfig::WIFI_Connenct()
     // ★ 檢查是否有無效 byte
     for (int i = 0; i < 33; i++) {
         if ((uint8_t)ssid[i] == 0xFF || (uint8_t)ssid[i] == 0xFE) {
-            mySerial->println("[ERROR] SSID 有 0xFF 或 0xFE，資料來源錯誤！");
-            mySerial->print("位置：");
-            mySerial->println(i);
+//            mySerial->println("[ERROR] SSID 有 0xFF 或 0xFE，資料來源錯誤！");
+//            mySerial->print("位置：");
+//            mySerial->println(i);
             delay(1000);
             return;
         }
