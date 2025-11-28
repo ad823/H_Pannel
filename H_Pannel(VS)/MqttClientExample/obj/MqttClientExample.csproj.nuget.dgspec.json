@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrator\\Source\\Repos\\H_Pannel\\H_Pannel(VS)\\MqttClientExample\\MqttClientExample.csproj": {}
+    "C:\\Users\\HS\\Source\\Repos\\H_Pannel\\H_Pannel(VS)\\MqttClientExample\\MqttClientExample.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrator\\Source\\Repos\\H_Pannel\\H_Pannel(VS)\\MqttClientExample\\MqttClientExample.csproj": {
+    "C:\\Users\\HS\\Source\\Repos\\H_Pannel\\H_Pannel(VS)\\MqttClientExample\\MqttClientExample.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Source\\Repos\\H_Pannel\\H_Pannel(VS)\\MqttClientExample\\MqttClientExample.csproj",
+        "projectUniqueName": "C:\\Users\\HS\\Source\\Repos\\H_Pannel\\H_Pannel(VS)\\MqttClientExample\\MqttClientExample.csproj",
         "projectName": "MqttClientExample",
-        "projectPath": "C:\\Users\\Administrator\\Source\\Repos\\H_Pannel\\H_Pannel(VS)\\MqttClientExample\\MqttClientExample.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\Source\\Repos\\H_Pannel\\H_Pannel(VS)\\MqttClientExample\\obj\\",
+        "projectPath": "C:\\Users\\HS\\Source\\Repos\\H_Pannel\\H_Pannel(VS)\\MqttClientExample\\MqttClientExample.csproj",
+        "packagesPath": "C:\\Users\\HS\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\HS\\Source\\Repos\\H_Pannel\\H_Pannel(VS)\\MqttClientExample\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

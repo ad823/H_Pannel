@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MqttClientExample")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0012ba08ff4e2dd07130b73b568b58404e0ea7e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("MqttClientExample")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MqttClientExample")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
