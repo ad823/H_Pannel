@@ -6,6 +6,7 @@ bool flag_FADC_motorTrigger = false;
 bool flag_FADC_lockerTrigger = false;
 
 MyTimer MyTimer_FADC_motorDelay;
+MyTimer MyTimer_FADC_motorTimeout;
 byte cnt_FADC_motorTrigger = 255;
 int FADC_motorDelayTime = 0;
 bool flag_FADC_motorOutput = true;
@@ -20,6 +21,8 @@ bool flag_FADC_lokerOutput = false;
 
 bool flag_FADC_buttonInput = false;
 bool flag_FADC_buttonInput_buf = false;
+
+int cnt_FADC_motor = 0;
 
 void FADC_LockerInputRead()
 {
@@ -102,13 +105,20 @@ void FADC_MotorTrigger()
          {
              mySerial.println(F("(255)FADC_MotorTrigger,trigger.."));
              flag_FADC_motorOutput = true;
+             MyTimer_FADC_motorTimeout.TickStop();
+             MyTimer_FADC_motorTimeout.StartTickTime(5000);            
              mcp.digitalWrite(DC_MOTOR_OUTPUT , false);
              cnt_FADC_motorTrigger = 1;
          }
     }
     if(cnt_FADC_motorTrigger == 1)
     {
-        
+        if(MyTimer_FADC_motorTimeout.IsTimeOut())
+        {
+            mySerial.println(F("(1)FADC motor ouput timeout..."));
+            cnt_FADC_motorTrigger = 254;
+            return;
+        }
         if(mcp.digitalRead(LIGHT_SENSOR_INPUT) == false)
         {      
            mySerial.println(F("(1)FADC_MotorTrigger,motor run.."));
@@ -118,6 +128,12 @@ void FADC_MotorTrigger()
     }
     if(cnt_FADC_motorTrigger == 2)
     {
+        if(MyTimer_FADC_motorTimeout.IsTimeOut())
+        {
+            mySerial.println(F("(2)FADC motor ouput timeout..."));
+            cnt_FADC_motorTrigger = 254;
+            return;
+        }
         if(mcp.digitalRead(LIGHT_SENSOR_INPUT) == true)
         {
           MyTimer_FADC_motorDelay.TickStop();
@@ -144,6 +160,7 @@ void FADC_MotorTrigger()
     if(cnt_FADC_motorTrigger == 254)
     {
        mySerial.println(F("(254)FADC_MotorTrigger,motor stop..."));  
+       cnt_FADC_motor++;
        cnt_FADC_motorTrigger = 255;
        MyTimer_FADC_motorDelay.TickStop();
        flag_FADC_motorOutput = false;

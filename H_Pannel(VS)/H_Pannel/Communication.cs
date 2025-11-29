@@ -8566,6 +8566,40 @@ namespace H_Pannel_lib
 
             return bitmap;
         }
+        static public Bitmap EPD420G_GetBitmap(string IP)
+        {
+            Bitmap bitmap = new Bitmap(400, 300);
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                g.FillRectangle(new SolidBrush(Color.White), new RectangleF(0, 0, bitmap.Width, bitmap.Height));
+
+                using (Bitmap bitmap_text = Communication.TextToBitmap("鴻森智能科技股份有限公司", new Font("標楷體", 14), 1.0, 400, 300, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Center))
+                {
+                    g.DrawImage(bitmap_text, 50, (bitmap.Height - bitmap_text.Height) / 2, bitmap_text.Width, bitmap_text.Height);
+                }
+                using (Bitmap bitmap_text = Communication.TextToBitmap("HONGSEN Intelligent Technology Co.,Ltd.", new Font("微軟正黑體", 9), 1.0, 400, 30, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Center))
+                {
+                    g.DrawImage(bitmap_text, 50, 160, bitmap_text.Width, bitmap_text.Height);
+                }
+                using (Bitmap bitmap_text = Communication.TextToBitmap(IP, new Font("微軟正黑體", 10, FontStyle.Bold), 1.0, 600, 50, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Left))
+                {
+                    g.DrawImage(bitmap_text, 10, bitmap.Height - 50, bitmap_text.Width, bitmap_text.Height);
+                }
+                g.DrawImage(DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LOGO_BR, DitheringProcessor.DitheringMode.FourColor), 20, (bitmap.Height - 100) / 2, 100, 100);
+
+                g.FillRectangle(new SolidBrush(Color.Red), new RectangleF(400 - (30 * 1), 300 - (30 * 1), 30, 30));
+                g.FillRectangle(new SolidBrush(Color.Black), new RectangleF(400 - (30 * 2), 300 - (30 * 1), 30, 30));
+                g.FillRectangle(new SolidBrush(Color.Yellow), new RectangleF(400 - (30 * 3), 300 - (30 * 1), 30, 30));
+
+                g.Dispose();
+            }
+            bitmap.SetTag("EPD420G");
+            return bitmap;
+        }
         static public Bitmap EPD290_GetBitmap(string IP)
         {
             Bitmap bitmap = new Bitmap(296, 128);

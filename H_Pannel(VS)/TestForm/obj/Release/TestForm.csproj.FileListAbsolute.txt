@@ -453,4 +453,4 @@ C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.c
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.csproj.CopyComplete
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.exe
 C:\Users\user\Source\Repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.pdb
-C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.csproj.CopyComplete
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.csproj.Up2Date

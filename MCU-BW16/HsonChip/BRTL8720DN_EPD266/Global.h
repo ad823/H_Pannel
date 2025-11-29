@@ -83,7 +83,7 @@ extern OLCD114 oLCD114;
 
 
 extern bool flag_motor_debug;
-
+extern int cnt_FADC_motor;
 
 extern WiFiConfig wiFiConfig;
 extern int UDP_SemdTime;

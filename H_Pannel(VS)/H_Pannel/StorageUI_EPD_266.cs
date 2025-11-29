@@ -636,6 +636,23 @@ namespace H_Pannel_lib
                                     bmp.Dispose();
                                 }));
                             }
+                            else if (storage.DeviceType.GetEnumName().Contains("420") && storage.DeviceType.GetEnumName().Contains("G"))
+                            {
+                                Bitmap bmp = null;
+                                bmp = Communication.EPD420G_GetBitmap(IP);
+                                Graphics g = Graphics.FromImage(bmp);
+                                g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
+                                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                g.CompositingQuality = CompositingQuality.HighQuality;
+                                g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                                g.Dispose();
+
+                                taskList.Add(Task.Run(() =>
+                                {
+                                    DrawToEpd_UDP(IP, Port, bmp);
+                                    bmp.Dispose();
+                                }));
+                            }
                             else if (storage.DeviceType.GetEnumName().Contains("290") && !storage.DeviceType.GetEnumName().Contains("G"))
                             {
                                 Bitmap bmp = null;

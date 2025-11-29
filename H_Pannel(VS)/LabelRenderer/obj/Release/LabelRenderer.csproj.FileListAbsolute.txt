@@ -169,4 +169,5 @@ C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\Label
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.csproj.CopyComplete
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.exe
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.pdb
-C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRenderer.csproj.CopyComplete
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\bin\Release\stdole.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\LabelRenderer\obj\Release\LabelRen.AACE8D66.Up2Date

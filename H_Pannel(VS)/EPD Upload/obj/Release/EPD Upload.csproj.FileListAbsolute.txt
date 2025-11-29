@@ -365,5 +365,5 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SQLUI.dl
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\H_Pannel_lib.pdb
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\H_Pannel_lib.dll
 C:\Users\user\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\SQLUI.dll
-C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.csproj.CopyComplete
 C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EPD Upload\bin\Release\H_Pannel_lib.pdb
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EPD Upload\obj\Release\EPD Upload.csproj.Up2Date

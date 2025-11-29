@@ -60,8 +60,8 @@ void sub_UDP_Send()
          #endif
          #ifdef FADC
          doc["FADC_lokerInput"] = flag_FADC_lokerInput;
-         doc["FADC_lokerInput"] = flag_FADC_lokerInput;
          doc["FADC_buttonInput"] = flag_FADC_buttonInput;
+         doc["FADC_motorCnt"] = cnt_FADC_motor;
          #endif
          
          JsonOutput = "";

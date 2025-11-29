@@ -43,6 +43,9 @@ namespace H_Pannel_lib
         public bool LASER_ON { get => lASER_ON; set => lASER_ON = value; }
         public float dht_h { get => _dht_h; set => _dht_h = value; }
         public float dht_t { get => _dht_t; set => _dht_t = value; }
+        public int FADC_motorCnt { get; set; }
+        public bool FADC_lokerInput { get; set; }
+        public bool FADC_buttonInput { get; set; }
 
     }
 
