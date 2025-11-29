@@ -166,6 +166,7 @@ void FADC_MotorTrigger()
        flag_FADC_motorOutput = false;
        mcp.digitalWrite(DC_MOTOR_OUTPUT , true);
        flag_FADC_motorTrigger = false;
+       flag_JsonSend = true;
     }
 }
 #endif

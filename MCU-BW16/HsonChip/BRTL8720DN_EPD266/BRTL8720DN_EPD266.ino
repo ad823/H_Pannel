@@ -126,6 +126,9 @@ void loop()
       #if defined(B_Drawer)
       wiFiConfig.Set_Localport(29005);
       wiFiConfig.Set_Serverport(30005);
+      #elif defined(PowerReset)
+      wiFiConfig.Set_Localport(29005);
+      wiFiConfig.Set_Serverport(30005);
       #elif defined(OLCD_114)
       wiFiConfig.Set_Localport(29008);
       wiFiConfig.Set_Serverport(30008);
@@ -176,7 +179,13 @@ void loop()
    {
      if(flag_PowerReset == false && MyTimer_PowerReset.IsTimeOut())
      {
-         SetOutputPINTrigger(1 , true);
+         SetOutputPIN(1, true);
+         delay(3000);
+         SetOutputPIN(1, false);
+         delay(1000);
+         SetOutputPIN(1, true);
+         delay(1000);
+         SetOutputPIN(1, false);
          flag_PowerReset = true;
      }
    }

@@ -37,6 +37,9 @@ void sub_UDP_Send()
       if(UDP_Send_Timer.IsTimeOut() || flag_JsonSend)
       {
          doc["Version"] = VERSION;
+         #if defined(PowerReset)
+         doc["Model"] = "PowerReset";
+         #endif
          #ifdef EPD_TYPE
          doc["EPD_TYPE"] = EPD_TYPE;
          #endif
