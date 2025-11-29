@@ -256,29 +256,40 @@ void WiFiConfig::WIFI_Connenct()
     String s1 = this->Get_SSID_Str();
     String s2 = this->Get_Password_Str();
     
-    if (s1.length() > 32) s1 = s1.substring(0, 32);
-    if (s2.length() > 64) s2 = s2.substring(0, 64);
+    if (s1.length() > 20) s1 = s1.substring(0, 20);
+    if (s2.length() > 20) s2 = s2.substring(0, 20);
     
-    s1.toCharArray(ssid, 33);
-    s2.toCharArray(password, 65);
+    s1.toCharArray(ssid, 21);
+    s2.toCharArray(password, 21);
     
     // ★ 檢查是否有無效 byte
-    for (int i = 0; i < 33; i++) {
-        if ((uint8_t)ssid[i] == 0xFF || (uint8_t)ssid[i] == 0xFE) {
-//            mySerial->println("[ERROR] SSID 有 0xFF 或 0xFE，資料來源錯誤！");
-//            mySerial->print("位置：");
-//            mySerial->println(i);
+    for (int i = 0; i < 21; i++) 
+    {
+        if ((uint8_t)ssid[i] == 0xFF || (uint8_t)ssid[i] == 0xFE) 
+        {
             delay(1000);
             return;
         }
     }
-
+   for (int i = 0; i < 21; i++) 
+   {
+        if ((uint8_t)password[i] == 0xFF || (uint8_t)password[i] == 0xFE) 
+        {
+            delay(1000);
+            return;
+        }
+    }
     // ---------------------------------------------------------
     // 不重啟 WiFi，只重新 WiFi.begin()
     // ---------------------------------------------------------
     mySerial->println("[開始 WiFi.begin()]");
-    WiFi.begin(ssid, password);
+    mySerial->print("ssid : ");
+    mySerial->println(ssid);
+    mySerial->print("password : ");
+    mySerial->println(password);
 
+    WiFi.begin(ssid, password);
+    mySerial->println("[完成 WiFi.begin()]");
     int retry = 0;
     while (WiFi.status() != WL_CONNECTED)
     {

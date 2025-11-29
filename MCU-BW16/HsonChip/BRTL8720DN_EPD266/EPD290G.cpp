@@ -168,17 +168,18 @@ void EPD290G::Wakeup()
 void EPD290G::WaitUntilIdle() 
 {
     mySerial -> println("WaitUntilIdle....");
-    while(!digitalRead(this -> PIN_BUSY))
-    {
-       delay(10);
-       
-    }
+    delay(200);
+//    while(!digitalRead(this -> PIN_BUSY))
+//    {
+//       delay(10);
+//       
+//    }
     mySerial -> println("WaitUntilIdle OK....");
 }
 
 void EPD290G::SPI_Begin() 
 {
-    SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE0));
+    SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
 }
 
 void EPD290G::SetCursor(int Xstart, int Ystart)
