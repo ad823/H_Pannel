@@ -853,7 +853,7 @@ namespace H_Pannel_lib
                     MyTimer myTimer = new MyTimer();
                     myTimer.StartTickTime(50000);
 
-                    _bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    _bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
 
                     int frameDIV = 4;
                     bool flag_OK;
@@ -8627,6 +8627,40 @@ namespace H_Pannel_lib
 
                 g.FillRectangle(new SolidBrush(Color.Red), new RectangleF(296 - (20 * 1), 128 - (20 * 1), 20, 20));
                 g.FillRectangle(new SolidBrush(Color.Black), new RectangleF(296 - (20 * 2), 128 - (20 * 1), 20, 20));
+
+                g.Dispose();
+            }
+
+            return bitmap;
+        }
+        static public Bitmap EPD290G_GetBitmap(string IP)
+        {
+            Bitmap bitmap = new Bitmap(296, 128);
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                g.FillRectangle(new SolidBrush(Color.White), new RectangleF(0, 0, bitmap.Width, bitmap.Height));
+
+                using (Bitmap bitmap_text = Communication.TextToBitmap("鴻森智能科技股份有限公司", new Font("標楷體", 12), 1.0, 296, 30, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Center))
+                {
+                    g.DrawImage(bitmap_text, 30, (bitmap.Height - bitmap_text.Height) / 2 - 10, bitmap_text.Width, bitmap_text.Height);
+                }
+                using (Bitmap bitmap_text = Communication.TextToBitmap("HONGSEN Intelligent Technology Co.,Ltd.", new Font("微軟正黑體", 7), 1.0, 200, 10, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Center))
+                {
+                    g.DrawImage(bitmap_text, 75, 65, bitmap_text.Width, bitmap_text.Height);
+                }
+                using (Bitmap bitmap_text = Communication.TextToBitmap(IP, new Font("微軟正黑體", 10, FontStyle.Bold), 1.0, 296, 30, Color.Black, Color.White, 0, 0, Color.White, HorizontalAlignment.Left))
+                {
+                    g.DrawImage(bitmap_text, 10, bitmap.Height - 30, bitmap_text.Width, bitmap_text.Height);
+                }
+                g.DrawImage(DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LOGO_BR, DitheringProcessor.DitheringMode.FourColor), 15, (bitmap.Height - 70) / 2, 60, 60);
+
+                g.FillRectangle(new SolidBrush(Color.Red), new RectangleF(296 - (20 * 1), 128 - (20 * 1), 20, 20));
+                g.FillRectangle(new SolidBrush(Color.Black), new RectangleF(296 - (20 * 2), 128 - (20 * 1), 20, 20));
+                g.FillRectangle(new SolidBrush(Color.Yellow), new RectangleF(296 - (20 * 3), 128 - (20 * 1), 20, 20));
 
                 g.Dispose();
             }

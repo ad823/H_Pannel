@@ -138,14 +138,14 @@ namespace WT32_SC01
 
         private void PictureBox_test_Click(object sender, EventArgs e)
         {
-            pictureBox_test.Image = Communication.EPD290_GetBitmap("192.168.40.10");
+            pictureBox_test.Image = Communication.EPD290G_GetBitmap("192.168.40.10");
         }
 
         int index = 0;
         private void RJ_Button_lcD114_Panel_Write_MouseDownEvent(MouseEventArgs mevent)
         {
             Font font = new Font("標楷體", 80, FontStyle.Bold);
-            lcD114_Panel.DrawImage("192.168.40.150", 29008, index.ToString("000"), font, Color.White, Color.Red);
+            lcD114_Panel.DrawImage("192.168.40.10", 29008, index.ToString("000"), font, Color.White, Color.Red);
             index++;
         }
 

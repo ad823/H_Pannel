@@ -156,7 +156,7 @@ namespace H_Pannel_lib
                 string bmt_tag = bitmap.GetTag();
                 if (bmt_tag.StringIsEmpty() == false)
                 {
-                    if (bmt_tag.Contains("EPD420G"))
+                    if (bmt_tag.Contains("420G"))
                     {
                         flag_ok = Communication.EPD_420G_DrawImage(uDP_Class, IP, bitmap);
                         return flag_ok;
@@ -164,7 +164,7 @@ namespace H_Pannel_lib
                 }
                 if (bmt_tag.StringIsEmpty() == false)
                 {
-                    if (bmt_tag.Contains("EPD290G"))
+                    if (bmt_tag.Contains("290G"))
                     {
                         flag_ok = Communication.EPD_290G_DrawImage(uDP_Class, IP, bitmap);
                         return flag_ok;
@@ -664,6 +664,23 @@ namespace H_Pannel_lib
                                 g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
                                 g.Dispose();
 
+                                taskList.Add(Task.Run(() =>
+                                {
+                                    DrawToEpd_UDP(IP, Port, bmp);
+                                    bmp.Dispose();
+                                }));
+                            }
+                            else if (storage.DeviceType.GetEnumName().Contains("290") && storage.DeviceType.GetEnumName().Contains("G"))
+                            {
+                                Bitmap bmp = null;
+                                bmp = Communication.EPD290G_GetBitmap(IP);
+                                Graphics g = Graphics.FromImage(bmp);
+                                g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
+                                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                g.CompositingQuality = CompositingQuality.HighQuality;
+                                g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                                g.Dispose();
+                                bmp.SetTag("290G");
                                 taskList.Add(Task.Run(() =>
                                 {
                                     DrawToEpd_UDP(IP, Port, bmp);
