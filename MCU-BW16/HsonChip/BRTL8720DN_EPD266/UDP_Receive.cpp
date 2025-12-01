@@ -330,6 +330,10 @@ void HandleUdpCommand()
                  bytes[i * 3 + 0 + 0] = *(UdpRead + 4 + i * 3 + 0);     // 将光带上第1个LED灯珠的RGB数值中R数值设置为255
                  bytes[i * 3 + 0 + 1] = *(UdpRead + 4 + i * 3 + 1);   // 将光带上第1个LED灯珠的RGB数值中G数值设置为255
                  bytes[i * 3 + 0 + 2] = *(UdpRead + 4 + i * 3 + 2);      // 将光带上第1个LED灯珠的RGB数值中B数值设置为0      
+
+                 myWS2812.rgbBuffer[i * 3 + 0 + 0] = *(UdpRead + 4 + i * 3 + 0);
+                 myWS2812.rgbBuffer[i * 3 + 0 + 1] = *(UdpRead + 4 + i * 3 + 1);
+                 myWS2812.rgbBuffer[i * 3 + 0 + 2] = *(UdpRead + 4 + i * 3 + 2);
               }  
               myWS2812.Show(bytes ,numofLED );
               flag_WS2812B_breathing_ON_OFF = false;
@@ -393,10 +397,14 @@ void HandleUdpCommand()
             if(num > NUM_WS2812B_CRGB * 3) num = NUM_WS2812B_CRGB * 3;
             if(flag_udp_232back)printf("Get WS2812 Buffer\n");
             if(flag_udp_232back)printf("num : %d\n", num);
-//            for(int i = 0 ; i < num ; i++)
-//            {
-//                Serial.println(*(myWS2812.rgbBuffer + i));
-//            }
+            if(flag_udp_232back)
+            {
+              for(int i = 0 ; i < num ; i++)
+              {
+                 mySerial.println(*(myWS2812.rgbBuffer + i));
+              }
+            }
+
             Send_Bytes(myWS2812.rgbBuffer, num ,remoteIP, remotePort);                    
           }
           else if(*(UdpRead + 1) == 'B')

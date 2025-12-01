@@ -6,9 +6,9 @@
 #define NUM_OF_LEDS NUM_WS2812B_CRGB
 #define SYSTEM_LED_PIN PA30
 
-#define FADC
+//#define FADC
 //#define DrawerMCP23008
-//#define B_Drawer
+#define B_Drawer
 //#define DrawerHandSensor
 //#define MCP23008
 //#define PowerReset
