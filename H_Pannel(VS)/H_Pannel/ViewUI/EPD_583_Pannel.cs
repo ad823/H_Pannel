@@ -29,6 +29,8 @@ namespace H_Pannel_lib
             SaveToJPG,
             合併儲位,
             分割儲位,
+            背景顏色選擇,
+            字體顏色選擇,
             面板亮燈,
             儲位亮燈,         
             全部亮燈測試,
@@ -576,6 +578,80 @@ namespace H_Pannel_lib
                         }
 
                     }
+                    else if (dialog_ContextMenuStrip.Value == ContextMenuStrip_Main.分割儲位.GetEnumName())
+                    {
+                        this.SeparateBoxes();
+                    }
+                    else if (dialog_ContextMenuStrip.Value == ContextMenuStrip_Main.背景顏色選擇.GetEnumName())
+                    {
+                        if (currentDrawer.DeviceType == DeviceType.EPD730E || currentDrawer.DeviceType == DeviceType.EPD730E_lock)
+                        {
+                            int col;
+                            int row;
+                            if (this.Select_Column.Count <= 1) return;
+
+                            Dialog_7color_select dialog_7Color_Select = new Dialog_7color_select(Color.White);
+                            if (dialog_7Color_Select.ShowDialog() != DialogResult.Yes) return;
+
+                            List<int[]> list_Col_Row = new List<int[]>();
+
+                            for (int i = 0; i < this.Select_Column.Count; i++)
+                            {
+                                list_Col_Row.Add(new int[] { Select_Column[i], Select_Row[i] });
+                            }
+                            list_Col_Row.Sort(new IcpCol());
+
+
+                            for (int i = 0; i < list_Col_Row.Count; i++)
+                            {
+                                col = list_Col_Row[i][0];
+                                row = list_Col_Row[i][1];
+                                this.CurrentDrawer.Boxes[col][row].BackColor = dialog_7Color_Select.Value;
+                            }
+                            this.DrawToPictureBox(this.CurrentDrawer);
+                            if (DrawerChangeEvent != null)
+                            {
+                                DrawerChangeEvent(this.CurrentDrawer);
+                            }
+                        }
+
+                    }
+                    else if (dialog_ContextMenuStrip.Value == ContextMenuStrip_Main.字體顏色選擇.GetEnumName())
+                    {
+                        if (currentDrawer.DeviceType == DeviceType.EPD730E || currentDrawer.DeviceType == DeviceType.EPD730E_lock)
+                        {
+                            int col;
+                            int row;
+                            if (this.Select_Column.Count <= 1) return;
+
+                            Dialog_7color_select dialog_7Color_Select = new Dialog_7color_select(Color.White);
+                            if (dialog_7Color_Select.ShowDialog() != DialogResult.Yes) return;
+
+                            List<int[]> list_Col_Row = new List<int[]>();
+
+                            for (int i = 0; i < this.Select_Column.Count; i++)
+                            {
+                                list_Col_Row.Add(new int[] { Select_Column[i], Select_Row[i] });
+                            }
+                            list_Col_Row.Sort(new IcpCol());
+
+
+                            for (int i = 0; i < list_Col_Row.Count; i++)
+                            {
+                                col = list_Col_Row[i][0];
+                                row = list_Col_Row[i][1];
+                                this.CurrentDrawer.Boxes[col][row].Name_ForeColor = dialog_7Color_Select.Value;
+                                this.CurrentDrawer.Boxes[col][row].Code_ForeColor = dialog_7Color_Select.Value;
+                                this.CurrentDrawer.Boxes[col][row].Validity_period_ForeColor = dialog_7Color_Select.Value;
+                            }
+                            this.DrawToPictureBox(this.CurrentDrawer);
+                            if (DrawerChangeEvent != null)
+                            {
+                                DrawerChangeEvent(this.CurrentDrawer);
+                            }
+                        }
+
+                    }
                     else if (dialog_ContextMenuStrip.Value == ContextMenuStrip_Main.SaveToJPG.GetEnumName())
                     {
                         if (this.saveFileDialog_jpg.ShowDialog() != DialogResult.OK)
@@ -588,11 +664,7 @@ namespace H_Pannel_lib
                             ((Image)bitmap).SaveJpeg(this.saveFileDialog_jpg.FileName, 90);
                         }
 
-                    }
-                    else if (dialog_ContextMenuStrip.Value == ContextMenuStrip_Main.分割儲位.GetEnumName())
-                    {
-                        this.SeparateBoxes();
-                    }
+                    }                 
                     else if (dialog_ContextMenuStrip.Value == ContextMenuStrip_Main.面板亮燈.GetEnumName())
                     {
                         List<Task> taskList = new List<Task>();

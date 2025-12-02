@@ -23,6 +23,7 @@ namespace H_Pannel_lib
             庫存,
             單位,
             條碼,
+            QRCode,
             圖片1,
             圖片2,
             文本1,

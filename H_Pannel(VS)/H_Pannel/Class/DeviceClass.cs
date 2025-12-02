@@ -708,6 +708,21 @@ namespace H_Pannel_lib
             }
         }
 
+        private string _QRCode = "";
+        public string QRCode
+        {
+            get
+            {
+                if (_QRCode.StringIsEmpty()) return Code;
+                return _QRCode;
+            }
+            set
+            {
+                if (_QRCode != value) flag_replace = true;
+                _QRCode = value;
+            }
+        }
+
         private string _CustomText1 = "";
         public string CustomText1 
         {
@@ -1632,6 +1647,7 @@ namespace H_Pannel_lib
             最小包裝單位,
             最小包裝單位數量,
             BarCode,
+            QRCode,
             CustomText1,
             CustomText2,
             CustomText3,
@@ -2406,6 +2422,62 @@ namespace H_Pannel_lib
                         else if (valueType == ValueType.Visable)
                         {
                             if (Value is bool) this.BarCode_Visable = (bool)Value;
+                        }
+                        break;
+                    }
+                case ValueName.QRCode:
+                    {
+                        if (valueType == ValueType.Value)
+                        {
+                            if (Value is string) this.QRCode = (string)Value;
+                        }
+                        else if (valueType == ValueType.Title)
+                        {
+                            if (Value is string) this.QRCode_Title = (string)Value;
+                        }
+                        else if (valueType == ValueType.Font)
+                        {
+                            if (Value is Font) this.QRCode_font = (Font)Value;
+                        }
+                        else if (valueType == ValueType.ForeColor)
+                        {
+                            if (Value is Color) this.QRCode_ForeColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.BackColor)
+                        {
+                            if (Value is Color) this.QRCode_BackColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.Position)
+                        {
+                            if (Value is Point) this.QRCode_Position = (Point)Value;
+                        }
+                        else if (valueType == ValueType.Width)
+                        {
+                            if (Value is int) this.QRCode_Width = (int)Value;
+                        }
+                        else if (valueType == ValueType.Height)
+                        {
+                            if (Value is int) this.QRCode_Height = (int)Value;
+                        }
+                        else if (valueType == ValueType.BorderSize)
+                        {
+                            if (Value is int) this.QRCode_BorderSize = (int)Value;
+                        }
+                        else if (valueType == ValueType.BorderRadius)
+                        {
+                            if (Value is int) this.QRCode_BorderRadius = (int)Value;
+                        }
+                        else if (valueType == ValueType.BorderColor)
+                        {
+                            if (Value is Color) this.QRCode_BorderColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.HorizontalAlignment)
+                        {
+                            if (Value is HorizontalAlignment) this.QRCode_HorizontalAlignment = (HorizontalAlignment)Value;
+                        }
+                        else if (valueType == ValueType.Visable)
+                        {
+                            if (Value is bool) this.QRCode_Visable = (bool)Value;
                         }
                         break;
                     }
@@ -3301,6 +3373,32 @@ namespace H_Pannel_lib
                         ////if (vlaueClass.Height < size.Height) vlaueClass.Height = size.Height;
                         break;
                     }
+                case ValueName.QRCode:
+                    {
+                        vlaueClass.valueName = valueName;
+                        vlaueClass.Title = this.QRCode_Title;
+                        vlaueClass.Value = this.QRCode;
+                        vlaueClass.Font = this.QRCode_font;
+                        vlaueClass.ForeColor = this.QRCode_ForeColor;
+                        vlaueClass.BackColor = this.QRCode_BackColor;
+                        vlaueClass.Position = this.QRCode_Position;
+                        vlaueClass.Width = this.QRCode_Width;
+                        vlaueClass.Height = this.QRCode_Height;
+                        vlaueClass.HorizontalAlignment = this.QRCode_HorizontalAlignment;
+                        vlaueClass.BorderSize = this.QRCode_BorderSize;
+                        vlaueClass.BorderRadius = this.QRCode_BorderRadius;
+                        vlaueClass.BorderColor = this.QRCode_BorderColor;
+                        vlaueClass.Visable = this.QRCode_Visable;
+
+                        if (vlaueClass.Value.StringIsEmpty())
+                        {
+                            vlaueClass.Value = "None";
+                        }
+                        ////Size size = TextRenderer.MeasureText(vlaueClass.Value, vlaueClass.Font);
+                        ////if (vlaueClass.Width < size.Width) vlaueClass.Width = size.Width;
+                        ////if (vlaueClass.Height < size.Height) vlaueClass.Height = size.Height;
+                        break;
+                    }
                 case ValueName.圖片1:
                     {
                         vlaueClass.valueName = valueName;
@@ -3450,12 +3548,15 @@ namespace H_Pannel_lib
         {
             VlaueClass vlaueClass = this.GetValue(valueName);
 
-            if (valueName == ValueName.BarCode)
+            if (valueName == ValueName.BarCode || valueName == ValueName.QRCode)
             {
 
                 Size Rect_Size = new Size((int)(vlaueClass.Width * bmp_Scale), (int)(vlaueClass.Height * bmp_Scale));
 
-                Bitmap bitmap = Communication.CreateBarCode(vlaueClass.Value, Rect_Size.Width, Rect_Size.Height);
+                Bitmap bitmap = null;
+                if (valueName == ValueName.BarCode) bitmap = Communication.CreateBarCode(vlaueClass.Value, Rect_Size.Width, Rect_Size.Height);
+                else bitmap = Communication.CreateQRCode(vlaueClass.Value, Rect_Size.Width, Rect_Size.Height);
+
                 if (bitmap != null)
                 {
                     using (Graphics g = Graphics.FromImage(bitmap))
@@ -3613,6 +3714,7 @@ namespace H_Pannel_lib
             if (text == "最小包裝單位數量" || text == "最小單位數量") return ValueName.最小包裝單位數量;
             if (text.ToUpper() == "BarCode".ToUpper() || text.Contains("條碼")) return ValueName.BarCode;
             if (text == "儲位名稱") return ValueName.儲位名稱;
+            if (text == "QRCode") return ValueName.QRCode;
             if (text == "IP") return ValueName.IP;
             if (text == "Port") return ValueName.Port;
             if (text == "最大存量") return ValueName.最大存量;
@@ -4869,6 +4971,69 @@ namespace H_Pannel_lib
         private HorizontalAlignment _CustomText3_HorizontalAlignment = HorizontalAlignment.Left;
         public HorizontalAlignment CustomText3_HorizontalAlignment { get => _CustomText3_HorizontalAlignment; set => _CustomText3_HorizontalAlignment = value; }
         #endregion
+        #region QRCode
+        private string _QRCode_Title = "";
+        public string QRCode_Title { get => _QRCode_Title; set => _QRCode_Title = value; }
+
+        [JsonIgnore]
+        public Font QRCode_font
+        {
+            get
+            {
+                return FontSerializationHelper.FromString(_QRCode_font_Serialize);
+            }
+            set
+            {
+                _QRCode_font_Serialize = FontSerializationHelper.ToString(value);
+            }
+        }
+        private string _QRCode_font_Serialize = "微軟正黑體:14:Bold:Point:1:False";
+        [Browsable(false)]
+        public string QRCode_font_Serialize
+        {
+            get { return _QRCode_font_Serialize; }
+            set { _QRCode_font_Serialize = value; }
+        }
+        [JsonIgnore]
+        public Color QRCode_BackColor = Color.White;
+        [Browsable(false)]
+        public string QRCode_BackColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(QRCode_BackColor); }
+            set { QRCode_BackColor = ColorSerializationHelper.FromString(value); }
+        }
+        [JsonIgnore]
+        public Color QRCode_ForeColor = Color.Black;
+        [Browsable(false)]
+        public string QRCode_ForeColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(QRCode_ForeColor); }
+            set { QRCode_ForeColor = ColorSerializationHelper.FromString(value); }
+        }
+        private Point _QRCode_Position = new Point();
+        public Point QRCode_Position { get => _QRCode_Position; set => _QRCode_Position = value; }
+        private bool _QRCode_Visable = true;
+        public bool QRCode_Visable { get => _QRCode_Visable; set => _QRCode_Visable = value; }
+        private int _QRCode_Width = 200;
+        public int QRCode_Width { get => _QRCode_Width; set => _QRCode_Width = value; }
+        private int _QRCode_Height = 100;
+        public int QRCode_Height { get => _QRCode_Height; set => _QRCode_Height = value; }
+        private int _QRCode_BorderSize = 2;
+        public int QRCode_BorderSize { get => _QRCode_BorderSize; set => _QRCode_BorderSize = value; }
+        private int _QRCode_BorderRadius = 0;
+        public int QRCode_BorderRadius { get => _QRCode_BorderRadius; set => _QRCode_BorderRadius = value; }
+        [JsonIgnore]
+        public Color QRCode_BorderColor = Color.Black;
+        [Browsable(false)]
+        public string QRCode_BorderColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(QRCode_BorderColor); }
+            set { QRCode_BorderColor = ColorSerializationHelper.FromString(value); }
+        }
+        private HorizontalAlignment _QRCode_HorizontalAlignment = HorizontalAlignment.Left;
+        public HorizontalAlignment QRCode_HorizontalAlignment { get => _QRCode_HorizontalAlignment; set => _QRCode_HorizontalAlignment = value; }
+        #endregion
+
 
         [JsonIgnore]
         public Color BackColor = Color.White;

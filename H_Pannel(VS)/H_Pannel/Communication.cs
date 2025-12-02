@@ -8073,6 +8073,13 @@ namespace H_Pannel_lib
                             g_buf.DrawImage(bitmap_barcode, (Pannel_Width - storage.BarCode_Width) / 2, storage.PanelSize.Height - storage.BarCode_Height);
                             bitmap_barcode.Dispose();
                         }
+                        //if (storage.QRCode_Visable)
+                        //{
+                        //    Bitmap bitmap_barcode = Communication.CreateQRCode($"{storage.QRCode_Title}", storage.QRCode_Width, storage.QRCode_Height);
+
+                        //    g_buf.DrawImage(bitmap_barcode, (Pannel_Width - storage.QRCode_Width) / 2, storage.PanelSize.Height - storage.QRCode_Height);
+                        //    bitmap_barcode.Dispose();
+                        //}
                     }
                      bitmap_buf = Communication.ScaleImage(bitmap, (int)(storage.PanelSize.Width * scale), (int)(storage.PanelSize.Height * scale));
                 

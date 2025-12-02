@@ -93,6 +93,9 @@ namespace H_Pannel_lib
             this.rJ_Lable1 = new MyUI.RJ_Lable();
             this.comboBox_選擇項目 = new System.Windows.Forms.ComboBox();
             this.fontDialog = new System.Windows.Forms.FontDialog();
+            this.checkBox_QRCode = new System.Windows.Forms.CheckBox();
+            this.textBox_邊框圓角 = new System.Windows.Forms.TextBox();
+            this.rJ_Lable7 = new MyUI.RJ_Lable();
             this.panel1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -429,6 +432,7 @@ namespace H_Pannel_lib
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox_QRCode);
             this.groupBox1.Controls.Add(this.panel3);
             this.groupBox1.Controls.Add(this.panel4);
             this.groupBox1.Controls.Add(this.checkBox_文本3);
@@ -703,6 +707,8 @@ namespace H_Pannel_lib
             // 
             // panel_邊框大小
             // 
+            this.panel_邊框大小.Controls.Add(this.textBox_邊框圓角);
+            this.panel_邊框大小.Controls.Add(this.rJ_Lable7);
             this.panel_邊框大小.Controls.Add(this.textBox_邊框大小);
             this.panel_邊框大小.Controls.Add(this.rJ_Lable6);
             this.panel_邊框大小.Dock = System.Windows.Forms.DockStyle.Top;
@@ -957,6 +963,45 @@ namespace H_Pannel_lib
             this.comboBox_選擇項目.Size = new System.Drawing.Size(353, 35);
             this.comboBox_選擇項目.TabIndex = 1;
             // 
+            // checkBox_QRCode
+            // 
+            this.checkBox_QRCode.AutoSize = true;
+            this.checkBox_QRCode.Location = new System.Drawing.Point(279, 28);
+            this.checkBox_QRCode.Name = "checkBox_QRCode";
+            this.checkBox_QRCode.Size = new System.Drawing.Size(93, 25);
+            this.checkBox_QRCode.TabIndex = 28;
+            this.checkBox_QRCode.Text = "QRCode";
+            this.checkBox_QRCode.UseVisualStyleBackColor = true;
+            // 
+            // textBox_邊框圓角
+            // 
+            this.textBox_邊框圓角.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.textBox_邊框圓角.Location = new System.Drawing.Point(391, 11);
+            this.textBox_邊框圓角.Name = "textBox_邊框圓角";
+            this.textBox_邊框圓角.Size = new System.Drawing.Size(76, 33);
+            this.textBox_邊框圓角.TabIndex = 11;
+            // 
+            // rJ_Lable7
+            // 
+            this.rJ_Lable7.BackColor = System.Drawing.Color.White;
+            this.rJ_Lable7.BackgroundColor = System.Drawing.Color.White;
+            this.rJ_Lable7.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.rJ_Lable7.BorderRadius = 10;
+            this.rJ_Lable7.BorderSize = 0;
+            this.rJ_Lable7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.rJ_Lable7.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.rJ_Lable7.ForeColor = System.Drawing.Color.Transparent;
+            this.rJ_Lable7.GUID = "";
+            this.rJ_Lable7.Location = new System.Drawing.Point(259, 7);
+            this.rJ_Lable7.Name = "rJ_Lable7";
+            this.rJ_Lable7.ShadowColor = System.Drawing.Color.DimGray;
+            this.rJ_Lable7.ShadowSize = 0;
+            this.rJ_Lable7.Size = new System.Drawing.Size(113, 40);
+            this.rJ_Lable7.TabIndex = 10;
+            this.rJ_Lable7.Text = "邊框圓角";
+            this.rJ_Lable7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rJ_Lable7.TextColor = System.Drawing.Color.Black;
+            // 
             // EPD420_Paint_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1062,5 +1107,8 @@ namespace H_Pannel_lib
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox_圖片1;
+        private System.Windows.Forms.CheckBox checkBox_QRCode;
+        private System.Windows.Forms.TextBox textBox_邊框圓角;
+        private MyUI.RJ_Lable rJ_Lable7;
     }
 }

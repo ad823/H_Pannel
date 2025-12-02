@@ -193,6 +193,7 @@ namespace H_Pannel_lib
             ComboBox_圖形編輯_編輯內容名稱_SelectedIndexChanged(null, null);
             this.button_字體.Click += Button_字體_Click;
             this.textBox_邊框大小.Click += TextBox_邊框大小_Click;
+            this.textBox_邊框圓角.Click += TextBox_邊框圓角_Click;
             this.rJ_Pannel_文字背景顏色.Click += RJ_Pannel_文字背景顏色_Click;
             this.rJ_Pannel_邊框顏色.Click += RJ_Pannel_邊框顏色_Click;
             this.rJ_Pannel_字體顏色.Click += RJ_Pannel_字體顏色_Click;
@@ -221,6 +222,7 @@ namespace H_Pannel_lib
             this.checkBox_庫存.Checked = currentStorage.Inventory_Visable;
             this.checkBox_單位.Checked = currentStorage.Package_Visable;
             this.checkBox_條碼.Checked = currentStorage.BarCode_Visable;
+            this.checkBox_QRCode.Checked = currentStorage.QRCode_Visable;
             this.checkBox_文本1.Checked = currentStorage.CustomText1_Visable;
             this.checkBox_文本2.Checked = currentStorage.CustomText2_Visable;
             this.checkBox_文本3.Checked = currentStorage.CustomText3_Visable;
@@ -237,6 +239,7 @@ namespace H_Pannel_lib
             this.checkBox_文本1.CheckedChanged += CheckBox_CheckedChanged;
             this.checkBox_文本2.CheckedChanged += CheckBox_CheckedChanged;
             this.checkBox_文本3.CheckedChanged += CheckBox_CheckedChanged;
+            this.checkBox_QRCode.CheckedChanged += CheckBox_CheckedChanged;
             rJ_Pannel_背景顏色.BackgroundColor = CurrentStorage.BackColor;
 
             this.comboBox_圖片1.DataSource = new enum_PictureType().GetEnumNames();
@@ -285,6 +288,15 @@ namespace H_Pannel_lib
             this.DrawToPictureBox();
         }
 
+        private void TextBox_邊框圓角_Click(object sender, EventArgs e)
+        {
+            Dialog_NumPannel dialog_NumPannel = new Dialog_NumPannel();
+            dialog_NumPannel.ShowDialog();
+            this.textBox_邊框圓角.Text = dialog_NumPannel.Value.ToString();
+            Storage.ValueName valueName = (GetSelectValueName());
+            CurrentStorage.SetValue(valueName, Device.ValueType.BorderRadius, (int)dialog_NumPannel.Value);
+            this.DrawToPictureBox();
+        }
         private void ComboBox_圖形編輯_編輯內容名稱_SelectedIndexChanged(object sender, EventArgs e)
         {
             MainSelect = this.comboBox_選擇項目.SelectedIndex;
@@ -296,6 +308,8 @@ namespace H_Pannel_lib
         private void EPD420_Paint_Form_PanelSelectEvent(Device.ValueName valueName)
         {
             this.textBox_邊框大小.Text = CurrentStorage.GetValue(valueName).BorderSize.ToString();
+            this.textBox_邊框圓角.Text = CurrentStorage.GetValue(valueName).BorderRadius.ToString();
+
             textBox_字體.Text = CurrentStorage.GetValue(valueName).Font.ToFontString();
             rJ_Pannel_邊框顏色.BackgroundColor = CurrentStorage.GetValue(valueName).BorderColor;
             rJ_Pannel_字體顏色.BackgroundColor = CurrentStorage.GetValue(valueName).ForeColor;
