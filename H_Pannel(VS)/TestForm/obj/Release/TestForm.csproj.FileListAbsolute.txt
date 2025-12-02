@@ -113,7 +113,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\T
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.Properties.Resources.resources
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.csproj.GenerateResource.cache
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.csproj.Up2Date
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.exe
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.pdb
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\TestForm\bin\Release\TestForm.exe.config
@@ -175,3 +174,4 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.c
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.csproj.Up2Date
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.exe
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.pdb
+C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\TestForm\obj\Release\TestForm.csproj.CopyComplete

@@ -20,11 +20,15 @@ namespace H_Pannel_lib
         }
         public unsafe static Bitmap ApplyFloydSteinbergDithering(this Bitmap inputBmp, DitheringMode mode)
         {
-            if (mode == DitheringMode.None) { return inputBmp; }
+         
             int width = inputBmp.Width;
             int height = inputBmp.Height;
             Bitmap outputBmp = new Bitmap(width, height, inputBmp.PixelFormat);
-
+            if (mode == DitheringMode.None)
+            {
+                outputBmp = inputBmp;
+                return inputBmp;
+            }
             Color[] palette;
             if (mode == DitheringMode.SixColor)
             {

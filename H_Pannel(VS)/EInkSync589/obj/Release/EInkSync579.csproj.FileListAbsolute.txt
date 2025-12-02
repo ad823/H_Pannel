@@ -98,7 +98,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Releas
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\CallBackUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\MeasureSystemFunction.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\MVSDK.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\stdole.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\Basic.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\System.Buffers.xml
@@ -110,9 +109,7 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Releas
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\System.Threading.Tasks.Extensions.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\System.ValueTuple.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\SQLUI.xml
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync579.csproj.AssemblyReference.cache
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync579.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync.0EBEBEFA.Up2Date
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync589.exe
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync589.pdb
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\EInkSync589.exe.config
@@ -174,3 +171,5 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSyn
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync.0EBEBEFA.Up2Date
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync589.exe
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync589.pdb
+C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync579.csproj.CopyComplete
+C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync579.csproj.AssemblyReference.cache

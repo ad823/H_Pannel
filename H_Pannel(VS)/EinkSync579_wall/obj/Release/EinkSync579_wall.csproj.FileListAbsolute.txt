@@ -90,14 +90,11 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\bin\R
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\bin\Release\CallBackUI.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\bin\Release\MeasureSystemFunction.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\bin\Release\MVSDK.dll
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\bin\Release\stdole.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\bin\Release\Basic.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\bin\Release\SQLUI.xml
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\EinkSync579_wall.csproj.AssemblyReference.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\EinkSync579_wall.csproj.SuggestedBindingRedirects.cache
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\EinkSync579_wall.exe.config
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\EinkSync579_wall.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\EinkSync.2845A588.Up2Date
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\EinkSync579_wall.exe
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\EinkSync579_wall.pdb
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\bin\Release\EinkSync579_wall.exe.config
@@ -152,3 +149,4 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\Ei
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\EinkSync.2845A588.Up2Date
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\EinkSync579_wall.exe
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\EinkSync579_wall.pdb
+C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EinkSync579_wall\obj\Release\EinkSync579_wall.csproj.CopyComplete

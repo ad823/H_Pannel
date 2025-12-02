@@ -10400,7 +10400,7 @@ namespace H_Pannel_lib
 
             // 縮放
             bitmap = Communication.ScaleImage(bitmap, rect.Width, rect.Height);
-
+            if (bitmap == null) return;
             // 繪製圖片
             g.DrawImage(bitmap, rect);
 

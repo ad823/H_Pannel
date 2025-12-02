@@ -195,7 +195,6 @@ C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.WT32_GPADC.resources
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.csproj.GenerateResource.cache
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel.DC91EED3.Up2Date
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.dll
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.pdb
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\bin\Release\H_Pannel_lib.dll.config
@@ -298,3 +297,4 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_l
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel.DC91EED3.Up2Date
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.dll
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.pdb
+C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\H_Pannel\obj\Release\H_Pannel_lib.csproj.CopyComplete
