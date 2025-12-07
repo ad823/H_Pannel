@@ -53,9 +53,9 @@ namespace EinkSyncConsole
 
                                 //bmp_buf_.Save(savePath, System.Drawing.Imaging.ImageFormat.Bmp);
                                 Console.WriteLine($"✅ 已儲存處理圖片到桌面：{savePath}");
-                                UDP_Class uDP_Class = new UDP_Class(defaultIP, 29005, false);
+                                //UDP_Class uDP_Class = new UDP_Class(defaultIP, 29005, false);
 
-                                Communication.EPD_730E_DrawImage(uDP_Class, ip, bmp);
+                                //Communication.EPD_730E_DrawImage(uDP_Class, ip, bmp);
 
                                 ShowImage(new Bitmap(bmp_buf)); // 顯示處理後圖片
                                                                  // 儲存處理後圖片到桌面
