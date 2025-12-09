@@ -847,7 +847,15 @@ namespace H_Pannel_lib
             }
             return false;
         }
-
+        virtual public string Get_JsonStrin(string IP, int Port)
+        {
+            UDP_Class uDP_Class = List_UDP_Local.SortByPort(Port);
+            if (uDP_Class != null)
+            {
+                return Communication.Get_JsonStrin(uDP_Class, IP);
+            }
+            return "";
+        }
         public string Get_Version_UART()
         {
             return this.Get_Version_UART(mySerialPort.PortName);

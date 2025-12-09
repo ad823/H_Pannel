@@ -36,39 +36,9 @@ void sub_UDP_Send()
   {      
       if(UDP_Send_Timer.IsTimeOut() || flag_JsonSend)
       {
-         doc["Version"] = VERSION;
-         #if defined(PowerReset)
-         doc["Model"] = "PowerReset";
-         #endif
-         #ifdef EPD_TYPE
-         doc["EPD_TYPE"] = EPD_TYPE;
-         #endif
-         doc["IP"] = wiFiConfig.Get_IPAdress_Str();
-         doc["Port"] = wiFiConfig.Get_Localport();
-         doc["RSSI"] = wiFiConfig.GetRSSI();                
-         doc["Input"] = Input;
-         doc["Output"] = Output;
-         doc["Input_dir"] = Input_dir;
-         doc["Output_dir"] = Output_dir;        
-         doc["WS2812_State"] = myWS2812.IsON(200);    
-          
-         #ifdef HandSensor       
-         doc["LASER_ON_num"] = LASER_ON_num;
-         doc["LaserDistance"] = LaserDistance;  
-         doc["LASER_ON"] = LASER_ON;
-         #endif  
-         #ifdef DHTSensor
-         doc["dht_h"] = dht_h;
-         doc["dht_t"] = dht_t;
-         #endif
-         #ifdef FADC
-         doc["FADC_lokerInput"] = flag_FADC_lokerInput;
-         doc["FADC_buttonInput"] = flag_FADC_buttonInput;
-         doc["FADC_motorCnt"] = cnt_FADC_motor;
-         #endif
          
-         JsonOutput = "";
-         serializeJson(doc, JsonOutput);
+         Refresh_doc();
+         
          #ifdef MQTT
          #ifdef DHTSensor
          wiFiConfig.MQTT_publishMessage("DHTSensor" , JsonOutput.c_str() , false);  
@@ -87,4 +57,39 @@ void sub_UDP_Send()
   {
      cnt_UDP_Send = 65535;
   }
+}
+void Refresh_doc()
+{
+     doc["Version"] = VERSION;
+     #if defined(PowerReset)
+     doc["Model"] = "PowerReset";
+     #endif
+     #ifdef EPD_TYPE
+     doc["EPD_TYPE"] = EPD_TYPE;
+     #endif
+     doc["IP"] = wiFiConfig.Get_IPAdress_Str();
+     doc["Port"] = wiFiConfig.Get_Localport();
+     doc["RSSI"] = wiFiConfig.GetRSSI();                
+     doc["Input"] = Input;
+     doc["Output"] = Output;
+     doc["Input_dir"] = Input_dir;
+     doc["Output_dir"] = Output_dir;        
+     doc["WS2812_State"] = myWS2812.IsON(200);    
+      
+     #ifdef HandSensor       
+     doc["LASER_ON_num"] = LASER_ON_num;
+     doc["LaserDistance"] = LaserDistance;  
+     doc["LASER_ON"] = LASER_ON;
+     #endif  
+     #ifdef DHTSensor
+     doc["dht_h"] = dht_h;
+     doc["dht_t"] = dht_t;
+     #endif
+     #ifdef FADC
+     doc["FADC_lokerInput"] = flag_FADC_lokerInput;
+     doc["FADC_buttonInput"] = flag_FADC_buttonInput;
+     doc["FADC_motorCnt"] = cnt_FADC_motor;
+     #endif
+     JsonOutput = "";
+     serializeJson(doc, JsonOutput);
 }

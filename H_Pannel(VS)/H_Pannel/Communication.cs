@@ -124,6 +124,8 @@ namespace H_Pannel_lib
             Set_WS2812_Buffer_B = (byte)'#',
 
             Set_ADCMotorTrigger = (byte)'!',
+            Get_JsonString = (byte)'%',
+
 
             EPD_Set_Sleep = (byte)'a',
             EPD_Set_WakeUp = (byte)'b',
@@ -546,6 +548,10 @@ namespace H_Pannel_lib
         static public int EPD_Get_LaserDistance(UDP_Class uDP_Class, string IP)
         {
             return Command_EPD_Get_LaserDistance(uDP_Class, IP);
+        }
+        static public string Get_JsonStrin(UDP_Class uDP_Class, string IP)
+        {
+            return Command_Get_JsonString(uDP_Class, IP);
         }
         static public bool EPD_Set_Sleep(UDP_Class uDP_Class, string IP)
         {
@@ -4678,6 +4684,61 @@ namespace H_Pannel_lib
             }
             if (ConsoleWrite) Console.WriteLine($"{IP}:{uDP_Class.Port} : EPD Get LaserDistance {string.Format(flag_OK ? "sucess" : "failed")}!");
             return distance;
+        }
+        static private string Command_Get_JsonString(UDP_Class uDP_Class, string IP)
+        {
+            string json = "";
+            bool flag_OK = true;
+            byte checksum = 0;
+            List<byte> list_byte = new List<byte>();
+            list_byte.Add(2);
+            list_byte.Add((byte)UDP_Command.Get_JsonString);
+            list_byte.Add(3);
+            for (int i = 0; i < list_byte.Count; i++)
+            {
+                checksum += list_byte[i];
+            }
+            MyTimer MyTimer_UART_TimeOut = new MyTimer();
+            int retry = 0;
+            int cnt = 0;
+            while (true)
+            {
+                if (cnt == 0)
+                {
+                    if (retry >= UDP_RetryNum)
+                    {
+                        flag_OK = false;
+                        break;
+                    }
+                    uDP_Class.Set_ReadLineClearByIP(IP);
+                    uDP_Class.WriteByte(list_byte.ToArray(), IP);
+                    MyTimer_UART_TimeOut.TickStop();
+                    MyTimer_UART_TimeOut.StartTickTime(UDP_TimeOut);
+                    cnt++;
+                }
+                else if (cnt == 1)
+                {
+                    if (retry >= UDP_RetryNum)
+                    {
+                        flag_OK = false;
+                        break;
+                    }
+                    if (MyTimer_UART_TimeOut.IsTimeOut())
+                    {
+                        retry++;
+                        cnt = 0;
+                    }
+                    string UDP_RX = uDP_Class.Get_ReadLineByIP(IP);
+                    if (UDP_RX != "")
+                    {
+                        json = UDP_RX;
+                        break;
+                    }
+                }
+                System.Threading.Thread.Sleep(1);
+            }
+            if (ConsoleWrite) Console.WriteLine($"{IP}:{uDP_Class.Port} : Command_Get_JsonString {string.Format(flag_OK ? "sucess" : "failed")}!");
+            return json;
         }
         static private bool Command_EPD_Set_Sleep(UDP_Class uDP_Class, string IP)
         {

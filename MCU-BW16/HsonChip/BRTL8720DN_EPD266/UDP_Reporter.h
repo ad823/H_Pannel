@@ -20,5 +20,5 @@ extern int RSSI;
 
 // 外部函式
 void sub_UDP_Send();
-
+void Refresh_doc();
 #endif

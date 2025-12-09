@@ -216,8 +216,14 @@ void HandleUdpCommand()
           }  
           else if(*(UdpRead + 1) == 'g' && UdpRead_len == 3)
           {                                  
-             Send_String(str_distance , wiFiConfig.localport);
+             Send_StringTo(str_distance ,remoteIP, remotePort);
              if(flag_udp_232back)printf("LaserDistance : %d\n" ,str_distance);
+          } 
+          else if(*(UdpRead + 1) == '%' && UdpRead_len == 3)
+          {                
+             Refresh_doc();
+             Send_StringTo(JsonOutput ,remoteIP, remotePort);                  
+             if(flag_udp_232back)printf("Send JsonString : %d\n" ,JsonOutput);
           } 
           else if (*(UdpRead + 1) == 'h')
           {
