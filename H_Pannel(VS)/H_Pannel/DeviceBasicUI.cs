@@ -529,7 +529,7 @@ namespace H_Pannel_lib
             }
 
         }
-        public void Console_Init(string DataBaseName, string UserName, string Password, string IP, uint Port, MySql.Data.MySqlClient.MySqlSslMode SSLMode ,int serverPort , int localPort)
+        public void Console_Init(string DataBaseName, string UserName, string Password, string IP, uint Port, MySql.Data.MySqlClient.MySqlSslMode SSLMode ,int serverPort , int localPort, bool serverMode = true)
         {
             this.DataBaseName = DataBaseName;
             this.UserName = UserName;
@@ -545,7 +545,7 @@ namespace H_Pannel_lib
 
             this.sqL_DataGridView_UDP_DataReceive.Init(table_UDP_DataReceive, this.TableName);
             this.sqL_DataGridView_DeviceTable.Init(table_DeviceTable, this.TableName);
-            this.UDP_Class_Init(serverPort , localPort);
+            this.UDP_Class_Init(serverPort , localPort, serverMode);
         }
         public void InitEx(string DataBaseName, string UserName, string Password, string IP, uint Port, MySql.Data.MySqlClient.MySqlSslMode SSLMode)
         {
@@ -687,17 +687,17 @@ namespace H_Pannel_lib
   
 
         }
-        public void UDP_Class_Init(int serverPort, int localPort)
+        public void UDP_Class_Init(int serverPort, int localPort, bool serverMode = true)
         {
             if(serverPort > 0)
             {
-                UDP_Class uDP_Class_serverPort = new UDP_Class("0.0.0.0", serverPort);
+                UDP_Class uDP_Class_serverPort = new UDP_Class("0.0.0.0", serverPort, serverMode);
                 uDP_Class_serverPort.ConsoleWrite = false;
                 List_UDP_Server.Add(uDP_Class_serverPort);
             }
             if (localPort > 0)
             {
-                UDP_Class uDP_Class_localPort = new UDP_Class("0.0.0.0", localPort);
+                UDP_Class uDP_Class_localPort = new UDP_Class("0.0.0.0", localPort, serverMode);
                 uDP_Class_localPort.ConsoleWrite = false;
                 List_UDP_Local.Add(uDP_Class_localPort);
             }         

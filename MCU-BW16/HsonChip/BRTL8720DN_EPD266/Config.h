@@ -7,7 +7,7 @@
 #define SYSTEM_LED_PIN PA30
 
 //#define FADC
-//#define DrawerMCP23008
+#define DrawerMCP23008
 #define B_Drawer
 //#define DrawerHandSensor
 //#define MCP23008

@@ -54,6 +54,7 @@ namespace H_Pannel_lib
             this.button_對齊靠下 = new System.Windows.Forms.Button();
             this.button_對齊靠上 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox_QRCode = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox_圖片2 = new System.Windows.Forms.ComboBox();
@@ -76,6 +77,8 @@ namespace H_Pannel_lib
             this.panel8 = new System.Windows.Forms.Panel();
             this.rJ_Button_確定 = new MyUI.RJ_Button();
             this.panel_邊框大小 = new System.Windows.Forms.Panel();
+            this.textBox_邊框圓角 = new System.Windows.Forms.TextBox();
+            this.rJ_Lable7 = new MyUI.RJ_Lable();
             this.textBox_邊框大小 = new System.Windows.Forms.TextBox();
             this.rJ_Lable6 = new MyUI.RJ_Lable();
             this.panel_字體型態 = new System.Windows.Forms.Panel();
@@ -93,9 +96,6 @@ namespace H_Pannel_lib
             this.rJ_Lable1 = new MyUI.RJ_Lable();
             this.comboBox_選擇項目 = new System.Windows.Forms.ComboBox();
             this.fontDialog = new System.Windows.Forms.FontDialog();
-            this.checkBox_QRCode = new System.Windows.Forms.CheckBox();
-            this.textBox_邊框圓角 = new System.Windows.Forms.TextBox();
-            this.rJ_Lable7 = new MyUI.RJ_Lable();
             this.panel1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -455,6 +455,16 @@ namespace H_Pannel_lib
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "顯示";
             // 
+            // checkBox_QRCode
+            // 
+            this.checkBox_QRCode.AutoSize = true;
+            this.checkBox_QRCode.Location = new System.Drawing.Point(279, 28);
+            this.checkBox_QRCode.Name = "checkBox_QRCode";
+            this.checkBox_QRCode.Size = new System.Drawing.Size(93, 25);
+            this.checkBox_QRCode.TabIndex = 28;
+            this.checkBox_QRCode.Text = "QRCode";
+            this.checkBox_QRCode.UseVisualStyleBackColor = true;
+            // 
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -717,6 +727,35 @@ namespace H_Pannel_lib
             this.panel_邊框大小.Size = new System.Drawing.Size(1197, 57);
             this.panel_邊框大小.TabIndex = 6;
             // 
+            // textBox_邊框圓角
+            // 
+            this.textBox_邊框圓角.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.textBox_邊框圓角.Location = new System.Drawing.Point(391, 11);
+            this.textBox_邊框圓角.Name = "textBox_邊框圓角";
+            this.textBox_邊框圓角.Size = new System.Drawing.Size(76, 33);
+            this.textBox_邊框圓角.TabIndex = 11;
+            // 
+            // rJ_Lable7
+            // 
+            this.rJ_Lable7.BackColor = System.Drawing.Color.White;
+            this.rJ_Lable7.BackgroundColor = System.Drawing.Color.White;
+            this.rJ_Lable7.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.rJ_Lable7.BorderRadius = 10;
+            this.rJ_Lable7.BorderSize = 0;
+            this.rJ_Lable7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.rJ_Lable7.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.rJ_Lable7.ForeColor = System.Drawing.Color.Transparent;
+            this.rJ_Lable7.GUID = "";
+            this.rJ_Lable7.Location = new System.Drawing.Point(259, 7);
+            this.rJ_Lable7.Name = "rJ_Lable7";
+            this.rJ_Lable7.ShadowColor = System.Drawing.Color.DimGray;
+            this.rJ_Lable7.ShadowSize = 0;
+            this.rJ_Lable7.Size = new System.Drawing.Size(113, 40);
+            this.rJ_Lable7.TabIndex = 10;
+            this.rJ_Lable7.Text = "邊框圓角";
+            this.rJ_Lable7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rJ_Lable7.TextColor = System.Drawing.Color.Black;
+            // 
             // textBox_邊框大小
             // 
             this.textBox_邊框大小.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -962,45 +1001,6 @@ namespace H_Pannel_lib
             this.comboBox_選擇項目.Name = "comboBox_選擇項目";
             this.comboBox_選擇項目.Size = new System.Drawing.Size(353, 35);
             this.comboBox_選擇項目.TabIndex = 1;
-            // 
-            // checkBox_QRCode
-            // 
-            this.checkBox_QRCode.AutoSize = true;
-            this.checkBox_QRCode.Location = new System.Drawing.Point(279, 28);
-            this.checkBox_QRCode.Name = "checkBox_QRCode";
-            this.checkBox_QRCode.Size = new System.Drawing.Size(93, 25);
-            this.checkBox_QRCode.TabIndex = 28;
-            this.checkBox_QRCode.Text = "QRCode";
-            this.checkBox_QRCode.UseVisualStyleBackColor = true;
-            // 
-            // textBox_邊框圓角
-            // 
-            this.textBox_邊框圓角.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.textBox_邊框圓角.Location = new System.Drawing.Point(391, 11);
-            this.textBox_邊框圓角.Name = "textBox_邊框圓角";
-            this.textBox_邊框圓角.Size = new System.Drawing.Size(76, 33);
-            this.textBox_邊框圓角.TabIndex = 11;
-            // 
-            // rJ_Lable7
-            // 
-            this.rJ_Lable7.BackColor = System.Drawing.Color.White;
-            this.rJ_Lable7.BackgroundColor = System.Drawing.Color.White;
-            this.rJ_Lable7.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.rJ_Lable7.BorderRadius = 10;
-            this.rJ_Lable7.BorderSize = 0;
-            this.rJ_Lable7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.rJ_Lable7.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.rJ_Lable7.ForeColor = System.Drawing.Color.Transparent;
-            this.rJ_Lable7.GUID = "";
-            this.rJ_Lable7.Location = new System.Drawing.Point(259, 7);
-            this.rJ_Lable7.Name = "rJ_Lable7";
-            this.rJ_Lable7.ShadowColor = System.Drawing.Color.DimGray;
-            this.rJ_Lable7.ShadowSize = 0;
-            this.rJ_Lable7.Size = new System.Drawing.Size(113, 40);
-            this.rJ_Lable7.TabIndex = 10;
-            this.rJ_Lable7.Text = "邊框圓角";
-            this.rJ_Lable7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.rJ_Lable7.TextColor = System.Drawing.Color.Black;
             // 
             // EPD420_Paint_Form
             // 
