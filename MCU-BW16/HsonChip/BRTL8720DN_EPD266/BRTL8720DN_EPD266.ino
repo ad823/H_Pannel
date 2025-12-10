@@ -199,6 +199,9 @@ void loop()
    {                         
       if(isConnectedInternal() == false)
       {
+         #ifdef EPD_Device
+         epd.free_framebuffer();          
+         #endif
          wiFiConfig.WIFI_Connenct();
          if(isConnectedInternal()) 
          {

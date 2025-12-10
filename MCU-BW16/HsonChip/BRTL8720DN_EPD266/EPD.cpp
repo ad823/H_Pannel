@@ -45,7 +45,8 @@ void EPD::melloc_init()
 }
 void EPD::free_framebuffer()
 {
-    free(framebuffer);
+    if(flag_melloc_init)free(framebuffer);
+    flag_melloc_init = false;
     framebuffer = nullptr;
     mySerial->println("free_framebuffer...");
 }
