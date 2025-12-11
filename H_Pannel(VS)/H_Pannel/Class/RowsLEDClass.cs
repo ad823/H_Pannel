@@ -348,11 +348,13 @@ namespace H_Pannel_lib
                 {
                     if(flag_serch)
                     {
-                        if (rowsLEDs[i].RowsDevices[k].Code.ToUpper().Contains(Code.ToUpper())) rowsDevices.Add(rowsLEDs[i].RowsDevices[k]);
+                        if (rowsLEDs[i].RowsDevices[k].Code.ToUpper().Contains(Code.ToUpper())
+                            || (rowsLEDs[i].RowsDevices[k].SKDIACODE.StringIsEmpty() == false && rowsLEDs[i].RowsDevices[k].SKDIACODE == Code)) rowsDevices.Add(rowsLEDs[i].RowsDevices[k]);
                     }
                     else
                     {
-                        if (rowsLEDs[i].RowsDevices[k].Code.ToUpper() == Code.ToUpper()) rowsDevices.Add(rowsLEDs[i].RowsDevices[k]);
+                        if (rowsLEDs[i].RowsDevices[k].Code.ToUpper() == Code.ToUpper()
+                             || (rowsLEDs[i].RowsDevices[k].SKDIACODE.StringIsEmpty() == false && rowsLEDs[i].RowsDevices[k].SKDIACODE == Code)) rowsDevices.Add(rowsLEDs[i].RowsDevices[k]);
                     }
              
                 }
@@ -381,11 +383,13 @@ namespace H_Pannel_lib
             {
                 if(flag_serch)
                 {
-                    if (rowsLED.RowsDevices[k].Code.ToUpper().Contains(Code.ToUpper())) rowsDevices.Add(rowsLED.RowsDevices[k]);
+                    if (rowsLED.RowsDevices[k].Code.ToUpper().Contains(Code.ToUpper())
+                        || (rowsLED.RowsDevices[k].SKDIACODE.StringIsEmpty() == false && rowsLED.RowsDevices[k].SKDIACODE == Code)) rowsDevices.Add(rowsLED.RowsDevices[k]);
                 }
                 else
                 {
-                    if (rowsLED.RowsDevices[k].Code.ToUpper() == Code.ToUpper()) rowsDevices.Add(rowsLED.RowsDevices[k]);
+                    if (rowsLED.RowsDevices[k].Code.ToUpper() == Code.ToUpper()
+                          || (rowsLED.RowsDevices[k].SKDIACODE.StringIsEmpty() == false && rowsLED.RowsDevices[k].SKDIACODE == Code)) rowsDevices.Add(rowsLED.RowsDevices[k]);
                 }
           
             }

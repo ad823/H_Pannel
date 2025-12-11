@@ -389,11 +389,11 @@ namespace H_Pannel_lib
             {
                 if (flag_serch)
                 {
-                    if (Storages[i].Code.ToUpper().Contains(Code.ToUpper())) storages.Add(Storages[i]);
+                    if (Storages[i].Code.ToUpper().Contains(Code.ToUpper()) || (Storages[i].SKDIACODE.StringIsEmpty() == false && Storages[i].SKDIACODE == Code)) storages.Add(Storages[i]);
                 }
                 else
                 {
-                    if (Storages[i].Code.ToUpper()== Code.ToUpper()) storages.Add(Storages[i]);
+                    if (Storages[i].Code.ToUpper()== Code.ToUpper() || (Storages[i].SKDIACODE.StringIsEmpty() == false && Storages[i].SKDIACODE == Code)) storages.Add(Storages[i]);
                 }
             }
 

@@ -281,7 +281,7 @@ namespace H_Pannel_lib
             {
                 if(flag_serch == false)
                 {
-                    if (deviceBasic.Code == Code)
+                    if (deviceBasic.Code == Code || (deviceBasic.SKDIACODE.StringIsEmpty() == false && deviceBasic.SKDIACODE == Code))
                     {
                         DeviceBasics_buf.Add(deviceBasic);
                     }
@@ -1346,7 +1346,7 @@ namespace H_Pannel_lib
             List<Device> devices = new List<Device>();
             foreach (Device device in Devices)
             {
-                if (device.Code == Code)
+                if (device.Code == Code || (device.SKDIACODE.StringIsEmpty() == false && device.SKDIACODE == Code))
                 {
                     devices.Add(device);
                 }

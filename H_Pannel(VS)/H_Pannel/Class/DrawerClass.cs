@@ -336,11 +336,13 @@ namespace H_Pannel_lib
                     {
                         if(flag_serch)
                         {
-                            if (Drawers[i].Boxes[col][row].Code.ToUpper().Contains(Code.ToUpper())) boxes.Add(Drawers[i].Boxes[col][row]);
+                            if (Drawers[i].Boxes[col][row].Code.ToUpper().Contains(Code.ToUpper())
+                                || (Drawers[i].Boxes[col][row].SKDIACODE.StringIsEmpty() == false && Drawers[i].Boxes[col][row].SKDIACODE == Code)) boxes.Add(Drawers[i].Boxes[col][row]);
                         }
                         else
                         {
-                            if (Drawers[i].Boxes[col][row].Code.ToUpper() == Code.ToUpper()) boxes.Add(Drawers[i].Boxes[col][row]);
+                            if (Drawers[i].Boxes[col][row].Code.ToUpper() == Code.ToUpper() 
+                                || (Drawers[i].Boxes[col][row].SKDIACODE.StringIsEmpty() == false && Drawers[i].Boxes[col][row].SKDIACODE == Code)) boxes.Add(Drawers[i].Boxes[col][row]);
                         }
                       
                     }
