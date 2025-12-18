@@ -22,8 +22,10 @@ namespace H_Pannel_lib
         {
             type1,
             constom,
+            type2,
+
         }
-    
+
         private string outputAdress = "";
         private string inputAdress = "";
         private bool alarmEnable = false;

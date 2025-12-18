@@ -139,6 +139,19 @@ namespace WT32_SC01
         private void PictureBox_test_Click(object sender, EventArgs e)
         {
             pictureBox_test.Image = Communication.EPD290G_GetBitmap("192.168.40.10");
+            Storage storage = this.storageUI_EPD_266.SQL_GetStorage("192.168.0.100");
+            storage.Code = "TAZO";
+            storage.Name = "TAZOCIN(針)【抗3】INJ.2.25gm";
+            storage.ChineseName = "達梭黴素凍晶注射劑2.25公克【抗3】-";
+            storage.Scientific_Name = "Piperacillin+Tazobactam";
+            storage.StorageName = "N303";
+            storage.SafetyStock = 100;
+            storage.清除所有庫存資料();
+            storage.效期庫存異動("2026-12-31", 10);
+            storage.效期庫存異動("2027-12-31", 20);
+
+
+            storageUI_EPD_266.SQL_ReplaceStorage(storage);
         }
 
         int index = 0;

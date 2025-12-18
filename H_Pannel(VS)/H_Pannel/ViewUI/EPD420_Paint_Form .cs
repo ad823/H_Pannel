@@ -259,17 +259,25 @@ namespace H_Pannel_lib
             this.comboBox_圖片2.SelectedIndexChanged += ComboBox_圖片2_SelectedIndexChanged;
 
             this.rJ_RatioButton_預設樣式1.CheckedChanged += RJ_RatioButton_預設樣式1_CheckedChanged;
+            this.rJ_RatioButton_預設樣式2.CheckedChanged += RJ_RatioButton_預設樣式2_CheckedChanged;
             this.rJ_RatioButton_自定義.CheckedChanged += RJ_RatioButton_自定義_CheckedChanged;
             if (currentStorage.Enum_drawType == Storage.enum_DrawType.type1)
             {
                 rJ_RatioButton_預設樣式1.Checked = true;
             }
+            if (currentStorage.Enum_drawType == Storage.enum_DrawType.type2)
+            {
+                rJ_RatioButton_預設樣式2.Checked = true;
+            }
             if (currentStorage.Enum_drawType == Storage.enum_DrawType.constom)
             {
                 rJ_RatioButton_自定義.Checked = true;
             }
+
             this.Refresh();
         }
+
+    
 
         private void ComboBox_圖片1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -733,7 +741,19 @@ namespace H_Pannel_lib
                 DrawToPictureBox();
             }
         }
-
+        private void RJ_RatioButton_預設樣式2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.rJ_RatioButton_預設樣式2.Checked)
+            {
+                currentStorage.Enum_drawType = Storage.enum_DrawType.type2;
+                panel_選擇項目.Enabled = true;
+                panel_字體.Enabled = true;
+                panel_字體型態.Enabled = true;
+                panel_邊框大小.Enabled = true;
+                groupBox_對齊方式.Enabled = true;
+                DrawToPictureBox();
+            }
+        }
         public void DrawToPictureBox()
         {
             this.DrawToPictureBox(this.currentStorage);

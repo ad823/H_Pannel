@@ -783,7 +783,14 @@ namespace H_Pannel_lib
         public bool IsShapeSimilar { get => isShapeSimilar; set => isShapeSimilar = value; }
         private bool isSoundSimilar = false;
         public bool IsSoundSimilar { get => isSoundSimilar; set => isSoundSimilar = value; }
-
+        private int safetyStock = 0;
+        public int SafetyStock { get => safetyStock; set => safetyStock = value; }
+        private bool oPD_Usage = true;
+        public bool OPD_Usage { get => oPD_Usage; set => oPD_Usage = value; }
+        private bool uD_Usage = true;
+        public bool UD_Usage { get => uD_Usage; set => uD_Usage = value; }
+        private bool pHER_Usage = true;
+        public bool PHER_Usage { get => pHER_Usage; set => pHER_Usage = value; }
 
         private string _Min_Package_Num = "";
         public string Min_Package_Num
@@ -839,7 +846,7 @@ namespace H_Pannel_lib
             }
         }
 
-     
+
 
         public void 效期庫存異動(string 效期, double 異動量)
         {
