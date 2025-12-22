@@ -32,6 +32,7 @@ namespace H_Pannel_lib
             this.checkBox_藥碼 = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rJ_RatioButton_預設樣式2 = new MyUI.RJ_RatioButton();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.button_文本3_儲存 = new System.Windows.Forms.Button();
             this.rJ_TextBox_文本3 = new MyUI.RJ_TextBox();
@@ -96,7 +97,6 @@ namespace H_Pannel_lib
             this.rJ_Lable1 = new MyUI.RJ_Lable();
             this.comboBox_選擇項目 = new System.Windows.Forms.ComboBox();
             this.fontDialog = new System.Windows.Forms.FontDialog();
-            this.rJ_RatioButton_預設樣式2 = new MyUI.RJ_RatioButton();
             this.panel1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -147,6 +147,20 @@ namespace H_Pannel_lib
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1237, 502);
             this.panel1.TabIndex = 3;
+            // 
+            // rJ_RatioButton_預設樣式2
+            // 
+            this.rJ_RatioButton_預設樣式2.AutoSize = true;
+            this.rJ_RatioButton_預設樣式2.CheckColor = System.Drawing.Color.MediumSlateBlue;
+            this.rJ_RatioButton_預設樣式2.Location = new System.Drawing.Point(714, 459);
+            this.rJ_RatioButton_預設樣式2.MinimumSize = new System.Drawing.Size(0, 21);
+            this.rJ_RatioButton_預設樣式2.Name = "rJ_RatioButton_預設樣式2";
+            this.rJ_RatioButton_預設樣式2.Size = new System.Drawing.Size(89, 21);
+            this.rJ_RatioButton_預設樣式2.TabIndex = 12;
+            this.rJ_RatioButton_預設樣式2.TabStop = true;
+            this.rJ_RatioButton_預設樣式2.Text = "預設樣式2";
+            this.rJ_RatioButton_預設樣式2.UncheckColor = System.Drawing.Color.Gray;
+            this.rJ_RatioButton_預設樣式2.UseVisualStyleBackColor = true;
             // 
             // groupBox5
             // 
@@ -1003,20 +1017,6 @@ namespace H_Pannel_lib
             this.comboBox_選擇項目.Name = "comboBox_選擇項目";
             this.comboBox_選擇項目.Size = new System.Drawing.Size(353, 35);
             this.comboBox_選擇項目.TabIndex = 1;
-            // 
-            // rJ_RatioButton_預設樣式2
-            // 
-            this.rJ_RatioButton_預設樣式2.AutoSize = true;
-            this.rJ_RatioButton_預設樣式2.CheckColor = System.Drawing.Color.MediumSlateBlue;
-            this.rJ_RatioButton_預設樣式2.Location = new System.Drawing.Point(714, 459);
-            this.rJ_RatioButton_預設樣式2.MinimumSize = new System.Drawing.Size(0, 21);
-            this.rJ_RatioButton_預設樣式2.Name = "rJ_RatioButton_預設樣式2";
-            this.rJ_RatioButton_預設樣式2.Size = new System.Drawing.Size(89, 21);
-            this.rJ_RatioButton_預設樣式2.TabIndex = 12;
-            this.rJ_RatioButton_預設樣式2.TabStop = true;
-            this.rJ_RatioButton_預設樣式2.Text = "預設樣式2";
-            this.rJ_RatioButton_預設樣式2.UncheckColor = System.Drawing.Color.Gray;
-            this.rJ_RatioButton_預設樣式2.UseVisualStyleBackColor = true;
             // 
             // EPD420_Paint_Form
             // 

@@ -8179,40 +8179,44 @@ namespace H_Pannel_lib
 
               
                 float posy = 0;
-
-                using (Graphics g_buf = Graphics.FromImage(bitmap))
-                {
-                    if (storage.QRCode.StringIsEmpty()) storage.QRCode = storage.Code;
-                    using (Bitmap bitmap_QRCode = Communication.CreateQRCode(storage.QRCode, 50, 50))
-                    {
-                        g_buf.DrawImage(bitmap_QRCode,  0, 0);
-                        g.FillRectangle(new SolidBrush(Color.Red), new RectangleF(bitmap_QRCode.Width, 0, Pannel_Width - bitmap_QRCode.Width, bitmap_QRCode.Height));
-                        posy += bitmap_QRCode.Height;
-                    }
-                }
-       
-
-
-                using (Bitmap bmp = Communication.TextToBitmap(storage.Name, new Font("微軟正黑體", 14, FontStyle.Bold), 1, Pannel_Width, 70, Color.Black, storage.BackColor, 0, 0, Color.Transparent, HorizontalAlignment.Center))
+                g.FillRectangle(new SolidBrush(storage.IsWarning ? Color.Red : Color.White), new RectangleF(0, 0, Pannel_Width, 40));
+                using (Bitmap bmp = Communication.TextToBitmap(storage.CustomText1, storage.CustomText1_font, 1, Pannel_Width, 40, storage.IsWarning ? Color.White : Color.Black, storage.IsWarning ? Color.Red : Color.White, 0, 0, Color.Transparent, HorizontalAlignment.Center))
                 {
                     g.DrawImage(bmp, 0, posy);
                     posy += bmp.Height;
                 }
-                using (Bitmap bmp = Communication.TextToBitmap(storage.ChineseName, new Font("微軟正黑體", 14, FontStyle.Bold), 1, Pannel_Width, 30, Color.White, Color.Black, 1, 0, Color.Black, HorizontalAlignment.Center))
+
+                using (Bitmap bmp = Communication.TextToBitmap(storage.Name, storage.Name_font, 1, Pannel_Width, 80, storage.Name_ForeColor, storage.Name_BackColor, 0, 0, Color.Transparent, HorizontalAlignment.Center))
                 {
                     g.DrawImage(bmp, 0, posy);
                     posy += bmp.Height;
                 }
-                using (Bitmap bmp = Communication.TextToBitmap(storage.Scientific_Name, new Font("微軟正黑體", 12, FontStyle.Bold), 1, Pannel_Width, 20, Color.White, Color.Black, 1, 0, Color.Black, HorizontalAlignment.Center))
+                using (Bitmap bmp = Communication.TextToBitmap(storage.ChineseName, storage.ChineseName_font, 1, Pannel_Width, 30, Color.White, Color.Black, 1, 0, Color.Black, HorizontalAlignment.Center))
+                {
+                    g.DrawImage(bmp, 0, posy);
+                    posy += bmp.Height;
+                }
+                using (Bitmap bmp = Communication.TextToBitmap(storage.Scientific_Name, storage.Scientific_Name_font, 1, Pannel_Width, 30, Color.White, Color.Black, 1, 0, Color.Black, HorizontalAlignment.Center))
                 {
                     g.DrawImage(bmp, 0, posy);
                     posy += bmp.Height;
                 }
 
           
-                using (Bitmap bmp = Communication.TextToBitmap(storage.StorageName, new Font("微軟正黑體", 20, FontStyle.Bold), 1, 100, Pannel_Height - posy, Color.Black, Color.White, 1, 0, Color.Black, HorizontalAlignment.Center))
+                using (Bitmap bmp = Communication.TextToBitmap(storage.StorageName, new Font("微軟正黑體", 20, FontStyle.Bold), 1, 100, 30, Color.Black, Color.White, 1, 0, Color.Black, HorizontalAlignment.Center))
                 {
                     g.DrawImage(bmp, 0, posy);
+                    //posy += bmp.Height;
+
+                }
+                using (Graphics g_buf = Graphics.FromImage(bitmap))
+                {
+                    if (storage.QRCode.StringIsEmpty()) storage.QRCode = storage.Code;
+                    using (Bitmap bitmap_QRCode = Communication.CreateQRCode(storage.QRCode, 85, 85))
+                    {
+                        g_buf.DrawImage(bitmap_QRCode, 10, posy + 30);
+                        //posy += bitmap_QRCode.Height;
+                    }
                 }
 
                 float grid_height = 35;
