@@ -8203,7 +8203,7 @@ namespace H_Pannel_lib
                 }
 
           
-                using (Bitmap bmp = Communication.TextToBitmap(storage.StorageName, new Font("微軟正黑體", 20, FontStyle.Bold), 1, 100, 30, Color.Black, Color.White, 1, 0, Color.Black, HorizontalAlignment.Center))
+                using (Bitmap bmp = Communication.TextToBitmap(storage.StorageName, storage.StorageName_font, 1, 100, 30, Color.Black, Color.White, 1, 0, Color.Black, HorizontalAlignment.Center))
                 {
                     g.DrawImage(bmp, 0, posy);
                     //posy += bmp.Height;
