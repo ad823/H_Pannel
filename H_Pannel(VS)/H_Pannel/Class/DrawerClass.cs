@@ -888,6 +888,10 @@ namespace H_Pannel_lib
         public bool AlarmEnable { get => alarmEnable; set => alarmEnable = value; }
         public bool BreathLight { get => breathLight; set => breathLight = value; }
 
+        /// <summary>
+        /// 是否為庫存儲位（非調劑位）
+        /// </summary>
+        public bool IsInventoryLocation { get; set; } = false;
 
         public Enum_DrawerType DrawerType 
         { 

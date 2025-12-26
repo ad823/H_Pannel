@@ -792,6 +792,11 @@ namespace H_Pannel_lib
         private bool pHER_Usage = true;
         public bool PHER_Usage { get => pHER_Usage; set => pHER_Usage = value; }
 
+        /// <summary>
+        /// 是否為庫存儲位（非調劑位）
+        /// </summary>
+        public bool IsInventoryLocation { get; set; } = false;
+
         private string _Min_Package_Num = "";
         public string Min_Package_Num
         {
