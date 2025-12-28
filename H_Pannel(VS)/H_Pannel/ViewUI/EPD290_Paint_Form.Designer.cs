@@ -54,6 +54,7 @@ namespace H_Pannel_lib
             this.button_對齊靠下 = new System.Windows.Forms.Button();
             this.button_對齊靠上 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox_QRCode = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox_圖片2 = new System.Windows.Forms.ComboBox();
@@ -93,7 +94,6 @@ namespace H_Pannel_lib
             this.rJ_Lable1 = new MyUI.RJ_Lable();
             this.comboBox_選擇項目 = new System.Windows.Forms.ComboBox();
             this.fontDialog = new System.Windows.Forms.FontDialog();
-            this.checkBox_QRCode = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -452,6 +452,16 @@ namespace H_Pannel_lib
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "顯示";
+            // 
+            // checkBox_QRCode
+            // 
+            this.checkBox_QRCode.AutoSize = true;
+            this.checkBox_QRCode.Location = new System.Drawing.Point(279, 28);
+            this.checkBox_QRCode.Name = "checkBox_QRCode";
+            this.checkBox_QRCode.Size = new System.Drawing.Size(93, 25);
+            this.checkBox_QRCode.TabIndex = 29;
+            this.checkBox_QRCode.Text = "QRCode";
+            this.checkBox_QRCode.UseVisualStyleBackColor = true;
             // 
             // panel3
             // 
@@ -958,16 +968,6 @@ namespace H_Pannel_lib
             this.comboBox_選擇項目.Name = "comboBox_選擇項目";
             this.comboBox_選擇項目.Size = new System.Drawing.Size(353, 35);
             this.comboBox_選擇項目.TabIndex = 1;
-            // 
-            // checkBox_QRCode
-            // 
-            this.checkBox_QRCode.AutoSize = true;
-            this.checkBox_QRCode.Location = new System.Drawing.Point(279, 28);
-            this.checkBox_QRCode.Name = "checkBox_QRCode";
-            this.checkBox_QRCode.Size = new System.Drawing.Size(93, 25);
-            this.checkBox_QRCode.TabIndex = 29;
-            this.checkBox_QRCode.Text = "QRCode";
-            this.checkBox_QRCode.UseVisualStyleBackColor = true;
             // 
             // EPD290_Paint_Form
             // 

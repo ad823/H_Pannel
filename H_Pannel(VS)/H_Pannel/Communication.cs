@@ -8089,7 +8089,7 @@ namespace H_Pannel_lib
                     for (int i = 0; i < storage.List_Validity_period.Count; i++)
                     {
                         if (storage.List_Inventory[i] == "00") continue;
-                        string str = $"{i + 1}.效期 : {storage.List_Validity_period[i]}   庫存 : {storage.List_Inventory[i]}";
+                        string str = $"{storage.List_Validity_period[i]}({storage.List_Lot_number[i]}) 庫:{storage.List_Inventory[i]}";
                         storage.Validity_period_font = new Font(storage.Validity_period_font, FontStyle.Bold);
                         SizeF size_Validity_period = TextRenderer.MeasureText(str, storage.Validity_period_font);
                         g.DrawString(str, storage.Validity_period_font, new SolidBrush((Color)storage.GetValue(Storage.ValueName.效期, Storage.ValueType.ForeColor)), 5, 0 + posy);

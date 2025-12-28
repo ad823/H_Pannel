@@ -225,6 +225,8 @@ namespace H_Pannel_lib
             this.checkBox_文本3.Checked = currentStorage.CustomText3_Visable;
             this.checkBox_QRCode.Checked = currentStorage.QRCode_Visable;
 
+
+
             this.checkBox_藥碼.CheckedChanged += CheckBox_CheckedChanged;
             this.checkBox_藥名.CheckedChanged += CheckBox_CheckedChanged;
             this.checkBox_中文名.CheckedChanged += CheckBox_CheckedChanged;
