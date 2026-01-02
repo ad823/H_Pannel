@@ -171,5 +171,6 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSyn
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync.0EBEBEFA.Up2Date
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync589.exe
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync589.pdb
-C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync579.csproj.CopyComplete
 C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync579.csproj.AssemblyReference.cache
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\bin\Release\stdole.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync589\obj\Release\EInkSync.0EBEBEFA.Up2Date

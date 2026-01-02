@@ -1,4 +1,4 @@
-#define VERSION "Ver 1.6.039"
+#define VERSION "Ver 1.6.040"
 #define RESOURCE "OTA_All.bin"  
 
 #define SPI_MOSI_PIN PA12
@@ -6,7 +6,7 @@
 #define NUM_OF_LEDS NUM_WS2812B_CRGB
 #define SYSTEM_LED_PIN PA30
 
-//#define FADC
+#define FADC
 //#define DrawerMCP23008
 //#define B_Drawer
 //#define DrawerHandSensor
@@ -50,8 +50,8 @@
 #endif
 
 
-#define MQTT
-#define DHTSensor
+//#define MQTT
+//#define DHTSensor
 //#define HandSensor
 //#define RowLED_Device
 //#define EPD213
@@ -61,13 +61,13 @@
 //#define EPD420
 //#define EPD4IN20G
 //#define EPD420_D
-#define EPD583
+//#define EPD583
 //#define EPD579G
 //#define EPD579B
 //#define DEPG0579RYT158FxX
 //#define EPD213_BRW_V0
 //#define EPD7IN3E
-//#define EPD3IN6E
+#define EPD3IN6E
 
 //#define OLCD_114
 //#define MCP23017

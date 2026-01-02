@@ -184,4 +184,5 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSyn
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync.D40E2457.Up2Date
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.exe
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.pdb
-C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync213.csproj.CopyComplete
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\bin\Release\stdole.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\EInkSync213\obj\Release\EInkSync.D40E2457.Up2Date

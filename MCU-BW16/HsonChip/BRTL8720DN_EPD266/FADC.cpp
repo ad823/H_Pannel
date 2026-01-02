@@ -15,6 +15,8 @@ MyTimer MyTimer_FADC_lockerDelay;
 byte cnt_FADC_lockerTrigger = 255;
 int FADC_lockerDelayTime = 1000;
 
+bool flag_FADC_lokerInput_init = false;
+
 bool flag_FADC_lokerInput = false;
 bool flag_FADC_lokerInput_buf = false;
 bool flag_FADC_lokerOutput = false;
@@ -51,12 +53,18 @@ void FADC_LockerTrigger()
 {
     if(cnt_FADC_lockerTrigger == 255)
     {
-         
+         if(flag_FADC_lokerInput_init == false)
+         {
+            if(((Output_dir  >> 0) % 2 ) ==  1) mcp.digitalWrite(LOCKER_OUTPUT , true);
+            flag_FADC_lokerInput_init = true;
+         }
+        
          if(flag_FADC_lockerTrigger == true) 
          {
              mySerial.println(F("(255)FADC_lockerTrigger,wait trigger.."));
              flag_FADC_lokerOutput = true;
-             mcp.digitalWrite(LOCKER_OUTPUT , false);
+             if(((Output_dir  >> 0) % 2 ) ==  0)mcp.digitalWrite(LOCKER_OUTPUT , false);
+             else mcp.digitalWrite(LOCKER_OUTPUT , true);
              cnt_FADC_lockerTrigger = 1;
          }
     }
@@ -90,7 +98,8 @@ void FADC_LockerTrigger()
        cnt_FADC_lockerTrigger = 255;
        MyTimer_FADC_lockerDelay.TickStop();
        flag_FADC_lokerOutput = false;
-       mcp.digitalWrite(LOCKER_OUTPUT , true);
+       if(((Output_dir  >> 0) % 2 ) ==  0)mcp.digitalWrite(LOCKER_OUTPUT , true);
+       else mcp.digitalWrite(LOCKER_OUTPUT , false);
        flag_FADC_lockerTrigger = false;
     }
 }
@@ -100,7 +109,6 @@ void FADC_MotorTrigger()
     
     if(cnt_FADC_motorTrigger == 255)
     {
-         
          if(flag_FADC_motorTrigger == true) 
          {
              mySerial.println(F("(255)FADC_MotorTrigger,trigger.."));

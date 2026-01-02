@@ -188,4 +188,6 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\Con
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleA.D471CFE7.Up2Date
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.exe
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.pdb
-C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.csproj.CopyComplete
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\bin\Release\stdole.dll
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleApp_Test.csproj.SuggestedBindingRedirects.cache
+C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\ConsoleApp_Test\obj\Release\ConsoleA.D471CFE7.Up2Date
