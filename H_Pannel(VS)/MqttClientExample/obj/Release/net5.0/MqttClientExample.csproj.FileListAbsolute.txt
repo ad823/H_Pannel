@@ -37,3 +37,4 @@ C:\Users\Administrator\Source\Repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.sourcelink.json
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClie.83915F19.Up2Date
 C:\Users\Administrator\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\refint\MqttClientExample.dll
+C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\refint\MqttClientExample.dll

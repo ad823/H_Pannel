@@ -8248,7 +8248,7 @@ namespace H_Pannel_lib
                 {
                     g.DrawImage(bmp, 100, posy);
                 }
-                using (Bitmap bmp = Communication.TextToBitmap("0(0)", new Font("微軟正黑體", 14, FontStyle.Bold), 1, 75, grid_height, Color.Black, Color.White, 1, 0, Color.Black, HorizontalAlignment.Center))
+                using (Bitmap bmp = Communication.TextToBitmap(storage.CustomText3, new Font("微軟正黑體", 14, FontStyle.Bold), 1, 75, grid_height, Color.Black, Color.White, 1, 0, Color.Black, HorizontalAlignment.Center))
                 {
                     g.DrawImage(bmp, 100 + 75 * 1, posy);
                 }
@@ -8256,7 +8256,7 @@ namespace H_Pannel_lib
                 {
                     g.DrawImage(bmp, 100 + 75 * 2, posy);
                 }
-                using (Bitmap bmp = Communication.TextToBitmap(storage.Inventory, new Font("微軟正黑體", 14, FontStyle.Bold), 1, 75, grid_height, Color.Black, Color.White, 1, 0, Color.Black, HorizontalAlignment.Center))
+                using (Bitmap bmp = Communication.TextToBitmap(storage.CustomText2, new Font("微軟正黑體", 14, FontStyle.Bold), 1, 75, grid_height, Color.Black, Color.White, 1, 0, Color.Black, HorizontalAlignment.Center))
                 {
                     g.DrawImage(bmp, 100 + 75 * 3, posy);
                 }
