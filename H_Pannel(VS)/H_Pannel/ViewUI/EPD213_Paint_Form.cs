@@ -222,6 +222,7 @@ namespace H_Pannel_lib
             this.checkBox_文本1.Checked = currentStorage.CustomText1_Visable;
             this.checkBox_文本2.Checked = currentStorage.CustomText2_Visable;
             this.checkBox_文本3.Checked = currentStorage.CustomText3_Visable;
+            this.checkBox_QRCode.Checked = currentStorage.QRCode_Visable;
 
             this.checkBox_藥碼.CheckedChanged += CheckBox_CheckedChanged;
             this.checkBox_藥名.CheckedChanged += CheckBox_CheckedChanged;
@@ -235,6 +236,7 @@ namespace H_Pannel_lib
             this.checkBox_文本1.CheckedChanged += CheckBox_CheckedChanged;
             this.checkBox_文本2.CheckedChanged += CheckBox_CheckedChanged;
             this.checkBox_文本3.CheckedChanged += CheckBox_CheckedChanged;
+            this.checkBox_QRCode.CheckedChanged += CheckBox_CheckedChanged;
             rJ_Pannel_背景顏色.BackgroundColor = CurrentStorage.BackColor;
 
             this.comboBox_圖片1.DataSource = new enum_PictureType().GetEnumNames();
