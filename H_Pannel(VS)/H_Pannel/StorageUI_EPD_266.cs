@@ -271,8 +271,7 @@ namespace H_Pannel_lib
             畫面設置,
             IO設定,
             面板種類,
-            設定為FADC,
-            設定非FADC,
+
         }
         private enum ContextMenuStrip_DeviceTable_畫面設置
         {
@@ -286,6 +285,11 @@ namespace H_Pannel_lib
             IO測試,
             雷射開啟,
             雷射關閉,
+            設定為FADC,
+            設定非FADC,
+            設定為庫儲區,
+            設定非庫儲區,
+
         }
         private enum ContextMenuStrip_UDP_DataReceive_畫面設置
         {
@@ -358,47 +362,24 @@ namespace H_Pannel_lib
 
             string 序號 = $"{e.RowIndex + 1}.";
 
-            //string 加入時間 = $"{udnoectc.加入時間}";
-            //string 診別 = "【住院】";
-            //string 病床號 = $"{udnoectc.病房}-{udnoectc.床號}";
-            //if (udnoectc.病房.ToUpper().Contains("OPD"))
-            //{
-            //    診別 = "【門診】";
-            //    病床號 = "-------";
-            //}
-
-            //string 病人姓名 = $"{udnoectc.病人姓名}";
-            //string 病歷號 = $"{udnoectc.病歷號}";
-            //string 生日 = $"生日:{udnoectc.生日}";
-            //string 性別 = $"{udnoectc.性別}";
-            //string 身高 = $"身高:{udnoectc.身高}cm";
-            //string 體重 = $"體重:{udnoectc.體重}kg";
-
-            //string 診斷 = $"診斷:{udnoectc.診斷}";
-            //string 科別 = $"{udnoectc.科別}";
-            //string 開立醫師 = $"開立醫師:{udnoectc.開立醫師}";
-
-            DrawingClass.Draw.文字左上繪製(序號, new PointF(10, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
-            DrawingClass.Draw.文字左上繪製($"({storage.IP.StringLength(14)}:{storage.Port})", new PointF(30, y + 10), new Font("微軟正黑體", 14 , FontStyle.Bold), row_Forecolor, e.Graphics);
-            DrawingClass.Draw.文字左上繪製($"{storage.DeviceType.GetEnumName()}", new PointF(300, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
-            DrawingClass.Draw.文字左上繪製($"TOFON:{(storage.TOFON ? "Y" : "N")}", new PointF(500, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
-            DrawingClass.Draw.文字左上繪製($"FADC:{(storage.IsFADC ? "Y" : "N")}", new PointF(600, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
-
-            //DrawingClass.Draw.文字左上繪製(診別, new PointF(40, y + 10), new Font("標楷體", 16), row_Forecolor, e.Graphics);
-            //DrawingClass.Draw.文字左上繪製(加入時間, new PointF(150, y + 10), new Font("標楷體", 16, FontStyle.Italic), row_Forecolor, e.Graphics);
-
-            //DrawingClass.Draw.文字左上繪製(病人姓名, 300, new PointF(20, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
-            //DrawingClass.Draw.文字左上繪製(病歷號, new PointF(180, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
-            //DrawingClass.Draw.文字左上繪製(病床號, new PointF(280, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
-            //DrawingClass.Draw.文字左上繪製(生日, new PointF(420, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
-            //DrawingClass.Draw.文字左上繪製(性別, new PointF(640, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
-            //DrawingClass.Draw.文字左上繪製(身高, new PointF(690, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
-            //DrawingClass.Draw.文字左上繪製(體重, new PointF(840, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
-
-            //DrawingClass.Draw.文字左上繪製(診斷, new PointF(20, y + 100), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
-            //DrawingClass.Draw.文字左上繪製(科別, new PointF(600, y + 100), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
-            //DrawingClass.Draw.文字左上繪製(開立醫師, new PointF(840, y + 100), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
-            //brush.Dispose();
+            int offset_x = 0;
+            DrawingClass.Draw.文字左上繪製(序號, new PointF(offset_x += 10, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
+            DrawingClass.Draw.文字左上繪製($"({storage.IP.StringLength(14)}:{storage.Port})", new PointF(offset_x += 30, y + 10), new Font("微軟正黑體", 14 , FontStyle.Bold), row_Forecolor, e.Graphics);
+            DrawingClass.Draw.文字左上繪製($"{storage.DeviceType.GetEnumName()}", new PointF(offset_x += 250, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
+            offset_x += 50;
+            if (storage.TOFON)
+            {
+                DrawingClass.Draw.文字左上繪製($"【雷射開啟】", new PointF(offset_x += 100, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
+            }
+            if (storage.IsFADC)
+            {
+                DrawingClass.Draw.文字左上繪製($"【FADC】", new PointF(offset_x += 100, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
+            }
+            if (storage.IsInventoryLocation)
+            {
+                DrawingClass.Draw.文字左上繪製($"【庫儲區】", new PointF(offset_x += 100, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
+            }
+       
         }
 
         private void SqL_DataGridView_DeviceTable_DataGridRefreshEvent()
@@ -891,7 +872,58 @@ namespace H_Pannel_lib
                         LoadingForm.CloseLoadingForm();
 
                     }
-                 
+                    else if (dialog_ContextMenuStrip.Value == ContextMenuStrip_DeviceTable_IO設定.設定為FADC.GetEnumName())
+                    {
+                        // 逐一處理每個 IP
+                        for (int i = 0; i < iPEndPoints.Count; i++)
+                        {
+                            string IP = iPEndPoints[i].Address.ToString();
+                            Storage storage = this.SQL_GetStorage(IP);
+                            if (storage == null) continue;
+                            storage.IsFADC = true;
+                            this.SQL_ReplaceStorage(storage);                        
+                        }
+                        this.sqL_DataGridView_DeviceTable.SQL_GetAllRows(true);
+                    }
+                    else if (dialog_ContextMenuStrip.Value == ContextMenuStrip_DeviceTable_IO設定.設定非FADC.GetEnumName())
+                    {
+                        // 逐一處理每個 IP
+                        for (int i = 0; i < iPEndPoints.Count; i++)
+                        {
+                            string IP = iPEndPoints[i].Address.ToString();
+                            Storage storage = this.SQL_GetStorage(IP);
+                            if (storage == null) continue;
+                            storage.IsFADC = false;
+                            this.SQL_ReplaceStorage(storage);                 
+                        }
+                        this.sqL_DataGridView_DeviceTable.SQL_GetAllRows(true);
+                    }
+                    else if (dialog_ContextMenuStrip.Value == ContextMenuStrip_DeviceTable_IO設定.設定為庫儲區.GetEnumName())
+                    {
+                        // 逐一處理每個 IP
+                        for (int i = 0; i < iPEndPoints.Count; i++)
+                        {
+                            string IP = iPEndPoints[i].Address.ToString();
+                            Storage storage = this.SQL_GetStorage(IP);
+                            if (storage == null) continue;
+                            storage.IsInventoryLocation = true;
+                            this.SQL_ReplaceStorage(storage);
+                        }
+                        this.sqL_DataGridView_DeviceTable.SQL_GetAllRows(true);
+                    }
+                    else if (dialog_ContextMenuStrip.Value == ContextMenuStrip_DeviceTable_IO設定.設定非庫儲區.GetEnumName())
+                    {
+                        // 逐一處理每個 IP
+                        for (int i = 0; i < iPEndPoints.Count; i++)
+                        {
+                            string IP = iPEndPoints[i].Address.ToString();
+                            Storage storage = this.SQL_GetStorage(IP);
+                            if (storage == null) continue;
+                            storage.IsInventoryLocation = false;
+                            this.SQL_ReplaceStorage(storage);
+                        }
+                        this.sqL_DataGridView_DeviceTable.SQL_GetAllRows(true);
+                    }
                 }
 
             }
@@ -906,35 +938,7 @@ namespace H_Pannel_lib
                 }
 
             }
-            else if (selectedText == ContextMenuStrip_Main.設定為FADC.GetEnumName())
-            {
-                // 逐一處理每個 IP
-                for (int i = 0; i < iPEndPoints.Count; i++)
-                {
-                    string IP = iPEndPoints[i].Address.ToString();
-                    Storage storage = this.SQL_GetStorage(IP);
-                    if (storage == null) continue;
-
-                    storage.IsFADC = true;
-                    this.SQL_ReplaceStorage(storage);
-                    this.sqL_DataGridView_DeviceTable.SQL_GetAllRows(true);
-                }
-            }
-            else if (selectedText == ContextMenuStrip_Main.設定非FADC.GetEnumName())
-            {
-                // 逐一處理每個 IP
-                for (int i = 0; i < iPEndPoints.Count; i++)
-                {
-                    string IP = iPEndPoints[i].Address.ToString();
-                    Storage storage = this.SQL_GetStorage(IP);
-                    if (storage == null) continue;
-
-                    storage.IsFADC = false;
-                    this.SQL_ReplaceStorage(storage);
-                    this.sqL_DataGridView_DeviceTable.SQL_GetAllRows(true);
-
-                }
-            }
+          
 
         }
         private void StorageUI_EPD_266_UDP_DataReceiveMouseDownRightEvent(string selectedText, List<System.Net.IPEndPoint> iPEndPoints)

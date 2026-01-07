@@ -318,20 +318,7 @@ namespace H_Pannel_lib
             deviceBasics = json_result.JsonDeserializet<List<DeviceBasic>>();
 
 
-            //Parallel.ForEach(list_value, value =>
-            //{
-            //    string jsonString = value[(int)enum_DeviceTable.Value].ObjectToString();
-            //    DeviceBasic deviceBasic = jsonString.JsonDeserializet<DeviceBasic>();
-            //    if (deviceBasic != null)
-            //    {
-            //        deviceBasic.確認效期庫存(true);
-            //        deviceBasics.LockAdd(deviceBasic);
-            //    }
-
-            //});
-            //deviceBasics = (from value in deviceBasics
-            //                where value != null
-            //            select value).ToList();
+  
             return deviceBasics;
         }
 
