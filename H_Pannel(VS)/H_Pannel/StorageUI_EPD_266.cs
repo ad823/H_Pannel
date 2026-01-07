@@ -378,11 +378,11 @@ namespace H_Pannel_lib
             //string 科別 = $"{udnoectc.科別}";
             //string 開立醫師 = $"開立醫師:{udnoectc.開立醫師}";
 
-            DrawingClass.Draw.文字左上繪製(序號, new PointF(10, y + 10), new Font("標楷體", 14), row_Forecolor, e.Graphics);
-            DrawingClass.Draw.文字左上繪製($"({storage.IP.StringLength(14)}:{storage.Port})", new PointF(30, y + 10), new Font("標楷體", 14), row_Forecolor, e.Graphics);
-            DrawingClass.Draw.文字左上繪製($"{storage.DeviceType.GetEnumName()}", new PointF(300, y + 10), new Font("標楷體", 14), row_Forecolor, e.Graphics);
-            DrawingClass.Draw.文字左上繪製($"TOFON:{(storage.TOFON ? "Y" : "N")}", new PointF(500, y + 10), new Font("標楷體", 14), row_Forecolor, e.Graphics);
-            DrawingClass.Draw.文字左上繪製($"FADC:{(storage.IsFADC ? "Y" : "N")}", new PointF(600, y + 10), new Font("標楷體", 14), row_Forecolor, e.Graphics);
+            DrawingClass.Draw.文字左上繪製(序號, new PointF(10, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
+            DrawingClass.Draw.文字左上繪製($"({storage.IP.StringLength(14)}:{storage.Port})", new PointF(30, y + 10), new Font("微軟正黑體", 14 , FontStyle.Bold), row_Forecolor, e.Graphics);
+            DrawingClass.Draw.文字左上繪製($"{storage.DeviceType.GetEnumName()}", new PointF(300, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
+            DrawingClass.Draw.文字左上繪製($"TOFON:{(storage.TOFON ? "Y" : "N")}", new PointF(500, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
+            DrawingClass.Draw.文字左上繪製($"FADC:{(storage.IsFADC ? "Y" : "N")}", new PointF(600, y + 10), new Font("微軟正黑體", 14), row_Forecolor, e.Graphics);
 
             //DrawingClass.Draw.文字左上繪製(診別, new PointF(40, y + 10), new Font("標楷體", 16), row_Forecolor, e.Graphics);
             //DrawingClass.Draw.文字左上繪製(加入時間, new PointF(150, y + 10), new Font("標楷體", 16, FontStyle.Italic), row_Forecolor, e.Graphics);
