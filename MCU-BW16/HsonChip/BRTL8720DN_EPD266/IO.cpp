@@ -188,6 +188,7 @@ void sub_IO_Program()
     bool lock_input = mcp.digitalRead(LOCKER_INPUT);
     if(((Input_dir >> 0) % 2 ) ==  1) lock_input = !lock_input;
     Input = lock_input ? 1 : 0 ; 
+    #elif defined(FADC)
     #else
     Input = GetInput();
     #endif
