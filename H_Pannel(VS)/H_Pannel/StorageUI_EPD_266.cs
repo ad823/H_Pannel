@@ -12,6 +12,8 @@ using MyUI;
 using System.Reflection;
 using SkiaSharp;
 using System.Net;
+using static HIS_DB_Lib.deviceApiClass;
+using HIS_DB_Lib;
 namespace H_Pannel_lib
 {
     public partial class StorageUI_EPD_266 : StorageUI
@@ -269,6 +271,8 @@ namespace H_Pannel_lib
             畫面設置,
             IO設定,
             面板種類,
+            設定為FADC,
+            設定非FADC,
         }
         private enum ContextMenuStrip_DeviceTable_畫面設置
         {
@@ -312,6 +316,7 @@ namespace H_Pannel_lib
             設為EPD420G無鎖控,
             設為EPD360E有鎖控,
             設為EPD360E無鎖控,
+ 
         }
         public StorageUI_EPD_266()
         {
@@ -320,17 +325,90 @@ namespace H_Pannel_lib
             this.UDP_DataReceiveMouseDownRightEvent += StorageUI_EPD_266_UDP_DataReceiveMouseDownRightEvent;
 
             this.sqL_DataGridView_DeviceTable.DataGridRefreshEvent += SqL_DataGridView_DeviceTable_DataGridRefreshEvent;
-
+            this.sqL_DataGridView_DeviceTable.RowPostPaintingEventEx += SqL_DataGridView_DeviceTable_RowPostPaintingEventEx;
             Enum_ContextMenuStrip_DeviceTable = new ContextMenuStrip_Main();
             Enum_ContextMenuStrip_UDP_DataReceive = new ContextMenuStrip_Main();
         }
 
+        private void SqL_DataGridView_DeviceTable_RowPostPaintingEventEx(SQLUI.SQL_DataGridView sQL_DataGridView, DataGridViewRowPostPaintEventArgs e)
+        {
+            Color row_Backcolor = Color.White;
+            Color row_Forecolor = Color.Black;
+
+
+            object[] value = sQL_DataGridView.GetRowsList()[e.RowIndex];
+            string Value = value[(int)enum_DeviceTable.Value].ObjectToString();
+            Storage storage = Value.JsonDeserializet<Storage>();
+
+            if (sQL_DataGridView.dataGridView.Rows[e.RowIndex].Selected)
+            {
+                row_Backcolor = Color.Blue;
+                row_Forecolor = Color.White;
+            }
+
+
+            Brush brush = new SolidBrush(row_Backcolor);
+            int x = e.RowBounds.Left;
+            int y = e.RowBounds.Top;
+            int width = e.RowBounds.Width;
+            int height = e.RowBounds.Height;
+            e.Graphics.FillRectangle(brush, e.RowBounds);
+            //DrawingClass.Draw.DrawRoundShadow(e.Graphics, new RectangleF(x - 1, y - 1, width, height), Color.DarkGray, 1, 1);
+
+
+            string 序號 = $"{e.RowIndex + 1}.";
+
+            //string 加入時間 = $"{udnoectc.加入時間}";
+            //string 診別 = "【住院】";
+            //string 病床號 = $"{udnoectc.病房}-{udnoectc.床號}";
+            //if (udnoectc.病房.ToUpper().Contains("OPD"))
+            //{
+            //    診別 = "【門診】";
+            //    病床號 = "-------";
+            //}
+
+            //string 病人姓名 = $"{udnoectc.病人姓名}";
+            //string 病歷號 = $"{udnoectc.病歷號}";
+            //string 生日 = $"生日:{udnoectc.生日}";
+            //string 性別 = $"{udnoectc.性別}";
+            //string 身高 = $"身高:{udnoectc.身高}cm";
+            //string 體重 = $"體重:{udnoectc.體重}kg";
+
+            //string 診斷 = $"診斷:{udnoectc.診斷}";
+            //string 科別 = $"{udnoectc.科別}";
+            //string 開立醫師 = $"開立醫師:{udnoectc.開立醫師}";
+
+            DrawingClass.Draw.文字左上繪製(序號, new PointF(10, y + 10), new Font("標楷體", 14), row_Forecolor, e.Graphics);
+            DrawingClass.Draw.文字左上繪製($"({storage.IP.StringLength(14)}:{storage.Port})", new PointF(30, y + 10), new Font("標楷體", 14), row_Forecolor, e.Graphics);
+            DrawingClass.Draw.文字左上繪製($"{storage.DeviceType.GetEnumName()}", new PointF(300, y + 10), new Font("標楷體", 14), row_Forecolor, e.Graphics);
+            DrawingClass.Draw.文字左上繪製($"TOFON:{(storage.TOFON ? "Y" : "N")}", new PointF(500, y + 10), new Font("標楷體", 14), row_Forecolor, e.Graphics);
+            DrawingClass.Draw.文字左上繪製($"FADC:{(storage.IsFADC ? "Y" : "N")}", new PointF(600, y + 10), new Font("標楷體", 14), row_Forecolor, e.Graphics);
+
+            //DrawingClass.Draw.文字左上繪製(診別, new PointF(40, y + 10), new Font("標楷體", 16), row_Forecolor, e.Graphics);
+            //DrawingClass.Draw.文字左上繪製(加入時間, new PointF(150, y + 10), new Font("標楷體", 16, FontStyle.Italic), row_Forecolor, e.Graphics);
+
+            //DrawingClass.Draw.文字左上繪製(病人姓名, 300, new PointF(20, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
+            //DrawingClass.Draw.文字左上繪製(病歷號, new PointF(180, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
+            //DrawingClass.Draw.文字左上繪製(病床號, new PointF(280, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
+            //DrawingClass.Draw.文字左上繪製(生日, new PointF(420, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
+            //DrawingClass.Draw.文字左上繪製(性別, new PointF(640, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
+            //DrawingClass.Draw.文字左上繪製(身高, new PointF(690, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
+            //DrawingClass.Draw.文字左上繪製(體重, new PointF(840, y + 50), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
+
+            //DrawingClass.Draw.文字左上繪製(診斷, new PointF(20, y + 100), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
+            //DrawingClass.Draw.文字左上繪製(科別, new PointF(600, y + 100), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
+            //DrawingClass.Draw.文字左上繪製(開立醫師, new PointF(840, y + 100), new Font("標楷體", 16, FontStyle.Bold), row_Forecolor, e.Graphics);
+            //brush.Dispose();
+        }
+
         private void SqL_DataGridView_DeviceTable_DataGridRefreshEvent()
         {
+            List<Storage> storages = SQL_GetAllStorage();
             for (int i = 0; i < this.sqL_DataGridView_DeviceTable.dataGridView.Rows.Count; i++)
             {
-                string jsonString = this.sqL_DataGridView_DeviceTable.dataGridView.Rows[i].Cells[(int)enum_DeviceTable.Value].Value.ObjectToString();
-                Storage storage = jsonString.JsonDeserializet<Storage>();
+                string IP = this.sqL_DataGridView_DeviceTable.dataGridView.Rows[i].Cells[(int)enum_DeviceTable.IP].Value.ObjectToString();
+         
+                Storage storage = storages.Where(x=>x.IP.Equals(IP)).FirstOrDefault();
                 if (storage != null)
                 {
                     Color color = Color.White;
@@ -813,6 +891,7 @@ namespace H_Pannel_lib
                         LoadingForm.CloseLoadingForm();
 
                     }
+                 
                 }
 
             }
@@ -826,6 +905,35 @@ namespace H_Pannel_lib
                     HandleSetEPDPanelType(面板種類, iPEndPoints);
                 }
 
+            }
+            else if (selectedText == ContextMenuStrip_Main.設定為FADC.GetEnumName())
+            {
+                // 逐一處理每個 IP
+                for (int i = 0; i < iPEndPoints.Count; i++)
+                {
+                    string IP = iPEndPoints[i].Address.ToString();
+                    Storage storage = this.SQL_GetStorage(IP);
+                    if (storage == null) continue;
+
+                    storage.IsFADC = true;
+                    this.SQL_ReplaceStorage(storage);
+                    this.sqL_DataGridView_DeviceTable.SQL_GetAllRows(true);
+                }
+            }
+            else if (selectedText == ContextMenuStrip_Main.設定非FADC.GetEnumName())
+            {
+                // 逐一處理每個 IP
+                for (int i = 0; i < iPEndPoints.Count; i++)
+                {
+                    string IP = iPEndPoints[i].Address.ToString();
+                    Storage storage = this.SQL_GetStorage(IP);
+                    if (storage == null) continue;
+
+                    storage.IsFADC = false;
+                    this.SQL_ReplaceStorage(storage);
+                    this.sqL_DataGridView_DeviceTable.SQL_GetAllRows(true);
+
+                }
             }
 
         }
@@ -997,12 +1105,8 @@ namespace H_Pannel_lib
                 {
                     HandleSetEPDPanelType(面板種類, iPEndPoints);
                 }
-
             }
-            else if (selectedText == ContextMenuStrip_Main.IO設定.GetEnumName())
-            {
-
-            }
+        
         }
         public string ByteToStringHex(byte[] value)
         {

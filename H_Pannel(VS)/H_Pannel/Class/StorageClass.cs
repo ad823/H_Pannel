@@ -45,7 +45,7 @@ namespace H_Pannel_lib
         public bool TOFON { get => tOFON; set => tOFON = value; }
         public bool AlarmEnable { get => alarmEnable; set => alarmEnable = value; }
         public enum_DrawType Enum_drawType { get => _enum_drawType; set => _enum_drawType = value; }
-
+        public bool IsFADC { get; set; } = false;
 
         public bool ActionDone = false;
         public Storage(int station)
