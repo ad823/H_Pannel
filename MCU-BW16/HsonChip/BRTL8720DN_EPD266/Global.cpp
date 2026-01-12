@@ -21,6 +21,7 @@ float dht_hic = 0;
 bool flag_udp_232back = false;
 bool flag_JsonSend = false;
 bool flag_writeMode = false;
+bool upd_connected = false;
 
 #if defined(EPD266)
     EPD epd;

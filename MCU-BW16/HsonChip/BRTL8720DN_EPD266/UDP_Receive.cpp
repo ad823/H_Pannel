@@ -725,7 +725,7 @@ void Get_Checksum_UDP()
    Send_StringTo(str0 ,remoteIP, remotePort);
  
 }
-bool upd_connected = false;
+
 bool Connect_UDP(int localport)
 {
     if(upd_connected) return true;

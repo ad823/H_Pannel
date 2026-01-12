@@ -199,6 +199,7 @@ void loop()
    {                         
       if(isConnectedInternal() == false)
       {
+         upd_connected = false;
          #ifdef EPD_Device
          epd.free_framebuffer();          
          #endif
@@ -344,7 +345,7 @@ void Core0Task3( void * pvParameters )
               
         }
       
-       
+        delay(0);
     }
     
 }

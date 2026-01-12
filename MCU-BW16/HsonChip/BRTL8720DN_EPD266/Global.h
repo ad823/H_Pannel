@@ -46,7 +46,7 @@ extern float dht_hic;
 extern bool flag_udp_232back;
 extern bool flag_JsonSend;
 extern bool flag_writeMode;
-
+extern bool upd_connected;
 #if defined(EPD266)
     extern EPD epd;
 #elif defined(EPD290)
