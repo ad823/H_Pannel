@@ -13,6 +13,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using Basic;
 using System.Collections.Concurrent;
+using DrawingClass;
 namespace H_Pannel_lib
 {
     public class UDP_READ_basic
@@ -76,13 +77,13 @@ namespace H_Pannel_lib
         public string Qty { get; set; }
 
     }
-  
+
     static public class StockClassMethod
     {
         static public double GetTolalQty(this List<StockClass> stockClasses)
         {
             double qty = 0;
-            for(int i = 0; i < stockClasses.Count; i++)
+            for (int i = 0; i < stockClasses.Count; i++)
             {
                 qty += stockClasses[i].Qty.StringToDouble();
             }
@@ -146,7 +147,7 @@ namespace H_Pannel_lib
                 }
                 if (i == deviceBasicTables.Count - 1) sb.Append("]");
             }
-      
+
             string json_result = sb.ToString();
             if (json_result.StringIsEmpty()) json_result = "[]";
             deviceBasics = json_result.JsonDeserializet<List<DeviceBasic>>();
@@ -176,7 +177,7 @@ namespace H_Pannel_lib
             if (json_result.StringIsEmpty()) json_result = "[]";
             deviceBasics = json_result.JsonDeserializet<List<DeviceSimple>>();
             return deviceBasics;
-       
+
         }
         static public DeviceBasic SQL_GetDeviceBasic(SQLUI.SQL_DataGridView.ConnentionClass connentionClass, string TableName, DeviceBasic deviceBasic)
         {
@@ -186,7 +187,7 @@ namespace H_Pannel_lib
         {
             return SQL_GetDeviceBasic(sQLControl, deviceBasic.GUID);
         }
-        static public DeviceBasic SQL_GetDeviceBasic(SQLUI.SQL_DataGridView.ConnentionClass connentionClass, string TableName , string GUID)
+        static public DeviceBasic SQL_GetDeviceBasic(SQLUI.SQL_DataGridView.ConnentionClass connentionClass, string TableName, string GUID)
         {
             SQLUI.SQLControl sQLControl = new SQLUI.SQLControl(connentionClass.IP, connentionClass.DataBaseName, connentionClass.TableName, connentionClass.UserName, connentionClass.Password, connentionClass.Port, connentionClass.MySqlSslMode);
             return SQL_GetDeviceBasic(sQLControl, GUID);
@@ -279,14 +280,14 @@ namespace H_Pannel_lib
             List<DeviceBasic> DeviceBasics_buf = new List<DeviceBasic>();
             foreach (DeviceBasic deviceBasic in DeviceBasics)
             {
-                if(flag_serch == false)
+                if (flag_serch == false)
                 {
                     if (deviceBasic.Code == Code || (deviceBasic.SKDIACODE.StringIsEmpty() == false && deviceBasic.SKDIACODE == Code))
                     {
                         DeviceBasics_buf.Add(deviceBasic);
                     }
                 }
-              
+
             }
             return DeviceBasics_buf;
         }
@@ -323,7 +324,7 @@ namespace H_Pannel_lib
             }
             return new List<DeviceBasic>();
         }
-        public static List<DeviceBasic> SearchDictionaryByCode(this Dictionary<string, List<DeviceBasic>> dictionary, string code)
+        static public List<DeviceBasic> SearchDictionaryByCode(this Dictionary<string, List<DeviceBasic>> dictionary, string code)
         {
             code = code.Replace("*", "");
             // 找到所有包含特定子字符串的鍵
@@ -338,6 +339,33 @@ namespace H_Pannel_lib
 
             return result;
         }
+
+
+        static public object SortByIP(this List<object> list, string IP)
+        {
+            foreach (var temp in list)
+            {
+                if (temp is Drawer)
+                {
+                    Drawer drawer = (Drawer)temp;
+                    if (drawer.IP == IP) return drawer;
+                }
+                else if (temp is Storage)
+                {
+                    Storage storage = (Storage)temp;
+                    if (storage.IP == IP) return storage;
+
+                }
+                else if (temp is RowsLED)
+                {
+                    RowsLED rowsLED = (RowsLED)temp;
+                    if (rowsLED.IP == IP) return rowsLED;
+
+                }
+            }
+            return null;
+
+        }
     }
 
     [Serializable]
@@ -346,7 +374,7 @@ namespace H_Pannel_lib
         private bool flag_UDP_Class_Init = false;
         private string tableName = "";
         private SQLUI.SQLControl sQLControl;
-        public void Init(SQLUI.SQL_DataGridView.ConnentionClass connentionClass,string tableName)
+        public void Init(SQLUI.SQL_DataGridView.ConnentionClass connentionClass, string tableName)
         {
             Init(connentionClass.IP, connentionClass.DataBaseName, tableName, connentionClass.UserName, connentionClass.Password, connentionClass.Port, connentionClass.MySqlSslMode);
         }
@@ -358,7 +386,7 @@ namespace H_Pannel_lib
         {
             this.tableName = TableName;
             sQLControl = new SQLUI.SQLControl(IP, DataBaseName, TableName, UserName, Password, Port, mySqlSslMode);
-            if(flag_UDP_Class_Init == false)
+            if (flag_UDP_Class_Init == false)
             {
                 DeviceBasicMethod.SQL_Init(sQLControl);
             }
@@ -388,7 +416,7 @@ namespace H_Pannel_lib
         public void SQL_ReplaceDeviceBasic(List<DeviceBasic> deviceBasics)
         {
             if (sQLControl == null) return;
-            DeviceBasicMethod.SQL_ReplaceDeviceBasic(sQLControl ,deviceBasics);
+            DeviceBasicMethod.SQL_ReplaceDeviceBasic(sQLControl, deviceBasics);
         }
         public void SQL_AddDeviceBasic(List<DeviceBasic> deviceBasics)
         {
@@ -433,7 +461,7 @@ namespace H_Pannel_lib
             {
                 if (_Code != value) flag_replace = true;
                 _Code = value.Trim();
-                
+
             }
         }
         private string _SKDIACODE = "";
@@ -518,7 +546,7 @@ namespace H_Pannel_lib
         }
         public void 確認效期庫存(bool ClearAll)
         {
-            lock(_lock)
+            lock (_lock)
             {
                 List<string> 效期_temp = new List<string>();
                 List<string> 庫存_temp = new List<string>();
@@ -579,7 +607,7 @@ namespace H_Pannel_lib
                 this.list_Lot_number = 批號_temp;
                 this.list_Inventory = 庫存_temp;
             }
-          
+
 
         }
         public double 取得庫存(string 效期)
@@ -646,7 +674,7 @@ namespace H_Pannel_lib
             set
             {
                 if (deviceType != value) flag_replace = true;
-                 deviceType = value;
+                deviceType = value;
             }
         }
         private DeviceType deviceType = DeviceType.None;
@@ -688,7 +716,7 @@ namespace H_Pannel_lib
             }
         }
         private string _BarCode2 = "";
-        public string BarCode2 
+        public string BarCode2
         {
             get => _BarCode2;
             set
@@ -724,9 +752,9 @@ namespace H_Pannel_lib
         }
 
         private string _CustomText1 = "";
-        public string CustomText1 
+        public string CustomText1
         {
-            get => _CustomText1; 
+            get => _CustomText1;
             set => _CustomText1 = value;
         }
         private string _CustomText2 = "";
@@ -746,7 +774,7 @@ namespace H_Pannel_lib
         }
         private double max_Inventory = 0;
         public double Max_Inventory
-        { 
+        {
             get => max_Inventory;
             set
             {
@@ -764,7 +792,7 @@ namespace H_Pannel_lib
                 _StorageName = value;
             }
         }
- 
+
         private bool _isWarning = false;
         public bool IsWarning
         {
@@ -818,7 +846,7 @@ namespace H_Pannel_lib
         public LightStateClass LightState = new LightStateClass();
 
 
-        public void SetLight(bool state , Color color , double intervlal , double light_off_time)
+        public void SetLight(bool state, Color color, double intervlal, double light_off_time)
         {
             LightState.State = state;
             if (color != Color.Transparent) LightState.LightColor = color;
@@ -828,7 +856,7 @@ namespace H_Pannel_lib
         }
 
 
-        [JsonIgnore]   
+        [JsonIgnore]
         public List<StockClass> stockClasses
         {
             get
@@ -1159,7 +1187,7 @@ namespace H_Pannel_lib
             }
             return;
         }
-  
+
         public void 清除所有庫存資料()
         {
             list_Validity_period.Clear();
@@ -1229,7 +1257,7 @@ namespace H_Pannel_lib
 
     static public class DeviceMethod
     {
-        static public void SQL_Init(SQLUI.SQL_DataGridView.ConnentionClass connentionClass , string TableName)
+        static public void SQL_Init(SQLUI.SQL_DataGridView.ConnentionClass connentionClass, string TableName)
         {
             connentionClass.TableName = TableName;
             SQL_Init(connentionClass);
@@ -1237,7 +1265,7 @@ namespace H_Pannel_lib
         static public void SQL_Init(SQLUI.SQL_DataGridView.ConnentionClass connentionClass)
         {
             SQLUI.SQLControl sQLControl = new SQLUI.SQLControl(connentionClass.IP, connentionClass.DataBaseName, connentionClass.TableName, connentionClass.UserName, connentionClass.Password, connentionClass.Port, connentionClass.MySqlSslMode);
-            if(!sQLControl.IsTableCreat(null))
+            if (!sQLControl.IsTableCreat(null))
             {
                 SQLUI.Table table = new SQLUI.Table(connentionClass.TableName);
                 table.AddColumnList(enum_DeviceTable.GUID.GetEnumName(), SQLUI.Table.StringType.VARCHAR, SQLUI.Table.IndexType.PRIMARY);
@@ -1261,7 +1289,7 @@ namespace H_Pannel_lib
             List<Device> devices = SQL_GetAllDevice(deviceTables);
             return devices;
         }
-     
+
         static public void SQL_ReplaceDevice(SQLUI.SQL_DataGridView.ConnentionClass connentionClass, string TableName, List<Device> devices)
         {
             SQLUI.SQLControl sQLControl = new SQLUI.SQLControl(connentionClass.IP, connentionClass.DataBaseName, connentionClass.TableName, connentionClass.UserName, connentionClass.Password, connentionClass.Port, connentionClass.MySqlSslMode);
@@ -1276,7 +1304,7 @@ namespace H_Pannel_lib
                 list_value.LockAdd(SQLvalue);
 
             });
-            sQLControl.UpdateByDefulteExtra(TableName ,list_value);
+            sQLControl.UpdateByDefulteExtra(TableName, list_value);
         }
         static public void SQL_AddDevice(SQLUI.SQL_DataGridView.ConnentionClass connentionClass, string TableName, List<Device> devices)
         {
@@ -1294,7 +1322,7 @@ namespace H_Pannel_lib
             });
             sQLControl.AddRows(TableName, list_value);
         }
-    
+
         static public List<Device> SQL_GetAllDevice(List<object[]> deviceTables)
         {
             List<Device> devices = new List<Device>();
@@ -1318,7 +1346,7 @@ namespace H_Pannel_lib
             if (json_result.StringIsEmpty()) json_result = "[]";
             devices = json_result.JsonDeserializet<List<Device>>();
             return devices;
-         
+
         }
 
         static public List<Device> Add_NewDevice(this List<Device> Devices, string IP, int Port)
@@ -1477,7 +1505,7 @@ namespace H_Pannel_lib
                          || device.DeviceType == DeviceType.EPD360E || device.DeviceType == DeviceType.EPD360E_lock);
             return flag;
         }
-        
+
         static public double GetInventory(this List<DeviceBasic> deviceBasics)
         {
             double 庫存 = 0;
@@ -1500,13 +1528,13 @@ namespace H_Pannel_lib
             device.Package = medClass.包裝單位;
 
             return device;
-        }   
+        }
 
 
 
-    
+
     }
-  
+
 
     public delegate void PaintHandler();
     public enum DeviceType
@@ -1515,11 +1543,11 @@ namespace H_Pannel_lib
         EPD266_lock = 1,
         EPD266 = 2,
         EPD583_lock = 3,
-        EPD583 = 4,   
+        EPD583 = 4,
         RowsLED = 5,
         RFID_Device = 6,
         Pannel35_lock = 7,
-        Pannel35= 8,
+        Pannel35 = 8,
         EPD290_lock = 9,
         EPD290 = 10,
         EPD1020 = 11,
@@ -1606,7 +1634,7 @@ namespace H_Pannel_lib
     }
     #endregion
     [Serializable]
-    public class Device :DeviceBasic
+    public class Device : DeviceBasic
     {
         public bool input = false;
 
@@ -1695,7 +1723,7 @@ namespace H_Pannel_lib
             {
                 get
                 {
-                    if(valueName == ValueName.效期)
+                    if (valueName == ValueName.效期)
                     {
                         return this.Value;
                     }
@@ -1728,7 +1756,7 @@ namespace H_Pannel_lib
             public bool flag_breathing = false;
             public object Getvalue(ValueType valueType)
             {
-                if(valueType == ValueType.StringValue)
+                if (valueType == ValueType.StringValue)
                 {
                     return StringValue;
                 }
@@ -2603,7 +2631,7 @@ namespace H_Pannel_lib
                     {
                         if (valueType == ValueType.Value)
                         {
-                         
+
                         }
                         else if (valueType == ValueType.Title)
                         {
@@ -3275,7 +3303,7 @@ namespace H_Pannel_lib
                             if (i != 0) vlaueClass.Value += "\n";
                             vlaueClass.Value += $"效期:{list_Validity_period[i]} 庫存:{this.list_Inventory[i]}";
                         }
-                        
+
                         vlaueClass.Font = this.Validity_period_font;
                         vlaueClass.ForeColor = this.Validity_period_ForeColor;
                         vlaueClass.BackColor = this.Validity_period_BackColor;
@@ -3588,9 +3616,9 @@ namespace H_Pannel_lib
                         }
                     }
                 }
-                return bitmap;          
+                return bitmap;
             }
-            else if (valueName == ValueName.圖片1|| valueName == ValueName.圖片2)
+            else if (valueName == ValueName.圖片1 || valueName == ValueName.圖片2)
             {
                 // 計算縮放後的尺寸
                 Size rectSize = new Size((int)(vlaueClass.Width * bmp_Scale),
@@ -3610,7 +3638,7 @@ namespace H_Pannel_lib
             }
             else//繪製文字
             {
-                Bitmap bitmap = Communication.TextToBitmap(vlaueClass.Value, vlaueClass.Font, bmp_Scale, vlaueClass.Width, vlaueClass.Height, vlaueClass.ForeColor, vlaueClass.BackColor, vlaueClass.BorderSize , vlaueClass.BorderRadius, vlaueClass.BorderColor, vlaueClass.HorizontalAlignment);
+                Bitmap bitmap = Communication.TextToBitmap(vlaueClass.Value, vlaueClass.Font, bmp_Scale, vlaueClass.Width, vlaueClass.Height, vlaueClass.ForeColor, vlaueClass.BackColor, vlaueClass.BorderSize, vlaueClass.BorderRadius, vlaueClass.BorderColor, vlaueClass.HorizontalAlignment);
                 if (bitmap == null) return null;
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
@@ -3635,9 +3663,9 @@ namespace H_Pannel_lib
         }
         public Bitmap GetBitmap(ValueName valueName, double bmp_Scale)
         {
-            return this.GetBitmap(valueName, bmp_Scale, null , 0 , false);
+            return this.GetBitmap(valueName, bmp_Scale, null, 0, false);
         }
-        public Bitmap GetBitmap(ValueName valueName, double bmp_Scale, Color? color , int  BorderSize , bool dash)
+        public Bitmap GetBitmap(ValueName valueName, double bmp_Scale, Color? color, int BorderSize, bool dash)
         {
             VlaueClass vlaueClass = this.GetValue(valueName);
 
@@ -3652,12 +3680,12 @@ namespace H_Pannel_lib
                     g.CompositingQuality = CompositingQuality.HighQuality;
                     g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
                     if (color != null)
-                    {                      
+                    {
                         float[] dashValues = { 2, 2, 2, 2 };
                         Pen pen = new Pen((Color)color, BorderSize);
                         if (dash) pen.DashPattern = dashValues;
 
-                        g.DrawRectangle(pen, BorderSize/ 2, BorderSize / 2, (int)(bitmap.Width - BorderSize), (int)(bitmap.Height - BorderSize));                  
+                        g.DrawRectangle(pen, BorderSize / 2, BorderSize / 2, (int)(bitmap.Width - BorderSize), (int)(bitmap.Height - BorderSize));
                     }
                 }
                 return bitmap;
@@ -3682,7 +3710,7 @@ namespace H_Pannel_lib
                             Pen pen = new Pen((Color)color, BorderSize);
                             if (dash) pen.DashPattern = dashValues;
 
-                            g.DrawRectangle(pen, BorderSize / 2, BorderSize /  2, (int)(vlaueClass.Width * bmp_Scale - BorderSize), (int)(vlaueClass.Height * bmp_Scale - BorderSize));
+                            g.DrawRectangle(pen, BorderSize / 2, BorderSize / 2, (int)(vlaueClass.Width * bmp_Scale - BorderSize), (int)(vlaueClass.Height * bmp_Scale - BorderSize));
                         }
                     }
                 }
@@ -3713,7 +3741,7 @@ namespace H_Pannel_lib
 
         static public ValueName GetValueName(string text)
         {
-            if(text.StringIsEmpty())return ValueName.None;
+            if (text.StringIsEmpty()) return ValueName.None;
             if (text == "藥碼" || text == "藥品碼") return ValueName.藥品碼;
             if (text == "藥品名稱" || text == "藥名") return ValueName.藥品名稱;
             if (text == "藥品中文名稱" || text.Contains("中文名")) return ValueName.藥品中文名稱;
@@ -4184,8 +4212,8 @@ namespace H_Pannel_lib
         #region StorageName
         private string _StorageName_Title = "";
         public string StorageName_Title { get => _StorageName_Title; set => _StorageName_Title = value; }
-    
-       [JsonIgnore]
+
+        [JsonIgnore]
         public Font StorageName_font
         {
             get
@@ -5063,21 +5091,21 @@ namespace H_Pannel_lib
             get { return ColorSerializationHelper.ToString(ForeColor); }
             set { ForeColor = ColorSerializationHelper.FromString(value); }
         }
-      
+
         public bool UpToSQL = false;
-        public int station = -1;  
-        public int Station { get => station; set => station = value; }   
+        public int station = -1;
+        public int Station { get => station; set => station = value; }
 
         private int masterIndex = -1;
         public int MasterIndex { get => masterIndex; set => masterIndex = value; }
         public int Index { get => index; set => index = value; }
-       
+
         private int index = 0;
         public bool LightOn = false;
 
         virtual public void PasteFormat(object obj)
         {
-            if(obj is Device)
+            if (obj is Device)
             {
                 Device device = obj as Device;
 
@@ -5091,7 +5119,7 @@ namespace H_Pannel_lib
                         ValueType valueType = (ValueType)k;
 
 
-                        if (valueName != ValueName.圖片1 && valueName != ValueName.圖片2 )
+                        if (valueName != ValueName.圖片1 && valueName != ValueName.圖片2)
                         {
                             if (valueType == ValueType.StringValue) continue;
                             if (valueType == ValueType.Value) continue;
@@ -5103,7 +5131,7 @@ namespace H_Pannel_lib
                 }
                 this.Speaker = device.Speaker;
             }
-            
+
         }
         virtual public void Paste(object obj)
         {
@@ -5124,7 +5152,7 @@ namespace H_Pannel_lib
                 }
                 this.Speaker = device.Speaker;
             }
-          
+
         }
         public void Clear()
         {
@@ -5147,7 +5175,7 @@ namespace H_Pannel_lib
         }
 
 
-    
+
 
 
     }

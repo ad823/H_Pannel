@@ -223,6 +223,7 @@ void WiFiConfig::WIFI_Connenct()
     byte* gateway_ptr  = this->Get_Gateway();
     byte* subnet_ptr   = this->Get_Subnet();
     byte* dns_ptr      = this->Get_DNS();
+    #if defined(SSID_NoneVisable)
     uint8_t chnpln;     // Default channel plan 0x7F
     uint8_t chntgt = 0x76; 
     if (wifi_get_channel_plan(&chnpln) == RTW_SUCCESS) 
@@ -239,6 +240,7 @@ void WiFiConfig::WIFI_Connenct()
         }
       }
     }
+    #endif
     IPAddress ipAdress(ipAdress_ptr[0], ipAdress_ptr[1], ipAdress_ptr[2], ipAdress_ptr[3]);
     IPAddress gateway(gateway_ptr[0], gateway_ptr[1], gateway_ptr[2], gateway_ptr[3]);
     IPAddress subnet(subnet_ptr[0], subnet_ptr[1], subnet_ptr[2], subnet_ptr[3]);

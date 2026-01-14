@@ -1,4 +1,4 @@
-#define VERSION "Ver 1.6.043"
+#define VERSION "Ver 1.6.045"
 #define RESOURCE "OTA_All.bin"  
 
 #define SPI_MOSI_PIN PA12
@@ -6,10 +6,11 @@
 #define NUM_OF_LEDS NUM_WS2812B_CRGB
 #define SYSTEM_LED_PIN PA30
 
+//#define SSID_NoneVisable //啟用代表SSID可以隱藏
 //#define FADC
-#define DrawerMCP23008
-//#define B_Drawer
-//#define DrawerHandSensor
+//#define DrawerMCP23008
+//#define B_Drawer //大抽屜必須啟用
+#define DrawerHandSensor //抽屜手勢感測
 //#define MCP23008
 //#define PowerReset
 
@@ -59,7 +60,7 @@
 //#define EPD290
 //#define EPD2IN9G
 //#define EPD420
-#define EPD4IN20G
+//#define EPD4IN20G
 //#define EPD420_D
 //#define EPD583
 //#define EPD579G

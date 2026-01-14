@@ -39,7 +39,7 @@ void FADC_LockerInputRead()
         flag_FADC_MotroInput_buf = flag_FADC_MotorInput;
         bool lock_input = flag_FADC_lokerInput_buf;
         if(((Input_dir >> 0) % 2 ) ==  1) lock_input = !lock_input;
-        byte temp = 0
+        byte temp = 0;
         temp += lock_input ? 1 : 0 ;
         temp += flag_FADC_MotorInput ? 3 : 0 ;
         Input = temp ; 
