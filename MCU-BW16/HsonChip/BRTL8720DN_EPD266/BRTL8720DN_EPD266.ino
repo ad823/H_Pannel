@@ -35,6 +35,7 @@ TaskHandle_t Core0Task4Handle;
 int wtd_count = 0;
 
 
+
 void setup() 
 {
     MyTimer_WIFIConected.StartTickTime(180000);          

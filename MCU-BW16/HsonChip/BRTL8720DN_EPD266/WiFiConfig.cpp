@@ -180,7 +180,9 @@ void WiFiConfig::Init(String Version)
 
    
 }
-
+extern "C" {
+  #include "sys_api.h"
+}
 void WiFiConfig::WIFI_Disconnenct()
 {
     WiFi.disconnect();
@@ -312,7 +314,9 @@ void WiFiConfig::WIFI_Connenct()
         if(WIFI_connected_count >= 1)
         {
           mySerial->println("WiFi 連線過重新啟動...");
-          NVIC_SystemReset();
+          delay(1000);
+          sys_reset();
+          delay(50000);
         }
         
         WIFI_connected_count++;
