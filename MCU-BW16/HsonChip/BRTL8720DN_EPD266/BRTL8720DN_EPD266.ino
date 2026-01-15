@@ -289,13 +289,13 @@ void Core0Task3( void * pvParameters )
         }
         if( WiFi.status() == WL_CONNECTED )
         {
-              #ifdef EPD_Device
-              epd.melloc_init();
-              #endif
-              sub_UDP_Send();  
+              
               if(MyTimer_WIFIConected.IsTimeOut())
               {
-                
+                #ifdef EPD_Device
+                epd.melloc_init();
+                #endif
+                sub_UDP_Send();  
                 HandleUdpCommand(); 
                 #ifdef DrawerHandSensor
                 if(MyTimer_IO_WR.IsTimeOut())

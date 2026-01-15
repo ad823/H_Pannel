@@ -187,7 +187,7 @@ void WiFiConfig::WIFI_Disconnenct()
 }
 
 bool WIFI_Init_Done = false;
-
+bool WIFI_connected_count = 0;
 void WiFiConfig::WIFI_Connenct()
 {
     static bool firstInit = true;
@@ -309,6 +309,13 @@ void WiFiConfig::WIFI_Connenct()
         mySerial->println("WiFi 連線成功！");
         mySerial->print("IP: ");
         mySerial->println(WiFi.localIP());
+        if(WIFI_connected_count >= 1)
+        {
+          mySerial->println("WiFi 連線過重新啟動...");
+          NVIC_SystemReset();
+        }
+        
+        WIFI_connected_count++;
     }
     else
     {
