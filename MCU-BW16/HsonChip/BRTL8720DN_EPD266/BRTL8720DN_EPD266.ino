@@ -288,7 +288,7 @@ void Core0Task3( void * pvParameters )
             oLCD114.Lcd_Init();            
             #endif
         }
-        if( WiFi.status() == WL_CONNECTED )
+        if( wiFiConfig.IsConnected )
         {
               
               if(MyTimer_WIFIConected.IsTimeOut())

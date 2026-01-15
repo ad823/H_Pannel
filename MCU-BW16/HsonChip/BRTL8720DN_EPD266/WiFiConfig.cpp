@@ -192,6 +192,7 @@ bool WIFI_Init_Done = false;
 bool WIFI_connected_count = 0;
 void WiFiConfig::WIFI_Connenct()
 {
+    IsConnected = false;
     static bool firstInit = true;
 
 //    mySerial->println("\n=== [WiFi 初始化開始] ===");
@@ -304,9 +305,9 @@ void WiFiConfig::WIFI_Connenct()
     }
     mySerial->println();
 
-    this->IsConnected = (WiFi.status() == WL_CONNECTED);
+    
 
-    if (this->IsConnected)
+    if (WiFi.status() == WL_CONNECTED)
     {
         mySerial->println("WiFi 連線成功！");
         mySerial->print("IP: ");
@@ -314,16 +315,19 @@ void WiFiConfig::WIFI_Connenct()
         if(WIFI_connected_count >= 1)
         {
           mySerial->println("WiFi 連線過重新啟動...");
-          delay(1000);
+          delay(500);
           sys_reset();
-          delay(50000);
+          delay(3000);
+          return;
         }
         
         WIFI_connected_count++;
+        this->IsConnected = true;
     }
     else
     {
         mySerial->println("WiFi 連線失敗");
+        IsConnected = false;
     }
 
     mySerial->print("[Free Heap After] = ");
