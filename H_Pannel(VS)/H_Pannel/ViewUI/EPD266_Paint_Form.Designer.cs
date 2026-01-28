@@ -93,6 +93,7 @@ namespace H_Pannel_lib
             this.rJ_Lable1 = new MyUI.RJ_Lable();
             this.comboBox_選擇項目 = new System.Windows.Forms.ComboBox();
             this.fontDialog = new System.Windows.Forms.FontDialog();
+            this.checkBox_QRCode = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -419,6 +420,7 @@ namespace H_Pannel_lib
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox_QRCode);
             this.groupBox1.Controls.Add(this.panel3);
             this.groupBox1.Controls.Add(this.panel4);
             this.groupBox1.Controls.Add(this.checkBox_文本3);
@@ -957,6 +959,16 @@ namespace H_Pannel_lib
             this.comboBox_選擇項目.Size = new System.Drawing.Size(353, 35);
             this.comboBox_選擇項目.TabIndex = 1;
             // 
+            // checkBox_QRCode
+            // 
+            this.checkBox_QRCode.AutoSize = true;
+            this.checkBox_QRCode.Location = new System.Drawing.Point(279, 28);
+            this.checkBox_QRCode.Name = "checkBox_QRCode";
+            this.checkBox_QRCode.Size = new System.Drawing.Size(93, 25);
+            this.checkBox_QRCode.TabIndex = 30;
+            this.checkBox_QRCode.Text = "QRCode";
+            this.checkBox_QRCode.UseVisualStyleBackColor = true;
+            // 
             // EPD266_Paint_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1062,5 +1074,6 @@ namespace H_Pannel_lib
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox_圖片1;
+        private System.Windows.Forms.CheckBox checkBox_QRCode;
     }
 }
