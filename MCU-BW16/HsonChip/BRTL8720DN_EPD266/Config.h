@@ -1,4 +1,4 @@
-#define VERSION "Ver 1.6.051"
+#define VERSION "Ver 1.6.053"
 #define RESOURCE "OTA_All.bin"  
 
 #define SPI_MOSI_PIN PA12
@@ -9,7 +9,7 @@
 //#define SSID_NoneVisable //啟用代表SSID可以隱藏
 //#define FADC
 #define DrawerMCP23008
-#define B_Drawer //大抽屜必須啟用
+//#define B_Drawer //大抽屜必須啟用
 //#define DrawerHandSensor //抽屜手勢感測
 //#define MCP23008
 //#define PowerReset
@@ -58,7 +58,7 @@
 //#define EPD213
 //#define EPD266
 //#define EPD290
-//#define EPD2IN9G
+#define EPD2IN9G
 //#define EPD420
 //#define EPD4IN20G
 //#define EPD420_D
@@ -67,7 +67,7 @@
 //#define EPD579B
 //#define DEPG0579RYT158FxX
 //#define EPD213_BRW_V0
-#define EPD7IN3E
+//#define EPD7IN3E
 //#define EPD3IN6E
 
 //#define OLCD_114

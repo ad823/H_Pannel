@@ -101,64 +101,56 @@ void EPD290G::Wakeup()
     this -> MyTimer_SleepWaitTime.StartTickTime(90000);
     this -> SetToSleep = false;    
     HardwareReset();
+    mySerial -> println("EPD290G HardwareReset done...");
+    WaitUntilIdle();
     delay(100);
     SPI_Begin();
     SendCommand(0x4D);
     SendData(0x78);
-  
-    SendCommand(0x00); //PSR
-    SendData(0x0F);
+
+    SendCommand(0x00);  
+    SendData(0x0F); 
     SendData(0x29);
-  
-    SendCommand(0x01); //PWRR
-    SendData(0x07);
-    SendData(0x00);
-    
-    SendCommand(0x03); //POFS
+
+    SendCommand(0x06);
+    SendData(0x0d); 
+    SendData(0x12); 
+    SendData(0x24);     
+    SendData(0x25);     
+    SendData(0x12);       
+    SendData(0x29);     
     SendData(0x10);
-    SendData(0x54);
-    SendData(0x44);
-    
-    SendCommand(0x06); //BTST_P
-    SendData(0x05);
-    SendData(0x00);
-    SendData(0x3F);
-    SendData(0x0A);
-    SendData(0x25);
-    SendData(0x12);
-    SendData(0x1A); 
-  
-    SendCommand(0x50); //CDI
-    SendData(0x37);
-    
-    SendCommand(0x60); //TCON
-    SendData(0x02);
-    SendData(0x02);
-    
-    SendCommand(0x61); //TRES
-    SendData(128/256);   // Source_BITS_H
-    SendData(128%256);   // Source_BITS_L
-    SendData(296/256);     // Gate_BITS_H
-    SendData(296%256);     // Gate_BITS_L  
-    
-    SendCommand(0xE7);
-    SendData(0x1C);
-    
-    SendCommand(0xE3); 
-    SendData(0x22);
-    
-    SendCommand(0xB4);
-    SendData(0xD0);
-    SendCommand(0xB5);
-    SendData(0x03);
-    
-    SendCommand(0xE9);
-    SendData(0x01); 
-  
+
     SendCommand(0x30);
-    SendData(0x08);  
-    
+    SendData(0x08); 
+
+    SendCommand(0x50);
+    SendData(0x37); 
+
+    SendCommand(0x61); //0x61
+    SendData(128/256);    
+    SendData(128%256);    
+    SendData(296/256);   
+    SendData(296%256);   
+
+    SendCommand(0xae); 
+    SendData(0xcf);
+
+    SendCommand(0xb0); 
+    SendData(0x13);
+
+    SendCommand(0xbd); 
+    SendData(0x07);
+
+    SendCommand(0xbe); 
+    SendData(0xfe);
+
+    SendCommand(0xE9); 
+    SendData(0x01);
+
     SendCommand(0x04);
+    
+
     WaitUntilIdle();
     SPI_End();
     mySerial -> println("EPD290G done...");
@@ -167,19 +159,25 @@ void EPD290G::Wakeup()
 
 void EPD290G::WaitUntilIdle() 
 {
+    int retry = 0;
     mySerial -> println("WaitUntilIdle....");
     delay(200);
-//    while(!digitalRead(this -> PIN_BUSY))
-//    {
-//       delay(10);
-//       
-//    }
+    while(!digitalRead(this -> PIN_BUSY))
+    {
+       if(retry >= 20)
+       {
+           mySerial -> println("WaitUntilIdle failed....");
+           break;
+       }
+       delay(10);
+       retry++;
+    }
     mySerial -> println("WaitUntilIdle OK....");
 }
 
 void EPD290G::SPI_Begin() 
 {
-    SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
+    SPI.beginTransaction(SPISettings(200000, MSBFIRST, SPI_MODE0));
 }
 
 void EPD290G::SetCursor(int Xstart, int Ystart)
