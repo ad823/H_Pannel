@@ -1224,6 +1224,7 @@ namespace H_Pannel_lib
 
         public static Bitmap GetDitheredBitmapFromCache(string drugCode)
         {
+            if(drugCode.StringIsEmpty() ==true)return null;
             if (!bitmapCache.ContainsKey(drugCode)) return null;
 
             var info = bitmapCache[drugCode];
