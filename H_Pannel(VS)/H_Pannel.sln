@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttClientExample", "MqttCl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelRenderer", "LabelRenderer\LabelRenderer.csproj", "{AF8ADAEA-5F03-4D96-94CB-D324399D3C50}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoTag_Upload", "EcoTag_Upload\EcoTag_Upload.csproj", "{56DE3622-60B0-4246-9D5C-953A7D61F743}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{AF8ADAEA-5F03-4D96-94CB-D324399D3C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF8ADAEA-5F03-4D96-94CB-D324399D3C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF8ADAEA-5F03-4D96-94CB-D324399D3C50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56DE3622-60B0-4246-9D5C-953A7D61F743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56DE3622-60B0-4246-9D5C-953A7D61F743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56DE3622-60B0-4246-9D5C-953A7D61F743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56DE3622-60B0-4246-9D5C-953A7D61F743}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

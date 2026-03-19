@@ -8083,6 +8083,14 @@ namespace H_Pannel_lib
                     g.DrawString(storage.ChineseName, storage.ChineseName_font, new SolidBrush((Color)storage.GetValue(Storage.ValueName.藥品中文名稱, Storage.ValueType.ForeColor)), new RectangleF(0, posy, Pannel_Width, Pannel_Height), StringFormat.GenericDefault);
                     posy += size_ChineseName.Height;
                 }
+                if (storage.StorageName_Visable)
+                {
+                    SizeF size_StorageName = g.MeasureString(storage.StorageName, storage.StorageName_font, new Size(rect.Width, rect.Height), StringFormat.GenericDefault);
+                    size_StorageName = new SizeF((int)size_StorageName.Width, (int)size_StorageName.Height);
+                    // SizeF size_StorageName = TextRenderer.MeasureText(storage.StorageName, storage.StorageName_font, new Size(rect.Width, rect.Height), TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl);
+                    g.DrawString(storage.StorageName, storage.StorageName_font, new SolidBrush((Color)storage.GetValue(Storage.ValueName.儲位名稱, Storage.ValueType.ForeColor)), new RectangleF(0, posy, Pannel_Width, Pannel_Height), StringFormat.GenericDefault);
+                    posy += size_StorageName.Height;
+                }
                 posy += 3;
                 if (storage.Validity_period_Visable)
                 {
@@ -8131,7 +8139,7 @@ namespace H_Pannel_lib
 
             }
             Bitmap bitmap_buf = null;
-            if (storage.DeviceIsStorage())
+            if (storage.DeviceIsStorage() || true)
             {
                 using (Graphics g_buf = Graphics.FromImage(bitmap))
                 {

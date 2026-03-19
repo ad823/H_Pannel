@@ -53,6 +53,10 @@
     </Reference>
     <Reference Include="FontAwesome.Sharp, Version=5.15.4.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f" />
     <Reference Include="HCGUI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="HIS_DB_Lib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DLL\HIS_DB_Lib.dll</HintPath>
+    </Reference>
     <Reference Include="H_Pannel_lib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\H_Pannel\bin\Release\H_Pannel_lib.dll</HintPath>

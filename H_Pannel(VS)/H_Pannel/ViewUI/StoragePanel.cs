@@ -117,6 +117,12 @@ namespace H_Pannel_lib
                 if (ePD360E_Paint_Form.ShowDialog() != DialogResult.Yes) return;
                 if (SureClick != null) SureClick(currentStorage);
             }
+            if (CurrentStorage.DeviceType == DeviceType.EPD730E || CurrentStorage.DeviceType == DeviceType.EPD730E_lock)
+            {
+                EPD730E_Paint_Form ePD730E_Paint_Form = new EPD730E_Paint_Form(this.CurrentStorage);
+                if (ePD730E_Paint_Form.ShowDialog() != DialogResult.Yes) return;
+                if (SureClick != null) SureClick(currentStorage);
+            }
             base.OnMouseDown(e);
         }
 
@@ -177,6 +183,10 @@ namespace H_Pannel_lib
                 return Communication.Storage_GetBitmap(storage, scale);
             }
             if (storage.DeviceType == DeviceType.EPD360E || storage.DeviceType == DeviceType.EPD360E_lock)
+            {
+                return Communication.Storage_GetBitmap(storage, scale);
+            }
+            if (storage.DeviceType == DeviceType.EPD730E || storage.DeviceType == DeviceType.EPD730E_lock)
             {
                 return Communication.Storage_GetBitmap(storage, scale);
             }

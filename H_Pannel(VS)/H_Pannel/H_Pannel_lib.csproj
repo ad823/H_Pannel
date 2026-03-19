@@ -201,6 +201,12 @@
     <Compile Include="DrawerUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ViewUI\EPD730E_Paint_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewUI\EPD730E_Paint_Form.Designer.cs">
+      <DependentUpon>EPD730E_Paint_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="淘汰\DrawerUI_EPD_420.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -391,6 +397,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\Dialog_RWB_顏色選擇.resx">
       <DependentUpon>Dialog_3color_select.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewUI\EPD730E_Paint_Form.resx">
+      <DependentUpon>EPD730E_Paint_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="淘汰\DrawerUI_EPD_420.resx">
       <DependentUpon>DrawerUI_EPD_420.cs</DependentUpon>

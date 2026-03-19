@@ -1667,6 +1667,10 @@ namespace H_Pannel_lib
                 {
                     return new Size(600, 400);
                 }
+                if (DeviceType.GetEnumName().Contains("EPD730E"))
+                {
+                    return new Size(800, 480);
+                }
                 if (DeviceType == DeviceType.Pannel35 || DeviceType == DeviceType.Pannel35_lock)
                 {
                     return new Size(360, 240);
