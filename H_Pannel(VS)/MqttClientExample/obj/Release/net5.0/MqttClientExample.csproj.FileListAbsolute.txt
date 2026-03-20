@@ -54,3 +54,6 @@ C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\n
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClie.83915F19.Up2Date
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.genruntimeconfig.cache
 C:\Users\Evan\source\repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\ref\MqttClientExample.dll
+C:\Users\DELL\Source\Repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.dll
+C:\Users\DELL\Source\Repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\refint\MqttClientExample.dll
+C:\Users\DELL\Source\Repos\H_Pannel\H_Pannel(VS)\MqttClientExample\obj\Release\net5.0\MqttClientExample.pdb

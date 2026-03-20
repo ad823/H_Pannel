@@ -369,7 +369,9 @@ namespace EcoTag_Upload
         private void RJ_Button_上傳_MouseDownEvent(MouseEventArgs mevent)
         {
             LoadingForm.ShowLoadingForm();
+            Communication.ConsoleWrite = true;
             UDP_Class uDP_Class = new UDP_Class(rJ_TextBox_裝置IP.Text, 29000, false);
+            storagePanel.CurrentStorage.IP = rJ_TextBox_裝置IP.Text;
             StorageUI_EPD_266.DrawToEpd_UDP(uDP_Class, storagePanel.CurrentStorage);
             uDP_Class.Dispose();
             LoadingForm.CloseLoadingForm();

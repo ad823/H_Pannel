@@ -197,6 +197,11 @@ namespace H_Pannel_lib
                     flag_ok = Communication.EPD_360E_DrawImage(uDP_Class, IP, bitmap);
                     return flag_ok;
                 }
+                if (bitmap.Width == 800 && bitmap.Height == 480)
+                {
+                    flag_ok = Communication.EPD_730E_DrawImage(uDP_Class, IP, bitmap);
+                    return flag_ok;
+                }
             }
             return false;
         }
