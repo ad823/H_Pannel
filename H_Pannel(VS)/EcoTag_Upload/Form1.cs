@@ -372,6 +372,9 @@ namespace EcoTag_Upload
             Communication.ConsoleWrite = true;
             UDP_Class uDP_Class = new UDP_Class(rJ_TextBox_裝置IP.Text, 29000, false);
             storagePanel.CurrentStorage.IP = rJ_TextBox_裝置IP.Text;
+            storagePanel.CurrentStorage.Code = storagePanel.CurrentStorage.SKDIACODE;
+            storagePanel.CurrentStorage.BarCode = storagePanel.CurrentStorage.SKDIACODE;
+            storagePanel.CurrentStorage.QRCode = storagePanel.CurrentStorage.SKDIACODE;
             StorageUI_EPD_266.DrawToEpd_UDP(uDP_Class, storagePanel.CurrentStorage);
             uDP_Class.Dispose();
             LoadingForm.CloseLoadingForm();

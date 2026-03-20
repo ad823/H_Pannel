@@ -8,7 +8,7 @@
 
 //#define SSID_NoneVisable //啟用代表SSID可以隱藏
 //#define FADC
-#define DrawerMCP23008
+//#define DrawerMCP23008
 //#define B_Drawer //大抽屜必須啟用
 //#define DrawerHandSensor //抽屜手勢感測
 //#define MCP23008

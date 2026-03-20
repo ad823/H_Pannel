@@ -1,3 +1,3 @@
 {
-  "Api_Server": "http://www.kutech.tw:4433"
+  "Api_Server": "http://192.168.12.164:4433"
 }

@@ -122,3 +122,4 @@ C:\Users\DELL\source\repos\H_Pannel\H_Pannel(VS)\EcoTag_Upload\obj\Release\EcoTa
 C:\Users\DELL\source\repos\H_Pannel\H_Pannel(VS)\EcoTag_Upload\obj\Release\EcoTag_U.5C901F74.Up2Date
 C:\Users\DELL\source\repos\H_Pannel\H_Pannel(VS)\EcoTag_Upload\obj\Release\EcoTag_Upload.exe
 C:\Users\DELL\source\repos\H_Pannel\H_Pannel(VS)\EcoTag_Upload\obj\Release\EcoTag_Upload.pdb
+C:\Users\DELL\source\repos\H_Pannel\H_Pannel(VS)\EcoTag_Upload\obj\Release\EcoTag_Upload.exe.config
