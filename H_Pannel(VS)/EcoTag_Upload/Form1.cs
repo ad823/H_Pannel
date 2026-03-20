@@ -314,6 +314,9 @@ namespace EcoTag_Upload
 
                 storage.SetDeviceType(DeviceType.EPD290G);
                 storage.SetMedClass(medClass);
+                storage.Code = storage.SKDIACODE;
+                storage.BarCode = storage.SKDIACODE;
+                storage.QRCode = storage.SKDIACODE;
                 storagePanel.DrawToPictureBox(storage);
                 rJ_Button_儲存格式.Enabled = true;
                 rJ_Button_上傳.Enabled = true;
@@ -325,6 +328,9 @@ namespace EcoTag_Upload
                 if (storage == null) storage = new Storage();
                 storage.SetDeviceType(DeviceType.EPD730E);
                 storage.SetMedClass(medClass);
+                storage.Code = storage.SKDIACODE;
+                storage.BarCode = storage.SKDIACODE;
+                storage.QRCode = storage.SKDIACODE;
                 storagePanel.DrawToPictureBox(storage);
                 rJ_Button_儲存格式.Enabled = true;
                 rJ_Button_上傳.Enabled = true;
