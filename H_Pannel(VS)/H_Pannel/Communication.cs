@@ -8496,7 +8496,7 @@ namespace H_Pannel_lib
                             // 管制藥
                             if (_box.DRUGKIND.StringIsEmpty() == false && _box.DRUGKIND != "N")
                             {
-                                DrawDrugKindHexagon(g, new Point(rect.X + temp_x, rect.Y + (int)posy), temp_height, _box.DRUGKIND, labelFont);
+                                DrawDrugKindHexagon(g, new Point(rect.X + temp_x, rect.Y + (int)posy), temp_height, $"管{_box.DRUGKIND}", labelFont);
                                 temp_x += (temp_height + 5);
                             }
                             // 麻醉藥
@@ -10396,6 +10396,18 @@ namespace H_Pannel_lib
         {
             DrawHexagonText(g, pos, size, text, font, Color.White, Color.Black, Color.Red);
         }
+
+        /// <summary>
+        /// 產生「管制藥 DRUGKIND」六邊形標籤 Bitmap
+        /// </summary>
+        public static Bitmap GetDrugKindHexagonBitmap(int size, string text, Font font)
+        {
+            return CreateBitmap(size, size, g =>
+            {
+                DrawDrugKindHexagon(g, new Point(size / 2, size / 2), size, text, font);
+            });
+        }
+
         /// <summary>
         /// 繪製「麻醉藥」圓形標籤
         /// </summary>
@@ -10403,6 +10415,18 @@ namespace H_Pannel_lib
         {
             DrawCircleText(g, pos, size, "麻", font, Color.White, Color.Black, Color.Red);
         }
+
+        /// <summary>
+        /// 產生「麻醉藥」圓形標籤 Bitmap
+        /// </summary>
+        public static Bitmap GetAnestheticCircleBitmap(int size, Font font)
+        {
+            return CreateBitmap(size, size, g =>
+            {
+                DrawAnestheticCircle(g, new Point(size / 2, size / 2), size, font);
+            });
+        }
+
         /// <summary>
         /// 繪製「形似藥」方形標籤
         /// </summary>
@@ -10410,12 +10434,56 @@ namespace H_Pannel_lib
         {
             DrawSquareText(g, pos, size, "形", font, Color.Black, Color.Black, Color.White);
         }
+
+        /// <summary>
+        /// 產生「形似藥」方形標籤 Bitmap
+        /// </summary>
+        public static Bitmap GetShapeSimilarSquareBitmap(int size, Font font)
+        {
+            return CreateBitmap(size, size, g =>
+            {
+                DrawShapeSimilarSquare(g, new Point(size / 2, size / 2), size, font);
+            });
+        }
+
         /// <summary>
         /// 繪製「音似藥」方形標籤
         /// </summary>
         public static void DrawSoundSimilarSquare(Graphics g, Point pos, int size, Font font)
         {
             DrawSquareText(g, pos, size, "音", font, Color.Black, Color.Black, Color.White);
+        }
+
+        /// <summary>
+        /// 產生「音似藥」方形標籤 Bitmap
+        /// </summary>
+        public static Bitmap GetSoundSimilarSquareBitmap(int size, Font font)
+        {
+            return CreateBitmap(size, size, g =>
+            {
+                DrawSoundSimilarSquare(g, new Point(size / 2, size / 2), size, font);
+            });
+        }
+
+        /// <summary>
+        /// 建立 Bitmap 並執行繪圖
+        /// </summary>
+        private static Bitmap CreateBitmap(int width, int height, Action<Graphics> drawAction)
+        {
+            Bitmap bitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                g.Clear(Color.Transparent);
+
+                drawAction?.Invoke(g);
+            }
+
+            return bitmap;
         }
 
         /// <summary>
@@ -10456,16 +10524,24 @@ namespace H_Pannel_lib
         /// <param name="BorderSize">邊框大小</param>
         /// <param name="dash">是否使用虛線</param>
         /// <returns>處理後的 Bitmap，若無法取得則回傳 null</returns>
-        public static Bitmap GetPictureBitmap(enum_PictureType picType, int width, int height, Color? borderColor = null, int BorderSize = 2, bool dash = false, string Code = null)
+        public static Bitmap GetPictureBitmap(enum_PictureType picType, int width, int height, Color? borderColor = null, int BorderSize = 2, bool dash = false, string Code = null,string text = null)
         {
             Bitmap bitmap = null;
-
+            Font font = new Font("微軟正黑體", 24, FontStyle.Bold);
             switch (picType)
             {
                 case enum_PictureType.藥品圖片:
                     bitmap = Device.GetDitheredBitmapFromCache(Code);
                     break;
-
+                case enum_PictureType.自定義_1:
+                    bitmap = Device.GetDitheredBitmapFromCache("自定義_1");
+                    break;
+                case enum_PictureType.自定義_2:
+                    bitmap = Device.GetDitheredBitmapFromCache("自定義_2");
+                    break;
+                case enum_PictureType.自定義_3:
+                    bitmap = Device.GetDitheredBitmapFromCache("自定義_3");
+                    break;
                 case enum_PictureType.高警訊_1:
                     bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.Alarm_filled_red, DitheringProcessor.DitheringMode.None);
                     break;
@@ -10489,7 +10565,15 @@ namespace H_Pannel_lib
                 case enum_PictureType.LASA_2:
                     bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LASA_2, DitheringProcessor.DitheringMode.None);
                     break;
-
+                case enum_PictureType.管制藥品標誌:
+                    if(text != null)
+                    {                
+                        bitmap = GetDrugKindHexagonBitmap(40, text, font);
+                    }
+                    break;
+                case enum_PictureType.麻醉藥品標誌:
+                    bitmap = GetAnestheticCircleBitmap(40, font);
+                    break;
                 default:
                     return null;
             }

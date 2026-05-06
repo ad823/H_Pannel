@@ -60,6 +60,11 @@ namespace H_Pannel_lib
         高警訊_4,
         LASA_1,
         LASA_2,
+        管制藥品標誌,
+        麻醉藥品標誌,
+        自定義_1,
+        自定義_2,
+        自定義_3,
 
     }
     public class StockClass
@@ -752,11 +757,7 @@ namespace H_Pannel_lib
         }
 
         private string _CustomText1 = "";
-        public string CustomText1
-        {
-            get => _CustomText1;
-            set => _CustomText1 = value;
-        }
+        public string CustomText1 { get => _CustomText1; set => _CustomText1 = value; }
         private string _CustomText2 = "";
         public string CustomText2 { get => _CustomText2; set => _CustomText2 = value; }
         private string _CustomText3 = "";
@@ -1221,7 +1222,6 @@ namespace H_Pannel_lib
                 });
             }
         }
-
         public static Bitmap GetDitheredBitmapFromCache(string drugCode)
         {
             if(drugCode.StringIsEmpty() ==true)return null;
@@ -1237,6 +1237,7 @@ namespace H_Pannel_lib
 
             return info.Dithered;
         }
+
         public static void ClearBitmapCache()
         {
             foreach (var entry in bitmapCache.Values)
@@ -1698,6 +1699,9 @@ namespace H_Pannel_lib
             CustomText3,
             圖片1,
             圖片2,
+            圖片3,
+            圖片4,
+            圖片5,
             儲位名稱,
             IP,
             Port,
@@ -2632,6 +2636,165 @@ namespace H_Pannel_lib
                         }
                         break;
                     }
+                case ValueName.圖片3:
+                    {
+
+                        if (valueType == ValueType.Title)
+                        {
+                            if (Value is string) this.Picture3_Title = (string)Value;
+                        }
+                        else if (valueType == ValueType.Value)
+                        {
+                            if (Value is string) this.Picture3_Name = (string)Value;
+                        }
+                        else if (valueType == ValueType.Font)
+                        {
+                            if (Value is Font) this.Picture3_font = (Font)Value;
+                        }
+                        else if (valueType == ValueType.ForeColor)
+                        {
+                            if (Value is Color) this.Picture3_ForeColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.BackColor)
+                        {
+                            if (Value is Color) this.Picture3_BackColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.Position)
+                        {
+                            if (Value is Point) this.Picture3_Position = (Point)Value;
+                        }
+                        else if (valueType == ValueType.Width)
+                        {
+                            if (Value is int) this.Picture3_Width = (int)Value;
+                        }
+                        else if (valueType == ValueType.Height)
+                        {
+                            if (Value is int) this.Picture3_Height = (int)Value;
+                        }
+                        else if (valueType == ValueType.BorderSize)
+                        {
+                            if (Value is int) this.Picture3_BorderSize = (int)Value;
+                        }
+                        else if (valueType == ValueType.BorderColor)
+                        {
+                            if (Value is Color) this.Picture3_BorderColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.HorizontalAlignment)
+                        {
+                            if (Value is HorizontalAlignment) this.Picture3_HorizontalAlignment = (HorizontalAlignment)Value;
+                        }
+                        else if (valueType == ValueType.Visable)
+                        {
+                            if (Value is bool) this.Picture3_Visable = (bool)Value;
+                        }
+                        break;
+                    }
+                case ValueName.圖片4:
+                    {
+
+                        if (valueType == ValueType.Title)
+                        {
+                            if (Value is string) this.Picture4_Title = (string)Value;
+                        }
+                        else if (valueType == ValueType.Value)
+                        {
+                            if (Value is string) this.Picture4_Name = (string)Value;
+                        }
+                        else if (valueType == ValueType.Font)
+                        {
+                            if (Value is Font) this.Picture4_font = (Font)Value;
+                        }
+                        else if (valueType == ValueType.ForeColor)
+                        {
+                            if (Value is Color) this.Picture4_ForeColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.BackColor)
+                        {
+                            if (Value is Color) this.Picture4_BackColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.Position)
+                        {
+                            if (Value is Point) this.Picture4_Position = (Point)Value;
+                        }
+                        else if (valueType == ValueType.Width)
+                        {
+                            if (Value is int) this.Picture4_Width = (int)Value;
+                        }
+                        else if (valueType == ValueType.Height)
+                        {
+                            if (Value is int) this.Picture4_Height = (int)Value;
+                        }
+                        else if (valueType == ValueType.BorderSize)
+                        {
+                            if (Value is int) this.Picture4_BorderSize = (int)Value;
+                        }
+                        else if (valueType == ValueType.BorderColor)
+                        {
+                            if (Value is Color) this.Picture4_BorderColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.HorizontalAlignment)
+                        {
+                            if (Value is HorizontalAlignment) this.Picture4_HorizontalAlignment = (HorizontalAlignment)Value;
+                        }
+                        else if (valueType == ValueType.Visable)
+                        {
+                            if (Value is bool) this.Picture4_Visable = (bool)Value;
+                        }
+                        break;
+                    }
+                case ValueName.圖片5:
+                    {
+
+                        if (valueType == ValueType.Title)
+                        {
+                            if (Value is string) this.Picture5_Title = (string)Value;
+                        }
+                        else if (valueType == ValueType.Value)
+                        {
+                            if (Value is string) this.Picture5_Name = (string)Value;
+                        }
+                        else if (valueType == ValueType.Font)
+                        {
+                            if (Value is Font) this.Picture5_font = (Font)Value;
+                        }
+                        else if (valueType == ValueType.ForeColor)
+                        {
+                            if (Value is Color) this.Picture5_ForeColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.BackColor)
+                        {
+                            if (Value is Color) this.Picture5_BackColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.Position)
+                        {
+                            if (Value is Point) this.Picture5_Position = (Point)Value;
+                        }
+                        else if (valueType == ValueType.Width)
+                        {
+                            if (Value is int) this.Picture5_Width = (int)Value;
+                        }
+                        else if (valueType == ValueType.Height)
+                        {
+                            if (Value is int) this.Picture5_Height = (int)Value;
+                        }
+                        else if (valueType == ValueType.BorderSize)
+                        {
+                            if (Value is int) this.Picture5_BorderSize = (int)Value;
+                        }
+                        else if (valueType == ValueType.BorderColor)
+                        {
+                            if (Value is Color) this.Picture5_BorderColor = (Color)Value;
+                        }
+                        else if (valueType == ValueType.HorizontalAlignment)
+                        {
+                            if (Value is HorizontalAlignment) this.Picture5_HorizontalAlignment = (HorizontalAlignment)Value;
+                        }
+                        else if (valueType == ValueType.Visable)
+                        {
+                            if (Value is bool) this.Picture5_Visable = (bool)Value;
+                        }
+                        break;
+                    }
                 case ValueName.庫存:
                     {
                         if (valueType == ValueType.Value)
@@ -3464,9 +3627,7 @@ namespace H_Pannel_lib
                         {
                             vlaueClass.Value = "None";
                         }
-                        ////Size size = TextRenderer.MeasureText(vlaueClass.Value, vlaueClass.Font);
-                        ////if (vlaueClass.Width < size.Width) vlaueClass.Width = size.Width;
-                        ////if (vlaueClass.Height < size.Height) vlaueClass.Height = size.Height;
+
                         break;
                     }
                 case ValueName.圖片2:
@@ -3489,9 +3650,72 @@ namespace H_Pannel_lib
                         {
                             vlaueClass.Value = "None";
                         }
-                        ////Size size = TextRenderer.MeasureText(vlaueClass.Value, vlaueClass.Font);
-                        ////if (vlaueClass.Width < size.Width) vlaueClass.Width = size.Width;
-                        ////if (vlaueClass.Height < size.Height) vlaueClass.Height = size.Height;
+                        break;
+                    }
+                case ValueName.圖片3:
+                    {
+                        vlaueClass.valueName = valueName;
+                        vlaueClass.Value = this.Picture3_Name;
+                        vlaueClass.Title = this.Picture3_Title;
+                        vlaueClass.Font = this.Picture3_font;
+                        vlaueClass.ForeColor = this.Picture3_ForeColor;
+                        vlaueClass.BackColor = this.Picture3_BackColor;
+                        vlaueClass.Position = this.Picture3_Position;
+                        vlaueClass.Width = this.Picture3_Width;
+                        vlaueClass.Height = this.Picture3_Height;
+                        vlaueClass.HorizontalAlignment = this.Picture3_HorizontalAlignment;
+                        vlaueClass.BorderSize = this.Picture3_BorderSize;
+                        vlaueClass.BorderColor = this.Picture3_BorderColor;
+                        vlaueClass.Visable = this.Picture3_Visable;
+
+                        if (vlaueClass.Value.StringIsEmpty())
+                        {
+                            vlaueClass.Value = "None";
+                        }
+                        break;
+                    }
+                case ValueName.圖片4:
+                    {
+                        vlaueClass.valueName = valueName;
+                        vlaueClass.Value = this.Picture4_Name;
+                        vlaueClass.Title = this.Picture4_Title;
+                        vlaueClass.Font = this.Picture4_font;
+                        vlaueClass.ForeColor = this.Picture4_ForeColor;
+                        vlaueClass.BackColor = this.Picture4_BackColor;
+                        vlaueClass.Position = this.Picture4_Position;
+                        vlaueClass.Width = this.Picture4_Width;
+                        vlaueClass.Height = this.Picture4_Height;
+                        vlaueClass.HorizontalAlignment = this.Picture4_HorizontalAlignment;
+                        vlaueClass.BorderSize = this.Picture4_BorderSize;
+                        vlaueClass.BorderColor = this.Picture4_BorderColor;
+                        vlaueClass.Visable = this.Picture4_Visable;
+
+                        if (vlaueClass.Value.StringIsEmpty())
+                        {
+                            vlaueClass.Value = "None";
+                        }
+                        break;
+                    }
+                case ValueName.圖片5:
+                    {
+                        vlaueClass.valueName = valueName;
+                        vlaueClass.Value = this.Picture5_Name;
+                        vlaueClass.Title = this.Picture5_Title;
+                        vlaueClass.Font = this.Picture5_font;
+                        vlaueClass.ForeColor = this.Picture5_ForeColor;
+                        vlaueClass.BackColor = this.Picture5_BackColor;
+                        vlaueClass.Position = this.Picture5_Position;
+                        vlaueClass.Width = this.Picture5_Width;
+                        vlaueClass.Height = this.Picture5_Height;
+                        vlaueClass.HorizontalAlignment = this.Picture5_HorizontalAlignment;
+                        vlaueClass.BorderSize = this.Picture5_BorderSize;
+                        vlaueClass.BorderColor = this.Picture5_BorderColor;
+                        vlaueClass.Visable = this.Picture5_Visable;
+
+                        if (vlaueClass.Value.StringIsEmpty())
+                        {
+                            vlaueClass.Value = "None";
+                        }
                         break;
                     }
                 case ValueName.庫存:
@@ -3623,7 +3847,7 @@ namespace H_Pannel_lib
                 }
                 return bitmap;
             }
-            else if (valueName == ValueName.圖片1 || valueName == ValueName.圖片2)
+            else if (valueName == ValueName.圖片1 || valueName == ValueName.圖片2 || valueName == ValueName.圖片3 || valueName == ValueName.圖片4 || valueName == ValueName.圖片5)
             {
                 // 計算縮放後的尺寸
                 Size rectSize = new Size((int)(vlaueClass.Width * bmp_Scale),
@@ -3765,6 +3989,9 @@ namespace H_Pannel_lib
             if (text == "最大存量") return ValueName.最大存量;
             if (text == "圖片1") return ValueName.圖片1;
             if (text == "圖片2") return ValueName.圖片2;
+            if (text == "圖片3") return ValueName.圖片3;
+            if (text == "圖片4") return ValueName.圖片4;
+            if (text == "圖片5") return ValueName.圖片5;
             if (text == "CustomText1" || text.Contains("文本1"))
             {
                 return ValueName.CustomText1;
@@ -4830,6 +5057,191 @@ namespace H_Pannel_lib
         private HorizontalAlignment _Picture2_HorizontalAlignment = HorizontalAlignment.Left;
         public HorizontalAlignment Picture2_HorizontalAlignment { get => _Picture2_HorizontalAlignment; set => _Picture2_HorizontalAlignment = value; }
         #endregion
+        #region Picture3
+        private string _Picture3_Title = "";
+        public string Picture3_Title { get => _Picture3_Title; set => _Picture3_Title = value; }
+        private string _Picture3_Name = "";
+        public string Picture3_Name { get => _Picture3_Name; set => _Picture3_Name = value; }
+        [JsonIgnore]
+        public Font Picture3_font
+        {
+            get
+            {
+                return FontSerializationHelper.FromString(_Picture3_font_Serialize);
+            }
+            set
+            {
+                _Picture3_font_Serialize = FontSerializationHelper.ToString(value);
+            }
+        }
+        private string _Picture3_font_Serialize = "微軟正黑體:14:Bold:Point:1:False";
+        [Browsable(false)]
+        public string Picture3_font_Serialize
+        {
+            get { return _Picture3_font_Serialize; }
+            set { _Picture3_font_Serialize = value; }
+        }
+        [JsonIgnore]
+        public Color Picture3_BackColor = Color.White;
+        [Browsable(false)]
+        public string Picture3_BackColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(Picture3_BackColor); }
+            set { Picture3_BackColor = ColorSerializationHelper.FromString(value); }
+        }
+        [JsonIgnore]
+        public Color Picture3_ForeColor = Color.Black;
+        [Browsable(false)]
+        public string Picture3_ForeColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(Picture3_ForeColor); }
+            set { Picture3_ForeColor = ColorSerializationHelper.FromString(value); }
+        }
+        private Point _Picture3_Position = new Point();
+        public Point Picture3_Position { get => _Picture3_Position; set => _Picture3_Position = value; }
+        private bool _Picture3_Visable = true;
+        public bool Picture3_Visable { get => _Picture3_Visable; set => _Picture3_Visable = value; }
+        private int _Picture3_Width = 50;
+        public int Picture3_Width { get => _Picture3_Width; set => _Picture3_Width = value; }
+        private int _Picture3_Height = 50;
+        public int Picture3_Height { get => _Picture3_Height; set => _Picture3_Height = value; }
+        private int _Picture3_BorderSize = 1;
+        public int Picture3_BorderSize { get => _Picture3_BorderSize; set => _Picture3_BorderSize = value; }
+        [JsonIgnore]
+        public Color Picture3_BorderColor = Color.Black;
+        [Browsable(false)]
+        public string Picture3_BorderColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(Picture3_BorderColor); }
+            set { Picture3_BorderColor = ColorSerializationHelper.FromString(value); }
+        }
+        private HorizontalAlignment _Picture3_HorizontalAlignment = HorizontalAlignment.Left;
+        public HorizontalAlignment Picture3_HorizontalAlignment { get => _Picture3_HorizontalAlignment; set => _Picture3_HorizontalAlignment = value; }
+        #endregion
+        #region Picture4
+        private string _Picture4_Title = "";
+        public string Picture4_Title { get => _Picture4_Title; set => _Picture4_Title = value; }
+        private string _Picture4_Name = "";
+        public string Picture4_Name { get => _Picture4_Name; set => _Picture4_Name = value; }
+        [JsonIgnore]
+        public Font Picture4_font
+        {
+            get
+            {
+                return FontSerializationHelper.FromString(_Picture4_font_Serialize);
+            }
+            set
+            {
+                _Picture4_font_Serialize = FontSerializationHelper.ToString(value);
+            }
+        }
+        private string _Picture4_font_Serialize = "微軟正黑體:14:Bold:Point:1:False";
+        [Browsable(false)]
+        public string Picture4_font_Serialize
+        {
+            get { return _Picture4_font_Serialize; }
+            set { _Picture4_font_Serialize = value; }
+        }
+        [JsonIgnore]
+        public Color Picture4_BackColor = Color.White;
+        [Browsable(false)]
+        public string Picture4_BackColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(Picture4_BackColor); }
+            set { Picture4_BackColor = ColorSerializationHelper.FromString(value); }
+        }
+        [JsonIgnore]
+        public Color Picture4_ForeColor = Color.Black;
+        [Browsable(false)]
+        public string Picture4_ForeColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(Picture4_ForeColor); }
+            set { Picture4_ForeColor = ColorSerializationHelper.FromString(value); }
+        }
+        private Point _Picture4_Position = new Point();
+        public Point Picture4_Position { get => _Picture4_Position; set => _Picture4_Position = value; }
+        private bool _Picture4_Visable = true;
+        public bool Picture4_Visable { get => _Picture4_Visable; set => _Picture4_Visable = value; }
+        private int _Picture4_Width = 50;
+        public int Picture4_Width { get => _Picture4_Width; set => _Picture4_Width = value; }
+        private int _Picture4_Height = 50;
+        public int Picture4_Height { get => _Picture4_Height; set => _Picture4_Height = value; }
+        private int _Picture4_BorderSize = 1;
+        public int Picture4_BorderSize { get => _Picture4_BorderSize; set => _Picture4_BorderSize = value; }
+        [JsonIgnore]
+        public Color Picture4_BorderColor = Color.Black;
+        [Browsable(false)]
+        public string Picture4_BorderColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(Picture4_BorderColor); }
+            set { Picture4_BorderColor = ColorSerializationHelper.FromString(value); }
+        }
+        private HorizontalAlignment _Picture4_HorizontalAlignment = HorizontalAlignment.Left;
+        public HorizontalAlignment Picture4_HorizontalAlignment { get => _Picture4_HorizontalAlignment; set => _Picture4_HorizontalAlignment = value; }
+        #endregion
+        #region Picture5
+        private string _Picture5_Title = "";
+        public string Picture5_Title { get => _Picture5_Title; set => _Picture5_Title = value; }
+        private string _Picture5_Name = "";
+        public string Picture5_Name { get => _Picture5_Name; set => _Picture5_Name = value; }
+        [JsonIgnore]
+        public Font Picture5_font
+        {
+            get
+            {
+                return FontSerializationHelper.FromString(_Picture5_font_Serialize);
+            }
+            set
+            {
+                _Picture5_font_Serialize = FontSerializationHelper.ToString(value);
+            }
+        }
+        private string _Picture5_font_Serialize = "微軟正黑體:14:Bold:Point:1:False";
+        [Browsable(false)]
+        public string Picture5_font_Serialize
+        {
+            get { return _Picture5_font_Serialize; }
+            set { _Picture5_font_Serialize = value; }
+        }
+        [JsonIgnore]
+        public Color Picture5_BackColor = Color.White;
+        [Browsable(false)]
+        public string Picture5_BackColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(Picture5_BackColor); }
+            set { Picture5_BackColor = ColorSerializationHelper.FromString(value); }
+        }
+        [JsonIgnore]
+        public Color Picture5_ForeColor = Color.Black;
+        [Browsable(false)]
+        public string Picture5_ForeColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(Picture5_ForeColor); }
+            set { Picture5_ForeColor = ColorSerializationHelper.FromString(value); }
+        }
+        private Point _Picture5_Position = new Point();
+        public Point Picture5_Position { get => _Picture5_Position; set => _Picture5_Position = value; }
+        private bool _Picture5_Visable = true;
+        public bool Picture5_Visable { get => _Picture5_Visable; set => _Picture5_Visable = value; }
+        private int _Picture5_Width = 50;
+        public int Picture5_Width { get => _Picture5_Width; set => _Picture5_Width = value; }
+        private int _Picture5_Height = 50;
+        public int Picture5_Height { get => _Picture5_Height; set => _Picture5_Height = value; }
+        private int _Picture5_BorderSize = 1;
+        public int Picture5_BorderSize { get => _Picture5_BorderSize; set => _Picture5_BorderSize = value; }
+        [JsonIgnore]
+        public Color Picture5_BorderColor = Color.Black;
+        [Browsable(false)]
+        public string Picture5_BorderColor_Serialize
+        {
+            get { return ColorSerializationHelper.ToString(Picture5_BorderColor); }
+            set { Picture5_BorderColor = ColorSerializationHelper.FromString(value); }
+        }
+        private HorizontalAlignment _Picture5_HorizontalAlignment = HorizontalAlignment.Left;
+        public HorizontalAlignment Picture5_HorizontalAlignment { get => _Picture5_HorizontalAlignment; set => _Picture5_HorizontalAlignment = value; }
+        #endregion
+
+
         #region CustomText1
         private string _CustomText1_Title = "";
         public string CustomText1_Title { get => _CustomText1_Title; set => _CustomText1_Title = value; }
@@ -5124,7 +5536,7 @@ namespace H_Pannel_lib
                         ValueType valueType = (ValueType)k;
 
 
-                        if (valueName != ValueName.圖片1 && valueName != ValueName.圖片2)
+                        if (valueName.GetEnumName().Contains("圖片") == false)
                         {
                             if (valueType == ValueType.StringValue) continue;
                             if (valueType == ValueType.Value) continue;
