@@ -1237,7 +1237,41 @@ namespace H_Pannel_lib
 
             return info.Dithered;
         }
+        public static Bitmap GetOriginalBitmapFromCache(string drugCode)
+        {
+            if (drugCode.StringIsEmpty() == true) return null;
+            if (!bitmapCache.ContainsKey(drugCode)) return null;
 
+            var info = bitmapCache[drugCode];
+
+         
+
+            return info.Original;
+        }
+        /// <summary>
+        /// 取得「先壓平透明背景，再做六色抖色」的圖片。
+        /// 適合 PNG 透明背景，避免透明區被抖成黑色。
+        /// </summary>
+        /// <param name="drugCode">圖片代碼。</param>
+        /// <param name="backgroundColor">透明區要合成的背景色。</param>
+        /// <returns>回傳處理後 Bitmap。呼叫端使用完畢後可 Dispose。</returns>
+        public static Bitmap GetDitheredBitmapFromCache(string drugCode, Color backgroundColor)
+        {
+            if (drugCode.StringIsEmpty() == true) return null;
+            if (!bitmapCache.ContainsKey(drugCode)) return null;
+
+            var info = bitmapCache[drugCode];
+
+            if (info.Original == null) return null;
+
+            using (Bitmap source = CloneToArgbBitmap(info.Original))
+            using (Bitmap flattened = FlattenAlphaToBackgroundByPixel(source, backgroundColor))
+            {
+                if (flattened == null) return null;
+
+                return flattened.ApplyFloydSteinbergDitheringSixColor();
+            }
+        }
         public static void ClearBitmapCache()
         {
             foreach (var entry in bitmapCache.Values)
@@ -1252,7 +1286,93 @@ namespace H_Pannel_lib
         {
             return bitmapCache.ContainsKey(drugCode);
         }
+        /// <summary>
+        /// 將 Image 轉成 Format32bppArgb。
+        /// 回傳新 Bitmap，呼叫端可安全 Dispose。
+        /// </summary>
+        public static Bitmap CloneToArgbBitmap(Image source)
+        {
+            if (source == null) return null;
+            if (source.Width <= 0 || source.Height <= 0) return null;
 
+            Bitmap bitmap = new Bitmap(
+                source.Width,
+                source.Height,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb
+            );
+
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.Transparent);
+                g.CompositingMode = CompositingMode.SourceCopy;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+
+                g.DrawImage(source, new Rectangle(0, 0, source.Width, source.Height));
+            }
+
+            return bitmap;
+        }
+
+        /// <summary>
+        /// 將含 Alpha 的圖片逐像素壓平成指定背景色。
+        /// 目的：避免透明 PNG 的透明區在後續縮放、抖色或電子紙轉色時變成黑色。
+        /// </summary>
+        public static Bitmap FlattenAlphaToBackgroundByPixel(Bitmap source, Color backgroundColor)
+        {
+            if (source == null) return null;
+            if (source.Width <= 0 || source.Height <= 0) return null;
+
+            Bitmap src = new Bitmap(
+                source.Width,
+                source.Height,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb
+            );
+
+            using (Graphics g = Graphics.FromImage(src))
+            {
+                g.Clear(Color.Transparent);
+                g.CompositingMode = CompositingMode.SourceCopy;
+                g.DrawImage(source, new Rectangle(0, 0, source.Width, source.Height));
+            }
+
+            Bitmap output = new Bitmap(
+                src.Width,
+                src.Height,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb
+            );
+
+            for (int y = 0; y < src.Height; y++)
+            {
+                for (int x = 0; x < src.Width; x++)
+                {
+                    Color c = src.GetPixel(x, y);
+                    int a = c.A;
+
+                    if (a <= 0)
+                    {
+                        output.SetPixel(x, y, Color.FromArgb(255, backgroundColor.R, backgroundColor.G, backgroundColor.B));
+                    }
+                    else if (a >= 255)
+                    {
+                        output.SetPixel(x, y, Color.FromArgb(255, c.R, c.G, c.B));
+                    }
+                    else
+                    {
+                        int r = ((c.R * a) + (backgroundColor.R * (255 - a))) / 255;
+                        int g = ((c.G * a) + (backgroundColor.G * (255 - a))) / 255;
+                        int b = ((c.B * a) + (backgroundColor.B * (255 - a))) / 255;
+
+                        output.SetPixel(x, y, Color.FromArgb(255, r, g, b));
+                    }
+                }
+            }
+
+            src.Dispose();
+
+            return output;
+        }
     }
 
 
@@ -3858,9 +3978,10 @@ namespace H_Pannel_lib
                 {
                     return null; // 無效的值就直接回傳 null
                 }
-
+                string text = "";
                 // 呼叫封裝好的靜態函式
-                Bitmap bitmap = Communication.GetPictureBitmap(picType, rectSize.Width, rectSize.Height, color, BorderSize, dash, Code);
+                if (picType == enum_PictureType.管制藥品標誌) text = $"管{this.DRUGKIND}";
+                Bitmap bitmap = Communication.GetPictureBitmap(picType, rectSize.Width, rectSize.Height, color, BorderSize, dash, Code, text);
 
                 return bitmap;
 

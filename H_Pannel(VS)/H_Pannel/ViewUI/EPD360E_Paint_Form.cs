@@ -25,6 +25,7 @@ namespace H_Pannel_lib
 {
     public partial class EPD360E_Paint_Form : MyDialog
     {
+        private List<ComboBox> comboBoxes = new List<ComboBox>(); 
         public delegate void PanelSelectEventHandler(Storage.ValueName valueName);
         public event PanelSelectEventHandler PanelSelectEvent;
 
@@ -241,21 +242,25 @@ namespace H_Pannel_lib
             this.checkBox_QRCode.CheckedChanged += CheckBox_CheckedChanged;
             rJ_Pannel_背景顏色.BackgroundColor = CurrentStorage.BackColor;
 
-            this.comboBox_圖片1.DataSource = new enum_PictureType().GetEnumNames();
-            this.comboBox_圖片1.Text = currentStorage.Picture1_Name;
-            if (this.comboBox_圖片1.Text.StringIsEmpty())
-            {
-                this.comboBox_圖片1.Text = "無";
-            }
-            this.comboBox_圖片1.SelectedIndexChanged += ComboBox_圖片1_SelectedIndexChanged;
+            comboBoxes.Add(comboBox_圖片1);
+            comboBoxes.Add(comboBox_圖片2);
+            comboBoxes.Add(comboBox_圖片3);
+            comboBoxes.Add(comboBox_圖片4);
+            comboBoxes.Add(comboBox_圖片5);
 
-            this.comboBox_圖片2.DataSource = new enum_PictureType().GetEnumNames();
-            this.comboBox_圖片2.Text = currentStorage.Picture2_Name;
-            if (this.comboBox_圖片2.Text.StringIsEmpty())
+            foreach(ComboBox comboBox in comboBoxes)
             {
-                this.comboBox_圖片2.Text = "無";
+                comboBox.DataSource = new enum_PictureType().GetEnumNames();
+                if (comboBox.Text.StringIsEmpty()) comboBox.Text = "無";
+
+                comboBox.SelectedIndexChanged += ComboBox_SelectedIndexChanged;
             }
-            this.comboBox_圖片2.SelectedIndexChanged += ComboBox_圖片2_SelectedIndexChanged;
+
+            comboBox_圖片1.Text = CurrentStorage.Picture1_Name;
+            comboBox_圖片2.Text = CurrentStorage.Picture2_Name;
+            comboBox_圖片3.Text = CurrentStorage.Picture3_Name;
+            comboBox_圖片4.Text = CurrentStorage.Picture4_Name;
+            comboBox_圖片5.Text = CurrentStorage.Picture5_Name;
 
             this.rJ_RatioButton_預設樣式1.CheckedChanged += RJ_RatioButton_預設樣式1_CheckedChanged;
             this.rJ_RatioButton_自定義.CheckedChanged += RJ_RatioButton_自定義_CheckedChanged;
@@ -272,22 +277,21 @@ namespace H_Pannel_lib
 
        
 
-        private void ComboBox_圖片1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string name = "圖片1";
+            string name = "";
+            ComboBox comboBox = (ComboBox)sender;
+            if (comboBox == comboBox_圖片1) name = "圖片1";
+            if (comboBox == comboBox_圖片2) name = "圖片2";
+            if (comboBox == comboBox_圖片3) name = "圖片3";
+            if (comboBox == comboBox_圖片4) name = "圖片4";
+            if (comboBox == comboBox_圖片5) name = "圖片5";
 
             Storage.ValueName valueName = Storage.GetValueName(name);
-            CurrentStorage.SetValue(valueName, Device.ValueType.Value, this.comboBox_圖片1.Text);
+            CurrentStorage.SetValue(valueName, Device.ValueType.Value, comboBox.Text);
             this.DrawToPictureBox();
         }
-        private void ComboBox_圖片2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string name = "圖片2";
-
-            Storage.ValueName valueName = Storage.GetValueName(name);
-            CurrentStorage.SetValue(valueName, Device.ValueType.Value, this.comboBox_圖片2.Text);
-            this.DrawToPictureBox();
-        }
+ 
 
         private void ComboBox_圖形編輯_編輯內容名稱_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -718,6 +722,21 @@ namespace H_Pannel_lib
                     if (vlaueClass.Height < 20) vlaueClass.Height = 20;
                 }
                 if (vlaueClass.valueName == Device.ValueName.圖片2)
+                {
+                    if (vlaueClass.Width < 20) vlaueClass.Width = 20;
+                    if (vlaueClass.Height < 20) vlaueClass.Height = 20;
+                }
+                if (vlaueClass.valueName == Device.ValueName.圖片3)
+                {
+                    if (vlaueClass.Width < 20) vlaueClass.Width = 20;
+                    if (vlaueClass.Height < 20) vlaueClass.Height = 20;
+                }
+                if (vlaueClass.valueName == Device.ValueName.圖片4)
+                {
+                    if (vlaueClass.Width < 20) vlaueClass.Width = 20;
+                    if (vlaueClass.Height < 20) vlaueClass.Height = 20;
+                }
+                if (vlaueClass.valueName == Device.ValueName.圖片5)
                 {
                     if (vlaueClass.Width < 20) vlaueClass.Width = 20;
                     if (vlaueClass.Height < 20) vlaueClass.Height = 20;

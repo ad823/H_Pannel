@@ -7959,17 +7959,38 @@ namespace H_Pannel_lib
             }
           
         }
+        /// <summary>
+        /// 產生 Type_1 電子紙圖片。
+        /// 圖示列支援：
+        /// 1. 固定高度，由左到右排列。
+        /// 2. 圖片依原圖比例計算寬度，避免重疊。
+        /// 3. PNG 透明背景先壓平成 storage.BackColor 或白底，避免後續抖色/縮放時變黑。
+        /// </summary>
+        /// <param name="storage">儲位資料。</param>
+        /// <param name="scale">輸出縮放倍率。</param>
+        /// <returns>回傳 Bitmap。</returns>
         static public Bitmap GetBitmapType_1(Storage storage, double scale = 1)
         {
-            Bitmap bitmap = new Bitmap(storage.PanelSize.Width, storage.PanelSize.Height);
+            if (storage == null) return null;
+            if (storage.PanelSize.Width <= 0 || storage.PanelSize.Height <= 0) return null;
+
+            Bitmap bitmap = new Bitmap(
+                storage.PanelSize.Width,
+                storage.PanelSize.Height,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb
+            );
+
             int Pannel_Width = bitmap.Width;
             int Pannel_Height = bitmap.Height;
+
             using (Graphics g = Graphics.FromImage(bitmap))
             {
-                g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
+                g.SmoothingMode = SmoothingMode.HighQuality;
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 g.CompositingQuality = CompositingQuality.HighQuality;
+                g.CompositingMode = CompositingMode.SourceOver;
                 g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+
                 if (storage.DeviceType.GetEnumName().Contains("G"))
                 {
                     if (storage.BackColor.ToArgb() != Color.Yellow.ToArgb())
@@ -7983,10 +8004,11 @@ namespace H_Pannel_lib
                 }
 
                 Rectangle rect = new Rectangle(0, 0, Pannel_Width, Pannel_Height);
-                int Line_Height = (Pannel_Height / 3) * 2;
-                g.FillRectangle(new SolidBrush(storage.BackColor), rect);
 
-                //this.Graphics_Draw_Bitmap.DrawLine(new Pen(storage.ForeColor, 2), new Point(0, Line_Height), new Point(Pannel_Width, Line_Height));
+                using (SolidBrush backBrush = new SolidBrush(storage.BackColor))
+                {
+                    g.FillRectangle(backBrush, rect);
+                }
 
                 if (storage.BarCode_Height > 40) storage.BarCode_Height = 40;
                 if (storage.BarCode_Width > 120) storage.BarCode_Width = 120;
@@ -8014,54 +8036,159 @@ namespace H_Pannel_lib
 
                 float posy = 0;
 
-                if ((storage.DRUGKIND.StringIsEmpty() == false && storage.DRUGKIND != "N") || storage.IsAnesthetic || storage.IsShapeSimilar || storage.IsSoundSimilar
-                     || (storage.Picture1_Name.StringIsEmpty() == false && storage.Picture1_Name != "無" && storage.Picture1_Name != "None") || (storage.Picture2_Name.StringIsEmpty() == false && storage.Picture2_Name != "無" && storage.Picture1_Name != "None"))
+                bool hasDrugKind = storage.DRUGKIND.StringIsEmpty() == false && storage.DRUGKIND != "N";
+                bool hasAnesthetic = storage.IsAnesthetic;
+                bool hasShapeSimilar = storage.IsShapeSimilar;
+                bool hasSoundSimilar = storage.IsSoundSimilar;
 
+                string[] pictureNames = new string[]
+                {
+            storage.Picture1_Name,
+            storage.Picture2_Name,
+            storage.Picture3_Name,
+            storage.Picture4_Name,
+            storage.Picture5_Name
+                };
+
+                bool hasAnyPicture = pictureNames.Any(name =>
+                    name.StringIsEmpty() == false &&
+                    name != "無" &&
+                    name != "None"
+                );
+
+                if (hasDrugKind || hasAnesthetic || hasShapeSimilar || hasSoundSimilar || hasAnyPicture)
                 {
                     int temp_x = 0;
-                    g.FillRectangle(new SolidBrush(Color.White), new Rectangle(0, 0, Pannel_Width, 30));
-                    if ((storage.DRUGKIND.StringIsEmpty() == false && storage.DRUGKIND != "N"))
+
+                    int iconBarHeight = 40;
+                    int iconSize = 40;
+                    int iconGap = 10;
+                    int iconY = 0;
+
+                    // 0 表示不限制圖片寬度。
+                    // 如果怕圖片太寬撐爆畫面，可以改成 90。
+                    int maxPictureWidth = 0;
+
+                    // true：透明 PNG 顯示白底。
+                    // false：透明 PNG 顯示 storage.BackColor。
+                    bool iconBarUseWhiteBackColor = false;
+
+                    Color iconBackColor = iconBarUseWhiteBackColor ? Color.White : storage.BackColor;
+
+                    if (iconBarUseWhiteBackColor)
                     {
-                        DrawHexagonText(g, new Point(temp_x, 0), 30, storage.DRUGKIND, new Font("Arial", 14), Color.White, Color.Black, Color.Red);
-                        temp_x += 40;
-                    }
-                    if (storage.IsAnesthetic)
-                    {
-                        DrawCircleText(g, new Point(temp_x, 0), 30, "麻", new Font("Arial", 14), Color.White, Color.Black, Color.Red);
-                        temp_x += 40;
-                    }
-                    if (storage.IsShapeSimilar)
-                    {
-                        DrawSquareText(g, new Point(temp_x, 0), 30, "形", new Font("Arial", 14), Color.Black, Color.Black, Color.White);
-                        temp_x += 40;
-                    }
-                    if (storage.IsSoundSimilar)
-                    {
-                        DrawSquareText(g, new Point(temp_x, 0), 30, "音", new Font("Arial", 14), Color.Black, Color.Black, Color.White);
-                        temp_x += 40;
-                    }
-                    if (storage.Picture1_Name.StringIsEmpty() == false && storage.Picture1_Name != "無")
-                    {
-                        DrawPicture(g, storage.Picture1_Name, new Rectangle(temp_x, 0, 30, 30));
-                        temp_x += 40;
-                    }
-                    if (storage.Picture2_Name.StringIsEmpty() == false && storage.Picture2_Name != "無")
-                    {
-                        DrawPicture(g, storage.Picture2_Name, new Rectangle(temp_x, 0, 30, 30));
-                        temp_x += 40;
+                        using (SolidBrush brush = new SolidBrush(Color.White))
+                        {
+                            g.FillRectangle(brush, new Rectangle(0, 0, Pannel_Width, iconBarHeight));
+                        }
                     }
 
-                    posy += 30;
+                    using (Font iconFont = new Font("Arial", 14))
+                    {
+                        if (hasDrugKind && temp_x < Pannel_Width)
+                        {
+                            DrawHexagonText(
+                                g,
+                                new Point(temp_x, iconY),
+                                iconSize,
+                                storage.DRUGKIND,
+                                iconFont,
+                                Color.White,
+                                Color.Black,
+                                Color.Red
+                            );
+
+                            temp_x += iconSize + iconGap;
+                        }
+
+                        if (hasAnesthetic && temp_x < Pannel_Width)
+                        {
+                            DrawCircleText(
+                                g,
+                                new Point(temp_x, iconY),
+                                iconSize,
+                                "麻",
+                                iconFont,
+                                Color.White,
+                                Color.Black,
+                                Color.Red
+                            );
+
+                            temp_x += iconSize + iconGap;
+                        }
+
+                        if (hasShapeSimilar && temp_x < Pannel_Width)
+                        {
+                            DrawSquareText(
+                                g,
+                                new Point(temp_x, iconY),
+                                iconSize,
+                                "形",
+                                iconFont,
+                                Color.Black,
+                                Color.Black,
+                                Color.White
+                            );
+
+                            temp_x += iconSize + iconGap;
+                        }
+
+                        if (hasSoundSimilar && temp_x < Pannel_Width)
+                        {
+                            DrawSquareText(
+                                g,
+                                new Point(temp_x, iconY),
+                                iconSize,
+                                "音",
+                                iconFont,
+                                Color.Black,
+                                Color.Black,
+                                Color.White
+                            );
+
+                            temp_x += iconSize + iconGap;
+                        }
+                    }
+
+                    for (int i = 0; i < pictureNames.Length; i++)
+                    {
+                        string pictureName = pictureNames[i];
+
+                        if (pictureName.StringIsEmpty()) continue;
+                        if (pictureName == "無") continue;
+                        if (pictureName == "None") continue;
+                        if (temp_x >= Pannel_Width) break;
+
+                        int pictureWidth = DrawPictureFixedHeight(
+                            g,
+                            pictureName,
+                            temp_x,
+                            iconY,
+                            iconBarHeight,
+                            storage.Code,
+                            maxPictureWidth,
+                            iconBackColor
+                        );
+
+                        if (pictureWidth > 0)
+                        {
+                            temp_x += pictureWidth + iconGap;
+                        }
+                    }
+
+                    posy += iconBarHeight;
                 }
-
-
 
                 if (storage.Name_Visable)
                 {
                     SizeF size_name = g.MeasureString(storage.Name, storage.Name_font, new Size(rect.Width, rect.Height), StringFormat.GenericDefault);
                     size_name = new SizeF((int)size_name.Width, (int)size_name.Height);
-                    //SizeF size_name = TextRenderer.MeasureText(g, storage.Name, storage.Name_font, new Size(rect.Width, rect.Height), TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl);
-                    g.DrawString(storage.Name, storage.Name_font, new SolidBrush((Color)storage.GetValue(Storage.ValueName.藥品名稱, Storage.ValueType.ForeColor)), new RectangleF(0, posy, Pannel_Width, Pannel_Height), StringFormat.GenericDefault);
+
+                    using (SolidBrush brush = new SolidBrush((Color)storage.GetValue(Storage.ValueName.藥品名稱, Storage.ValueType.ForeColor)))
+                    {
+                        g.DrawString(storage.Name, storage.Name_font, brush, new RectangleF(0, posy, Pannel_Width, Pannel_Height), StringFormat.GenericDefault);
+                    }
+
                     posy += size_name.Height;
                     DrawingClass.Draw.線段繪製(new PointF(0, posy), new PointF(rect.Width, posy), Color.Black, 1.5F, g, 1, 1);
                 }
@@ -8070,50 +8197,88 @@ namespace H_Pannel_lib
                 {
                     SizeF size_Scientific_Name = g.MeasureString(storage.Scientific_Name, storage.Scientific_Name_font, new Size(rect.Width, rect.Height), StringFormat.GenericDefault);
                     size_Scientific_Name = new SizeF((int)size_Scientific_Name.Width, (int)size_Scientific_Name.Height);
-                    // SizeF size_Scientific_Name_font = TextRenderer.MeasureText(storage.Scientific_Name, storage.Scientific_Name_font, new Size(rect.Width, rect.Height), TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl);
-                    g.DrawString(storage.Scientific_Name, storage.Scientific_Name_font, new SolidBrush((Color)storage.GetValue(Storage.ValueName.藥品學名, Storage.ValueType.ForeColor)), new RectangleF(0, posy, Pannel_Width, Pannel_Height), StringFormat.GenericDefault);
+
+                    using (SolidBrush brush = new SolidBrush((Color)storage.GetValue(Storage.ValueName.藥品學名, Storage.ValueType.ForeColor)))
+                    {
+                        g.DrawString(storage.Scientific_Name, storage.Scientific_Name_font, brush, new RectangleF(0, posy, Pannel_Width, Pannel_Height), StringFormat.GenericDefault);
+                    }
+
                     posy += size_Scientific_Name.Height;
                     DrawingClass.Draw.線段繪製(new PointF(0, posy), new PointF(rect.Width, posy), Color.Black, 1.5F, g, 1, 1);
                 }
+
                 if (storage.ChineseName_Visable)
                 {
                     SizeF size_ChineseName = g.MeasureString(storage.ChineseName, storage.ChineseName_font, new Size(rect.Width, rect.Height), StringFormat.GenericDefault);
                     size_ChineseName = new SizeF((int)size_ChineseName.Width, (int)size_ChineseName.Height);
-                    // SizeF size_ChineseName = TextRenderer.MeasureText(storage.ChineseName, storage.ChineseName_font, new Size(rect.Width, rect.Height), TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl);
-                    g.DrawString(storage.ChineseName, storage.ChineseName_font, new SolidBrush((Color)storage.GetValue(Storage.ValueName.藥品中文名稱, Storage.ValueType.ForeColor)), new RectangleF(0, posy, Pannel_Width, Pannel_Height), StringFormat.GenericDefault);
+
+                    using (SolidBrush brush = new SolidBrush((Color)storage.GetValue(Storage.ValueName.藥品中文名稱, Storage.ValueType.ForeColor)))
+                    {
+                        g.DrawString(storage.ChineseName, storage.ChineseName_font, brush, new RectangleF(0, posy, Pannel_Width, Pannel_Height), StringFormat.GenericDefault);
+                    }
+
                     posy += size_ChineseName.Height;
                 }
+
                 if (storage.StorageName_Visable)
                 {
                     SizeF size_StorageName = g.MeasureString(storage.StorageName, storage.StorageName_font, new Size(rect.Width, rect.Height), StringFormat.GenericDefault);
                     size_StorageName = new SizeF((int)size_StorageName.Width, (int)size_StorageName.Height);
-                    // SizeF size_StorageName = TextRenderer.MeasureText(storage.StorageName, storage.StorageName_font, new Size(rect.Width, rect.Height), TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl);
-                    g.DrawString(storage.StorageName, storage.StorageName_font, new SolidBrush((Color)storage.GetValue(Storage.ValueName.儲位名稱, Storage.ValueType.ForeColor)), new RectangleF(0, posy, Pannel_Width, Pannel_Height), StringFormat.GenericDefault);
+
+                    using (SolidBrush brush = new SolidBrush((Color)storage.GetValue(Storage.ValueName.儲位名稱, Storage.ValueType.ForeColor)))
+                    {
+                        g.DrawString(storage.StorageName, storage.StorageName_font, brush, new RectangleF(0, posy, Pannel_Width, Pannel_Height), StringFormat.GenericDefault);
+                    }
+
                     posy += size_StorageName.Height;
                 }
+
                 posy += 3;
+
                 if (storage.Validity_period_Visable)
                 {
                     for (int i = 0; i < storage.List_Validity_period.Count; i++)
                     {
+                        if (i >= storage.List_Inventory.Count) break;
+                        if (i >= storage.List_Lot_number.Count) break;
+
                         if (storage.List_Inventory[i] == "00") continue;
+
                         string str = $"{storage.List_Validity_period[i]}({storage.List_Lot_number[i]}) 庫:{storage.List_Inventory[i]}";
-                        storage.Validity_period_font = new Font(storage.Validity_period_font, FontStyle.Bold);
-                        SizeF size_Validity_period = TextRenderer.MeasureText(str, storage.Validity_period_font);
-                        g.DrawString(str, storage.Validity_period_font, new SolidBrush((Color)storage.GetValue(Storage.ValueName.效期, Storage.ValueType.ForeColor)), 5, 0 + posy);
-                        Color color_pen = storage.IsWarning ? Color.Black : Color.Red;
-                        g.DrawRectangle(new Pen(new SolidBrush(color_pen), 1), 5, 0 + posy, size_Validity_period.Width, size_Validity_period.Height);
-                        posy += size_Validity_period.Height;
+
+                        using (Font validityFont = new Font(storage.Validity_period_font, FontStyle.Bold))
+                        {
+                            SizeF size_Validity_period = TextRenderer.MeasureText(str, validityFont);
+
+                            using (SolidBrush brush = new SolidBrush((Color)storage.GetValue(Storage.ValueName.效期, Storage.ValueType.ForeColor)))
+                            {
+                                g.DrawString(str, validityFont, brush, 5, posy);
+                            }
+
+                            Color color_pen = storage.IsWarning ? Color.Black : Color.Red;
+
+                            using (Pen pen = new Pen(color_pen, 1))
+                            {
+                                g.DrawRectangle(pen, 5, posy, size_Validity_period.Width, size_Validity_period.Height);
+                            }
+
+                            posy += size_Validity_period.Height;
+                        }
                     }
                 }
 
                 SizeF size_Code_font = TextRenderer.MeasureText(storage.Code, storage.Code_font);
+
                 if (storage.Code_Visable)
                 {
-                    g.DrawString(storage.Code, storage.Code_font, new SolidBrush((Color)storage.GetValue(Storage.ValueName.藥品碼, Storage.ValueType.ForeColor)), 0, Pannel_Height - size_Code_font.Height);
+                    using (SolidBrush brush = new SolidBrush((Color)storage.GetValue(Storage.ValueName.藥品碼, Storage.ValueType.ForeColor)))
+                    {
+                        g.DrawString(storage.Code, storage.Code_font, brush, 0, Pannel_Height - size_Code_font.Height);
+                    }
                 }
 
                 SizeF size_Package_font = TextRenderer.MeasureText(storage.Package, storage.Package_font);
+
                 if (storage.Package_Visable)
                 {
                     DrawStorageString(g, storage, Device.ValueName.包裝單位, 0, Pannel_Height - size_Code_font.Height - size_Package_font.Height);
@@ -8121,43 +8286,68 @@ namespace H_Pannel_lib
 
                 string[] ip_array = storage.IP.Split('.');
                 SizeF size_IP = new SizeF();
+
                 if (ip_array.Length == 4)
                 {
                     string ip = ip_array[2] + "." + ip_array[3];
-                    size_IP = TextRenderer.MeasureText(ip, new Font("微軟正黑體", 8, FontStyle.Bold));
-                    g.DrawString(ip, new Font("微軟正黑體", 8, FontStyle.Bold), new SolidBrush((Color)storage.GetValue(Storage.ValueName.IP, Storage.ValueType.ForeColor)), (Pannel_Width - size_IP.Width), (Pannel_Height - size_IP.Height));
+
+                    using (Font ipFont = new Font("微軟正黑體", 8, FontStyle.Bold))
+                    {
+                        size_IP = TextRenderer.MeasureText(ip, ipFont);
+
+                        using (SolidBrush brush = new SolidBrush((Color)storage.GetValue(Storage.ValueName.IP, Storage.ValueType.ForeColor)))
+                        {
+                            g.DrawString(ip, ipFont, brush, (Pannel_Width - size_IP.Width), (Pannel_Height - size_IP.Height));
+                        }
+                    }
                 }
+
                 if (storage.Inventory_Visable)
                 {
-
                     SizeF size_Inventory = TextRenderer.MeasureText($"[{storage.Inventory}]", storage.Inventory_font);
                     PointF pointF = new PointF((Pannel_Width - size_Inventory.Width - 10), (Pannel_Height - size_IP.Height - size_Inventory.Height));
+
                     DrawingClass.Draw.方框繪製(pointF, new Size((int)size_Inventory.Width, (int)size_Inventory.Height), Color.Black, 1, false, g, 1, 1);
-                    g.DrawString($"[{storage.Inventory}]", storage.Inventory_font, new SolidBrush((Color)storage.GetValue(Storage.ValueName.庫存, Storage.ValueType.ForeColor)), pointF.X, pointF.Y);
 
-                }
-
-            }
-            Bitmap bitmap_buf = null;
-            if (storage.DeviceIsStorage() || true)
-            {
-                using (Graphics g_buf = Graphics.FromImage(bitmap))
-                {
-                    if (storage.BarCode_Visable)
+                    using (SolidBrush brush = new SolidBrush((Color)storage.GetValue(Storage.ValueName.庫存, Storage.ValueType.ForeColor)))
                     {
-                        Bitmap bitmap_barcode = Communication.CreateBarCode($"{storage.Code}", storage.BarCode_Width, storage.BarCode_Height);
+                        g.DrawString($"[{storage.Inventory}]", storage.Inventory_font, brush, pointF.X, pointF.Y);
+                    }
+                }
+            }
 
+            using (Graphics g_buf = Graphics.FromImage(bitmap))
+            {
+                g_buf.CompositingMode = CompositingMode.SourceOver;
+
+                if (storage.BarCode_Visable)
+                {
+                    Bitmap bitmap_barcode = Communication.CreateBarCode($"{storage.Code}", storage.BarCode_Width, storage.BarCode_Height);
+
+                    if (bitmap_barcode != null)
+                    {
                         g_buf.DrawImage(bitmap_barcode, (Pannel_Width - storage.BarCode_Width) / 2, storage.PanelSize.Height - storage.BarCode_Height);
                         bitmap_barcode.Dispose();
                     }
-
                 }
-                bitmap_buf = Communication.ScaleImage(bitmap, (int)(storage.PanelSize.Width * scale), (int)(storage.PanelSize.Height * scale));
+            }
 
+            int outputWidth = (int)(storage.PanelSize.Width * scale);
+            int outputHeight = (int)(storage.PanelSize.Height * scale);
+
+            if (outputWidth <= 0) outputWidth = storage.PanelSize.Width;
+            if (outputHeight <= 0) outputHeight = storage.PanelSize.Height;
+
+            Bitmap bitmap_buf = null;
+
+            using (Bitmap flattenedFinal = Device.FlattenAlphaToBackgroundByPixel(bitmap, storage.BackColor))
+            {
+                bitmap_buf = ScaleImageToBackground(flattenedFinal, outputWidth, outputHeight, storage.BackColor);
             }
 
             bitmap.Dispose();
             bitmap = null;
+
             return bitmap_buf;
         }
         static public Bitmap GetBitmapType_2(Storage storage, double scale = 1)
@@ -10289,113 +10479,43 @@ namespace H_Pannel_lib
             }
         }
 
-        public static void DrawCircleText(Graphics g, Point topLeft ,int size, string text, Font font, Color textCodor, Color borderCodor, Color backCodor)
-        {
-            // 設定圓形外框顏色
-            Pen whitePen = new Pen(borderCodor, 2);
-
-            // 設定圓形填充顏色
-            Brush redBrush = new SolidBrush(backCodor);
-
-
-            // 設定文字顏色
-            Brush textBrush = new SolidBrush(textCodor);
-
-            // 計算文字的寬度和高度
-            SizeF textSize = g.MeasureString(text, font);
-
-            // 計算圓形的位置
-            int centerX = topLeft.X + size / 2;
-            int centerY = topLeft.Y + size / 2;
-
-            // 繪製圓形外框
-            g.DrawEllipse(whitePen, topLeft.X, topLeft.Y, size, size);
-
-            // 繪製填充紅色的圓形
-            g.FillEllipse(redBrush, topLeft.X, topLeft.Y, size, size);
-
-            // 計算文字的位置使其置中於圓形內部
-            float textX = centerX - (textSize.Width / 2);
-            float textY = centerY - (textSize.Height / 2);
-
-            // 繪製文字
-            g.DrawString(text, font, textBrush, textX, textY);
-        }
-        public static void DrawHexagonText(Graphics g, Point topLeft, int size, string text, Font font, Color textCodor, Color borderCodor, Color backCodor)
-        {
-            // 設定六邊形外框顏色
-            Pen whitePen = new Pen(borderCodor, 2);
-
-            // 設定六邊形填充顏色
-            Brush redBrush = new SolidBrush(backCodor);
-
-
-            // 設定文字顏色
-            Brush textBrush = new SolidBrush(textCodor);
-
-            // 計算文字的寬度和高度
-            SizeF textSize = g.MeasureString(text, font);
-
-            // 計算六邊形的六個頂點
-            PointF[] hexagonVertices = new PointF[6];
-            float angle = 360f / 6;
-
-            for (int i = 0; i < 6; i++)
-            {
-                float x = topLeft.X + size / 2 + (size / 2) * (float)Math.Cos(Math.PI / 180 * (angle * i));
-                float y = topLeft.Y + size / 2 + (size / 2) * (float)Math.Sin(Math.PI / 180 * (angle * i));
-                hexagonVertices[i] = new PointF(x, y);
-            }
-
-            // 繪製六邊形外框
-            g.DrawPolygon(whitePen, hexagonVertices);
-
-            // 繪製填充紅色的六邊形
-            g.FillPolygon(redBrush, hexagonVertices);
-
-            // 計算文字的位置使其置中於六邊形內部
-            float textX = topLeft.X + size / 2 - (textSize.Width / 2);
-            float textY = topLeft.Y + size / 2 - (textSize.Height / 2);
-
-            // 繪製文字
-            g.DrawString(text, font, textBrush, textX, textY);
-        }
-        public static void DrawSquareText(Graphics g, Point topLeft, int size, string text, Font font, Color textCodor, Color borderCodor, Color backCodor)
-        {
-            // 設定正方形外框顏色
-            Pen whitePen = new Pen(borderCodor, 2);
-
-            // 設定正方形填充顏色
-            Brush redBrush = new SolidBrush(backCodor);
-
-
-            // 設定文字顏色
-            Brush textBrush = new SolidBrush(textCodor);
-
-            // 計算文字的寬度和高度
-            SizeF textSize = g.MeasureString(text, font);
-
-            // 繪製正方形外框
-            g.DrawRectangle(whitePen, topLeft.X, topLeft.Y, size, size);
-
-            // 繪製填充紅色的正方形
-            g.FillRectangle(redBrush, topLeft.X, topLeft.Y, size, size);
-
-            // 計算文字的位置使其置中於正方形內部
-            float textX = topLeft.X + (size - textSize.Width) / 2;
-            float textY = topLeft.Y + (size - textSize.Height) / 2;
-
-            // 繪製文字
-            g.DrawString(text, font, textBrush, textX, textY);
-        }
+        #region 對外函式 - 繪製到 Graphics
 
         /// <summary>
         /// 繪製「管制藥 DRUGKIND」六邊形標籤
         /// </summary>
-        public static void DrawDrugKindHexagon(Graphics g, Point pos, int size, string text, Font font)
+        public static void DrawDrugKindHexagon(Graphics g, Point topLeft, int size, string text, Font font)
         {
-            DrawHexagonText(g, pos, size, text, font, Color.White, Color.Black, Color.Red);
+            DrawHexagonText(g, topLeft, size, text, font, Color.White, Color.Black, Color.Red);
         }
+
+        /// <summary>
+        /// 繪製「麻醉藥」圓形標籤
+        /// </summary>
+        public static void DrawAnestheticCircle(Graphics g, Point topLeft, int size, Font font)
+        {
+            DrawCircleText(g, topLeft, size, "麻", font, Color.White, Color.Black, Color.Red);
+        }
+
+        /// <summary>
+        /// 繪製「形似藥」方形標籤
+        /// </summary>
+        public static void DrawShapeSimilarSquare(Graphics g, Point topLeft, int size, Font font)
+        {
+            DrawSquareText(g, topLeft, size, "形", font, Color.White, Color.Black, Color.Black);
+        }
+
+        /// <summary>
+        /// 繪製「音似藥」方形標籤
+        /// </summary>
+        public static void DrawSoundSimilarSquare(Graphics g, Point topLeft, int size, Font font)
+        {
+            DrawSquareText(g, topLeft, size, "音", font, Color.White, Color.Black, Color.Black);
+        }
+
+        #endregion
+
+        #region 對外函式 - 回傳 Bitmap
 
         /// <summary>
         /// 產生「管制藥 DRUGKIND」六邊形標籤 Bitmap
@@ -10404,16 +10524,9 @@ namespace H_Pannel_lib
         {
             return CreateBitmap(size, size, g =>
             {
-                DrawDrugKindHexagon(g, new Point(size / 2, size / 2), size, text, font);
+                int padding = 2;
+                DrawDrugKindHexagon(g, new Point(padding, padding), size - padding * 2, text, font);
             });
-        }
-
-        /// <summary>
-        /// 繪製「麻醉藥」圓形標籤
-        /// </summary>
-        public static void DrawAnestheticCircle(Graphics g, Point pos, int size, Font font)
-        {
-            DrawCircleText(g, pos, size, "麻", font, Color.White, Color.Black, Color.Red);
         }
 
         /// <summary>
@@ -10423,16 +10536,9 @@ namespace H_Pannel_lib
         {
             return CreateBitmap(size, size, g =>
             {
-                DrawAnestheticCircle(g, new Point(size / 2, size / 2), size, font);
+                int padding = 2;
+                DrawAnestheticCircle(g, new Point(padding, padding), size - padding * 2, font);
             });
-        }
-
-        /// <summary>
-        /// 繪製「形似藥」方形標籤
-        /// </summary>
-        public static void DrawShapeSimilarSquare(Graphics g, Point pos, int size, Font font)
-        {
-            DrawSquareText(g, pos, size, "形", font, Color.Black, Color.Black, Color.White);
         }
 
         /// <summary>
@@ -10442,16 +10548,9 @@ namespace H_Pannel_lib
         {
             return CreateBitmap(size, size, g =>
             {
-                DrawShapeSimilarSquare(g, new Point(size / 2, size / 2), size, font);
+                int padding = 2;
+                DrawShapeSimilarSquare(g, new Point(padding, padding), size - padding * 2, font);
             });
-        }
-
-        /// <summary>
-        /// 繪製「音似藥」方形標籤
-        /// </summary>
-        public static void DrawSoundSimilarSquare(Graphics g, Point pos, int size, Font font)
-        {
-            DrawSquareText(g, pos, size, "音", font, Color.Black, Color.Black, Color.White);
         }
 
         /// <summary>
@@ -10461,23 +10560,141 @@ namespace H_Pannel_lib
         {
             return CreateBitmap(size, size, g =>
             {
-                DrawSoundSimilarSquare(g, new Point(size / 2, size / 2), size, font);
+                int padding = 2;
+                DrawSoundSimilarSquare(g, new Point(padding, padding), size - padding * 2, font);
             });
         }
+
+        #endregion
+
+        #region 基礎繪圖函式
+
+        /// <summary>
+        /// 繪製圓形文字標籤
+        /// </summary>
+        public static void DrawCircleText(Graphics g, Point topLeft, int size, string text, Font font, Color textColor, Color borderColor, Color backColor)
+        {
+            if (g == null) return;
+            if (font == null) return;
+            if (size <= 0) return;
+
+            ApplyHighQualityGraphics(g);
+
+            Rectangle rect = new Rectangle(topLeft.X, topLeft.Y, size, size);
+
+            using (Pen borderPen = new Pen(borderColor, 2))
+            using (Brush backBrush = new SolidBrush(backColor))
+            using (Brush textBrush = new SolidBrush(textColor))
+            using (StringFormat sf = CreateCenterStringFormat())
+            {
+                // 先填背景，避免背景蓋掉外框
+                g.FillEllipse(backBrush, rect);
+
+                // 再畫外框
+                g.DrawEllipse(borderPen, rect);
+
+                // 文字置中
+                g.DrawString(text, font, textBrush, rect, sf);
+            }
+        }
+
+        /// <summary>
+        /// 繪製六邊形文字標籤
+        /// </summary>
+        public static void DrawHexagonText(Graphics g, Point topLeft, int size, string text, Font font, Color textColor, Color borderColor, Color backColor)
+        {
+            if (g == null) return;
+            if (font == null) return;
+            if (size <= 0) return;
+
+            ApplyHighQualityGraphics(g);
+
+            using (Pen borderPen = new Pen(borderColor, 2))
+            using (Brush backBrush = new SolidBrush(backColor))
+            using (Brush textBrush = new SolidBrush(textColor))
+            using (StringFormat sf = CreateCenterStringFormat())
+            {
+                float centerX = topLeft.X + size / 2f;
+                float centerY = topLeft.Y + size / 2f;
+
+                // 內縮，避免外框被 Bitmap 邊界裁切
+                float radius = size / 2f - borderPen.Width;
+
+                if (radius <= 0) return;
+
+                PointF[] hexagonVertices = new PointF[6];
+
+                for (int i = 0; i < 6; i++)
+                {
+                    // -30 度：左右尖角六邊形
+                    double angle = Math.PI / 180.0 * (60 * i - 30);
+
+                    float x = centerX + radius * (float)Math.Cos(angle);
+                    float y = centerY + radius * (float)Math.Sin(angle);
+
+                    hexagonVertices[i] = new PointF(x, y);
+                }
+
+                // 先填背景
+                g.FillPolygon(backBrush, hexagonVertices);
+
+                // 再畫外框
+                g.DrawPolygon(borderPen, hexagonVertices);
+
+                RectangleF textRect = new RectangleF(topLeft.X, topLeft.Y, size, size);
+
+                // 文字置中
+                g.DrawString(text, font, textBrush, textRect, sf);
+            }
+        }
+
+        /// <summary>
+        /// 繪製正方形文字標籤
+        /// </summary>
+        public static void DrawSquareText(Graphics g, Point topLeft, int size, string text, Font font, Color textColor, Color borderColor, Color backColor)
+        {
+            if (g == null) return;
+            if (font == null) return;
+            if (size <= 0) return;
+
+            ApplyHighQualityGraphics(g);
+
+            Rectangle rect = new Rectangle(topLeft.X, topLeft.Y, size, size);
+
+            using (Pen borderPen = new Pen(borderColor, 2))
+            using (Brush backBrush = new SolidBrush(backColor))
+            using (Brush textBrush = new SolidBrush(textColor))
+            using (StringFormat sf = CreateCenterStringFormat())
+            {
+                // 先填背景
+                g.FillRectangle(backBrush, rect);
+
+                // 再畫外框
+                g.DrawRectangle(borderPen, rect);
+
+                // 文字置中
+                g.DrawString(text, font, textBrush, rect, sf);
+            }
+        }
+
+        #endregion
+
+        #region 共用函式
 
         /// <summary>
         /// 建立 Bitmap 並執行繪圖
         /// </summary>
         private static Bitmap CreateBitmap(int width, int height, Action<Graphics> drawAction)
         {
-            Bitmap bitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            if (width <= 0) width = 1;
+            if (height <= 0) height = 1;
+
+            Bitmap bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb);
 
             using (Graphics g = Graphics.FromImage(bitmap))
             {
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                ApplyHighQualityGraphics(g);
+
                 g.Clear(Color.Transparent);
 
                 drawAction?.Invoke(g);
@@ -10487,21 +10704,157 @@ namespace H_Pannel_lib
         }
 
         /// <summary>
-        /// 依據字串 (enum_PictureType.GetEnumName()) 取得圖片，並進行縮放與可選的邊框繪製
+        /// 套用高品質繪圖設定
         /// </summary>
-        /// <param name="picTypeStr">圖片類型字串 (對應 enum_PictureType.GetEnumName())</param>
-        /// <param name="width">目標寬度 (已考慮縮放)</param>
-        /// <param name="height">目標高度 (已考慮縮放)</param>
-        /// <param name="borderColor">邊框顏色，null 表示不繪製</param>
-        /// <param name="BorderSize">邊框大小</param>
-        /// <param name="dash">是否使用虛線</param>
-        /// <param name="Code">藥品代碼 (僅當藥品圖片時使用)</param>
-        /// <returns>處理後的 Bitmap，若無法取得則回傳 null</returns>
-        public static Bitmap GetPictureBitmap(string picTypeStr, int width, int height, Color? borderColor = null, int BorderSize = 2, bool dash = false, string Code = null)
+        private static void ApplyHighQualityGraphics(Graphics g)
         {
-            if (string.IsNullOrEmpty(picTypeStr)) return null;
+            if (g == null) return;
 
-            // 嘗試將字串轉換成 enum_PictureType
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+        }
+
+        /// <summary>
+        /// 建立文字置中格式
+        /// </summary>
+        private static StringFormat CreateCenterStringFormat()
+        {
+            StringFormat sf = new StringFormat();
+            sf.Alignment = StringAlignment.Center;
+            sf.LineAlignment = StringAlignment.Center;
+            sf.FormatFlags = StringFormatFlags.NoClip;
+            return sf;
+        }
+
+        #endregion
+
+
+
+     
+
+        /// <summary>
+        /// 圖片縮放模式。
+        /// </summary>
+        public enum enum_PictureScaleMode
+        {
+            /// <summary>
+            /// 強制縮放至指定 Rectangle 寬高，可能變形。
+            /// </summary>
+            Stretch,
+
+            /// <summary>
+            /// 鎖定寬度，依 rect.Width 等比縮放，高度自動。
+            /// </summary>
+            LockWidth,
+
+            /// <summary>
+            /// 鎖定高度，依 rect.Height 等比縮放，寬度自動。
+            /// </summary>
+            LockHeight,
+
+            /// <summary>
+            /// 等比縮放至 rect 內，圖片完整顯示，不超出範圍。
+            /// </summary>
+            ZoomFit,
+
+            /// <summary>
+            /// 等比縮放填滿 rect，可能超出範圍。
+            /// </summary>
+            ZoomFill
+        }
+
+        /// <summary>
+        /// 依圖片名稱取得原始 Bitmap。
+        /// 注意：此方法不做 Dithering，避免透明 PNG 的 Alpha 先被轉成黑色。
+        /// 回傳的是複製後的 Bitmap，呼叫端可安全 Dispose。
+        /// </summary>
+        /// <param name="pictureName">圖片名稱。</param>
+        /// <param name="Code">藥品碼，pictureName 為「藥品圖片」時使用。</param>
+        /// <returns>回傳原始 Bitmap，失敗回傳 null。</returns>
+        private static Bitmap GetRawPictureBitmap(string pictureName, string Code = null)
+        {
+            if (pictureName.StringIsEmpty()) return null;
+            if (pictureName == "無") return null;
+            if (pictureName == "None") return null;
+
+            Image image = null;
+
+            switch (pictureName)
+            {
+                case "藥品圖片":
+                    image = Device.GetDitheredBitmapFromCache(Code);
+                    break;
+
+                case "自定義_1":
+                    image = Device.GetOriginalBitmapFromCache("自定義_1");
+                    break;
+
+                case "自定義_2":
+                    image = Device.GetOriginalBitmapFromCache("自定義_2");
+                    break;
+
+                case "自定義_3":
+                    image = Device.GetOriginalBitmapFromCache("自定義_3");
+                    break;
+
+                case "高警訊_1":
+                    image = Resource1.Alarm_filled_red;
+                    break;
+
+                case "高警訊_2":
+                    image = Resource1.高警訊_2;
+                    break;
+
+                case "高警訊_3":
+                    image = Resource1.高警訊_3;
+                    break;
+
+                case "高警訊_4":
+                    image = Resource1.高警訊_4;
+                    break;
+
+                case "LASA_1":
+                    image = Resource1.LASA圖標;
+                    break;
+
+                case "LASA_2":
+                    image = Resource1.LASA_2;
+                    break;
+            }
+
+            if (image == null) return null;
+
+            return Device.CloneToArgbBitmap(image);
+        }
+
+        /// <summary>
+        /// 依圖片名稱取得 Bitmap。
+        /// 此方法回傳已保留 Alpha 的 Bitmap；但若來源已是抖色後 cache，Alpha 可能已不存在。
+        /// </summary>
+        /// <param name="pictureName">圖片名稱。</param>
+        /// <param name="Code">藥品碼。</param>
+        /// <returns>回傳 Bitmap。</returns>
+        private static Bitmap GetPictureBitmap(string pictureName, string Code = null)
+        {
+            return GetRawPictureBitmap(pictureName, Code);
+        }
+
+        /// <summary>
+        /// 依據字串 enum_PictureType.GetEnumName() 取得圖片，並進行縮放與可選邊框繪製。
+        /// </summary>
+        public static Bitmap GetPictureBitmap(
+            string picTypeStr,
+            int width,
+            int height,
+            Color? borderColor = null,
+            int BorderSize = 2,
+            bool dash = false,
+            string Code = null)
+        {
+            if (picTypeStr.StringIsEmpty()) return null;
+
             foreach (enum_PictureType type in Enum.GetValues(typeof(enum_PictureType)))
             {
                 if (type.GetEnumName() == picTypeStr)
@@ -10510,171 +10863,238 @@ namespace H_Pannel_lib
                 }
             }
 
-            return null; // 沒找到對應的 enum
+            return null;
         }
 
         /// <summary>
-        /// 依據 enum_PictureType 取得圖片，並進行縮放與可選的邊框繪製
+        /// 依據 enum_PictureType 取得圖片，並進行縮放與可選邊框繪製。
+        /// 注意：此方法會用白底壓平透明背景。若要用其他底色，請使用 DrawPicture 或 DrawPictureFixedHeight。
         /// </summary>
-        /// <param name="picType">圖片類型 (enum_PictureType)</param>
-        /// <param name="width">目標寬度 (已考慮縮放)</param>
-        /// <param name="height">目標高度 (已考慮縮放)</param>
-        /// <param name="Code">藥品代碼 (僅當藥品圖片時使用)</param>
-        /// <param name="color">邊框顏色，null 表示不繪製</param>
-        /// <param name="BorderSize">邊框大小</param>
-        /// <param name="dash">是否使用虛線</param>
-        /// <returns>處理後的 Bitmap，若無法取得則回傳 null</returns>
-        public static Bitmap GetPictureBitmap(enum_PictureType picType, int width, int height, Color? borderColor = null, int BorderSize = 2, bool dash = false, string Code = null,string text = null)
+        public static Bitmap GetPictureBitmap(
+            enum_PictureType picType,
+            int width,
+            int height,
+            Color? borderColor = null,
+            int BorderSize = 2,
+            bool dash = false,
+            string Code = null,
+            string text = null)
         {
+            if (width <= 0 || height <= 0) return null;
+
             Bitmap bitmap = null;
-            Font font = new Font("微軟正黑體", 24, FontStyle.Bold);
-            switch (picType)
+
+            using (Font font = new Font("微軟正黑體", 24, FontStyle.Bold))
             {
-                case enum_PictureType.藥品圖片:
-                    bitmap = Device.GetDitheredBitmapFromCache(Code);
-                    break;
-                case enum_PictureType.自定義_1:
-                    bitmap = Device.GetDitheredBitmapFromCache("自定義_1");
-                    break;
-                case enum_PictureType.自定義_2:
-                    bitmap = Device.GetDitheredBitmapFromCache("自定義_2");
-                    break;
-                case enum_PictureType.自定義_3:
-                    bitmap = Device.GetDitheredBitmapFromCache("自定義_3");
-                    break;
-                case enum_PictureType.高警訊_1:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.Alarm_filled_red, DitheringProcessor.DitheringMode.None);
-                    break;
+                switch (picType)
+                {
+                    case enum_PictureType.藥品圖片:
+                        bitmap = GetRawPictureBitmap("藥品圖片", Code);
+                        break;
 
-                case enum_PictureType.高警訊_2:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_2, DitheringProcessor.DitheringMode.None);
-                    break;
+                    case enum_PictureType.自定義_1:
+                        bitmap = GetRawPictureBitmap("自定義_1");
+                        break;
 
-                case enum_PictureType.高警訊_3:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_3, DitheringProcessor.DitheringMode.None);
-                    break;
+                    case enum_PictureType.自定義_2:
+                        bitmap = GetRawPictureBitmap("自定義_2");
+                        break;
 
-                case enum_PictureType.高警訊_4:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_4, DitheringProcessor.DitheringMode.None);
-                    break;
+                    case enum_PictureType.自定義_3:
+                        bitmap = GetRawPictureBitmap("自定義_3");
+                        break;
 
-                case enum_PictureType.LASA_1:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LASA圖標, DitheringProcessor.DitheringMode.None);
-                    break;
+                    case enum_PictureType.高警訊_1:
+                        bitmap = GetRawPictureBitmap("高警訊_1");
+                        break;
 
-                case enum_PictureType.LASA_2:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LASA_2, DitheringProcessor.DitheringMode.None);
-                    break;
-                case enum_PictureType.管制藥品標誌:
-                    if(text != null)
-                    {                
-                        bitmap = GetDrugKindHexagonBitmap(40, text, font);
-                    }
-                    break;
-                case enum_PictureType.麻醉藥品標誌:
-                    bitmap = GetAnestheticCircleBitmap(40, font);
-                    break;
-                default:
-                    return null;
+                    case enum_PictureType.高警訊_2:
+                        bitmap = GetRawPictureBitmap("高警訊_2");
+                        break;
+
+                    case enum_PictureType.高警訊_3:
+                        bitmap = GetRawPictureBitmap("高警訊_3");
+                        break;
+
+                    case enum_PictureType.高警訊_4:
+                        bitmap = GetRawPictureBitmap("高警訊_4");
+                        break;
+
+                    case enum_PictureType.LASA_1:
+                        bitmap = GetRawPictureBitmap("LASA_1");
+                        break;
+
+                    case enum_PictureType.LASA_2:
+                        bitmap = GetRawPictureBitmap("LASA_2");
+                        break;
+
+                    case enum_PictureType.管制藥品標誌:
+                        if (text != null)
+                        {
+                            bitmap = GetDrugKindHexagonBitmap(80, text, font);
+                        }
+                        break;
+
+                    case enum_PictureType.麻醉藥品標誌:
+                        bitmap = GetAnestheticCircleBitmap(60, font);
+                        break;
+
+                    default:
+                        return null;
+                }
             }
 
             if (bitmap == null) return null;
 
-            // 縮放
-            bitmap = Communication.ScaleImage(bitmap, width, height);
+            Bitmap scaledBitmap = null;
 
-            // 畫邊框
-            if (bitmap != null && borderColor != null)
+            try
             {
-                using (Graphics g = Graphics.FromImage(bitmap))
+                using (Bitmap flattened = Device.FlattenAlphaToBackgroundByPixel(bitmap, Color.White))
                 {
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+                    scaledBitmap = ScaleImageToBackground(flattened, width, height, Color.White);
+                }
 
-                    float[] dashValues = { 2, 2, 2, 2 };
-                    using (Pen pen = new Pen((Color)borderColor, BorderSize))
+                if (scaledBitmap == null) return null;
+
+                if (borderColor != null)
+                {
+                    using (Graphics g = Graphics.FromImage(scaledBitmap))
                     {
-                        if (dash) pen.DashPattern = dashValues;
+                        g.SmoothingMode = SmoothingMode.HighQuality;
+                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        g.CompositingQuality = CompositingQuality.HighQuality;
+                        g.CompositingMode = CompositingMode.SourceOver;
+                        g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
-                        g.DrawRectangle(pen,
-                            BorderSize / 2,
-                            BorderSize / 2,
-                            width - BorderSize,
-                            height - BorderSize);
+                        float[] dashValues = { 2, 2, 2, 2 };
+
+                        using (Pen pen = new Pen((Color)borderColor, BorderSize))
+                        {
+                            if (dash) pen.DashPattern = dashValues;
+
+                            g.DrawRectangle(
+                                pen,
+                                BorderSize / 2,
+                                BorderSize / 2,
+                                width - BorderSize,
+                                height - BorderSize
+                            );
+                        }
                     }
                 }
+
+                return scaledBitmap;
             }
-
-            return bitmap;
+            catch
+            {
+                if (scaledBitmap != null) scaledBitmap.Dispose();
+                return null;
+            }
+            finally
+            {
+                bitmap.Dispose();
+            }
         }
-        /// <summary>
-        /// 依據字串 (enum_PictureType.GetEnumName()) 取得圖片，並繪製到指定 Graphics 物件上
-        /// </summary>
-        /// <param name="g">Graphics 物件（外部傳入，用於繪製）</param>
-        /// <param name="picTypeStr">圖片類型字串 (對應 enum_PictureType.GetEnumName())</param>
-        /// <param name="rect">繪製區域 (包含目標寬度與高度)</param>
-        /// <param name="borderColor">邊框顏色，null 表示不繪製</param>
-        /// <param name="BorderSize">邊框大小</param>
-        /// <param name="dash">是否使用虛線</param>
-        /// <param name="Code">藥品代碼 (僅當藥品圖片時使用)</param>
-        public static void DrawPicture(Graphics g, string picTypeStr, Rectangle rect, Color? borderColor = null, int BorderSize = 2, bool dash = false, string Code = null)
-        {
-            if (string.IsNullOrEmpty(picTypeStr)) return;
 
-            // 嘗試轉換字串 → enum
+        /// <summary>
+        /// 依據字串 enum_PictureType.GetEnumName() 取得圖片，並繪製到指定 Graphics。
+        /// </summary>
+        public static void DrawPicture(
+            Graphics g,
+            string picTypeStr,
+            Rectangle rect,
+            Color? borderColor = null,
+            int BorderSize = 2,
+            bool dash = false,
+            string Code = null)
+        {
+            if (g == null) return;
+            if (picTypeStr.StringIsEmpty()) return;
+
             foreach (enum_PictureType type in Enum.GetValues(typeof(enum_PictureType)))
             {
                 if (type.GetEnumName() == picTypeStr)
                 {
-                    DrawPicture(g, type, rect, borderColor, BorderSize, dash, Code);
+                    DrawPicture(
+                        g,
+                        type,
+                        rect,
+                        borderColor,
+                        BorderSize,
+                        dash,
+                        Code,
+                        enum_PictureScaleMode.Stretch,
+                        ContentAlignment.MiddleCenter,
+                        Color.White
+                    );
                     return;
                 }
             }
         }
+
         /// <summary>
-        /// 依據 enum_PictureType 取得圖片，並繪製到指定 Graphics 物件上
+        /// 依據 enum_PictureType 取得圖片，並繪製到指定 Graphics。
+        /// 透明背景會先壓平成 transparentBackColor。
         /// </summary>
-        /// <param name="g">Graphics 物件（外部傳入，用於繪製）</param>
-        /// <param name="picType">圖片類型 (enum_PictureType)</param>
-        /// <param name="rect">繪製區域 (包含目標寬度與高度)</param>
-        /// <param name="Code">藥品代碼 (僅當藥品圖片時使用)</param>
-        /// <param name="color">邊框顏色，null 表示不繪製</param>
-        /// <param name="BorderSize">邊框大小</param>
-        /// <param name="dash">是否使用虛線</param>
-        public static void DrawPicture(Graphics g, enum_PictureType picType, Rectangle rect, Color? borderColor = null, int BorderSize = 2, bool dash = false, string Code = null)
+        public static void DrawPicture(
+            Graphics g,
+            enum_PictureType picType,
+            Rectangle rect,
+            Color? borderColor = null,
+            int BorderSize = 2,
+            bool dash = false,
+            string Code = null,
+            enum_PictureScaleMode scaleMode = enum_PictureScaleMode.Stretch,
+            ContentAlignment alignment = ContentAlignment.MiddleCenter,
+            Color? transparentBackColor = null)
         {
+            if (g == null) return;
+            if (rect.Width <= 0 || rect.Height <= 0) return;
+
             Bitmap bitmap = null;
+            Color backColor = transparentBackColor ?? Color.White;
 
             switch (picType)
             {
                 case enum_PictureType.藥品圖片:
-                    bitmap = Device.GetDitheredBitmapFromCache(Code);
+                    bitmap = GetRawPictureBitmap("藥品圖片", Code);
+                    break;
+
+                case enum_PictureType.自定義_1:
+                    bitmap = GetRawPictureBitmap("自定義_1");
+                    break;
+
+                case enum_PictureType.自定義_2:
+                    bitmap = GetRawPictureBitmap("自定義_2");
+                    break;
+
+                case enum_PictureType.自定義_3:
+                    bitmap = GetRawPictureBitmap("自定義_3");
                     break;
 
                 case enum_PictureType.高警訊_1:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.Alarm_filled_red, DitheringProcessor.DitheringMode.None);
+                    bitmap = GetRawPictureBitmap("高警訊_1");
                     break;
 
                 case enum_PictureType.高警訊_2:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_2, DitheringProcessor.DitheringMode.None);
+                    bitmap = GetRawPictureBitmap("高警訊_2");
                     break;
 
                 case enum_PictureType.高警訊_3:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_3, DitheringProcessor.DitheringMode.None);
+                    bitmap = GetRawPictureBitmap("高警訊_3");
                     break;
 
                 case enum_PictureType.高警訊_4:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.高警訊_4, DitheringProcessor.DitheringMode.None);
+                    bitmap = GetRawPictureBitmap("高警訊_4");
                     break;
 
                 case enum_PictureType.LASA_1:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LASA圖標, DitheringProcessor.DitheringMode.None);
+                    bitmap = GetRawPictureBitmap("LASA_1");
                     break;
 
                 case enum_PictureType.LASA_2:
-                    bitmap = DitheringProcessor.ApplyFloydSteinbergDithering(Resource1.LASA_2, DitheringProcessor.DitheringMode.None);
+                    bitmap = GetRawPictureBitmap("LASA_2");
                     break;
 
                 default:
@@ -10682,36 +11102,299 @@ namespace H_Pannel_lib
             }
 
             if (bitmap == null) return;
-
-            // 縮放
-            bitmap = Communication.ScaleImage(bitmap, rect.Width, rect.Height);
-            if (bitmap == null) return;
-            // 繪製圖片
-            g.DrawImage(bitmap, rect);
-
-            // 畫邊框
-            if (borderColor != null)
+            if (bitmap.Width <= 0 || bitmap.Height <= 0)
             {
-                g.SmoothingMode = SmoothingMode.HighQuality;
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+                bitmap.Dispose();
+                return;
+            }
 
-                float[] dashValues = { 2, 2, 2, 2 };
-                using (Pen pen = new Pen((Color)borderColor, BorderSize))
+            try
+            {
+                using (Bitmap flattenedBitmap = Device.FlattenAlphaToBackgroundByPixel(bitmap, backColor))
                 {
-                    if (dash) pen.DashPattern = dashValues;
+                    if (flattenedBitmap == null) return;
 
-                    g.DrawRectangle(pen,
-                        rect.X + BorderSize / 2,
-                        rect.Y + BorderSize / 2,
-                        rect.Width - BorderSize,
-                        rect.Height - BorderSize);
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.CompositingMode = CompositingMode.SourceOver;
+                    g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
+                    Rectangle drawRect = GetScaledRectangle(flattenedBitmap.Size, rect, scaleMode, alignment);
+
+                    Region oldClip = null;
+
+                    if (scaleMode == enum_PictureScaleMode.ZoomFill)
+                    {
+                        oldClip = g.Clip.Clone();
+                        g.SetClip(rect);
+                    }
+
+                    g.DrawImage(flattenedBitmap, drawRect);
+
+                    if (oldClip != null)
+                    {
+                        g.Clip = oldClip;
+                        oldClip.Dispose();
+                    }
+                }
+
+                if (borderColor != null)
+                {
+                    float[] dashValues = { 2, 2, 2, 2 };
+
+                    using (Pen pen = new Pen((Color)borderColor, BorderSize))
+                    {
+                        if (dash) pen.DashPattern = dashValues;
+
+                        g.DrawRectangle(
+                            pen,
+                            rect.X + BorderSize / 2,
+                            rect.Y + BorderSize / 2,
+                            rect.Width - BorderSize,
+                            rect.Height - BorderSize
+                        );
+                    }
+                }
+            }
+            finally
+            {
+                bitmap.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// 以固定高度繪製圖片，寬度依原圖比例自動計算，並回傳實際繪製寬度。
+        /// 此版本會先取原始圖片，將透明 PNG 壓平成指定背景色，再做六色抖色，避免透明區變黑。
+        /// </summary>
+        /// <param name="g">Graphics。</param>
+        /// <param name="pictureName">圖片名稱。</param>
+        /// <param name="x">繪製 X。</param>
+        /// <param name="y">繪製 Y。</param>
+        /// <param name="fixedHeight">固定高度。</param>
+        /// <param name="Code">藥品碼，pictureName 為「藥品圖片」時使用。</param>
+        /// <param name="maxWidth">最大寬度，0 表示不限制。</param>
+        /// <param name="transparentBackColor">透明區要壓平的背景色。</param>
+        /// <returns>回傳實際繪製寬度。</returns>
+        private static int DrawPictureFixedHeight(
+            Graphics g,
+            string pictureName,
+            int x,
+            int y,
+            int fixedHeight,
+            string Code = null,
+            int maxWidth = 0,
+            Color? transparentBackColor = null)
+        {
+            if (g == null) return 0;
+            if (pictureName.StringIsEmpty()) return 0;
+            if (pictureName == "無") return 0;
+            if (pictureName == "None") return 0;
+            if (fixedHeight <= 0) return 0;
+
+            Color backColor = transparentBackColor ?? Color.White;
+
+            using (Bitmap sourceBitmap = GetRawPictureBitmap(pictureName, Code))
+            {
+                if (sourceBitmap == null) return 0;
+                if (sourceBitmap.Width <= 0 || sourceBitmap.Height <= 0) return 0;
+
+                using (Bitmap flattenedBitmap = Device.FlattenAlphaToBackgroundByPixel(sourceBitmap, backColor))
+                {
+                    if (flattenedBitmap == null) return 0;
+
+                    using (Bitmap ditheredBitmap = flattenedBitmap.ApplyFloydSteinbergDitheringSixColor())
+                    {
+                        if (ditheredBitmap == null) return 0;
+                        if (ditheredBitmap.Width <= 0 || ditheredBitmap.Height <= 0) return 0;
+
+                        double ratio = ditheredBitmap.Width / (double)ditheredBitmap.Height;
+                        int drawWidth = (int)Math.Round(fixedHeight * ratio);
+
+                        if (drawWidth <= 0)
+                        {
+                            drawWidth = fixedHeight;
+                        }
+
+                        if (maxWidth > 0 && drawWidth > maxWidth)
+                        {
+                            drawWidth = maxWidth;
+                        }
+
+                        Rectangle drawRect = new Rectangle(x, y, drawWidth, fixedHeight);
+
+                        g.SmoothingMode = SmoothingMode.HighQuality;
+                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        g.CompositingQuality = CompositingQuality.HighQuality;
+                        g.CompositingMode = CompositingMode.SourceOver;
+                        g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
+                        g.DrawImage(ditheredBitmap, drawRect);
+
+                        return drawWidth;
+                    }
                 }
             }
         }
 
-       
+        /// <summary>
+        /// 縮放圖片並壓平成指定背景色。
+        /// 適合最終輸出到不支援 Alpha 的設備。
+        /// </summary>
+        private static Bitmap ScaleImageToBackground(Image source, int width, int height, Color backgroundColor)
+        {
+            if (source == null) return null;
+            if (width <= 0 || height <= 0) return null;
+
+            Bitmap bitmap = new Bitmap(
+                width,
+                height,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb
+            );
+
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(backgroundColor);
+
+                g.CompositingMode = CompositingMode.SourceOver;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+
+                g.DrawImage(source, new Rectangle(0, 0, width, height));
+            }
+
+            return bitmap;
+        }
+
+ 
+
+        /// <summary>
+        /// 依縮放模式取得圖片繪製範圍。
+        /// </summary>
+        private static Rectangle GetScaledRectangle(
+            Size imageSize,
+            Rectangle targetRect,
+            enum_PictureScaleMode scaleMode,
+            ContentAlignment alignment)
+        {
+            if (imageSize.Width <= 0 || imageSize.Height <= 0) return targetRect;
+            if (targetRect.Width <= 0 || targetRect.Height <= 0) return targetRect;
+
+            int drawWidth = targetRect.Width;
+            int drawHeight = targetRect.Height;
+
+            double imageRatio = imageSize.Width / (double)imageSize.Height;
+            double targetRatio = targetRect.Width / (double)targetRect.Height;
+
+            switch (scaleMode)
+            {
+                case enum_PictureScaleMode.Stretch:
+                    drawWidth = targetRect.Width;
+                    drawHeight = targetRect.Height;
+                    break;
+
+                case enum_PictureScaleMode.LockWidth:
+                    drawWidth = targetRect.Width;
+                    drawHeight = (int)Math.Round(drawWidth / imageRatio);
+                    break;
+
+                case enum_PictureScaleMode.LockHeight:
+                    drawHeight = targetRect.Height;
+                    drawWidth = (int)Math.Round(drawHeight * imageRatio);
+                    break;
+
+                case enum_PictureScaleMode.ZoomFit:
+                    if (imageRatio > targetRatio)
+                    {
+                        drawWidth = targetRect.Width;
+                        drawHeight = (int)Math.Round(drawWidth / imageRatio);
+                    }
+                    else
+                    {
+                        drawHeight = targetRect.Height;
+                        drawWidth = (int)Math.Round(drawHeight * imageRatio);
+                    }
+                    break;
+
+                case enum_PictureScaleMode.ZoomFill:
+                    if (imageRatio > targetRatio)
+                    {
+                        drawHeight = targetRect.Height;
+                        drawWidth = (int)Math.Round(drawHeight * imageRatio);
+                    }
+                    else
+                    {
+                        drawWidth = targetRect.Width;
+                        drawHeight = (int)Math.Round(drawWidth / imageRatio);
+                    }
+                    break;
+            }
+
+            if (drawWidth <= 0) drawWidth = 1;
+            if (drawHeight <= 0) drawHeight = 1;
+
+            Point location = GetAlignedLocation(targetRect, drawWidth, drawHeight, alignment);
+
+            return new Rectangle(location.X, location.Y, drawWidth, drawHeight);
+        }
+
+        /// <summary>
+        /// 依 ContentAlignment 計算圖片位置。
+        /// </summary>
+        private static Point GetAlignedLocation(
+            Rectangle targetRect,
+            int drawWidth,
+            int drawHeight,
+            ContentAlignment alignment)
+        {
+            int x = targetRect.X;
+            int y = targetRect.Y;
+
+            switch (alignment)
+            {
+                case ContentAlignment.TopLeft:
+                case ContentAlignment.MiddleLeft:
+                case ContentAlignment.BottomLeft:
+                    x = targetRect.Left;
+                    break;
+
+                case ContentAlignment.TopCenter:
+                case ContentAlignment.MiddleCenter:
+                case ContentAlignment.BottomCenter:
+                    x = targetRect.Left + (targetRect.Width - drawWidth) / 2;
+                    break;
+
+                case ContentAlignment.TopRight:
+                case ContentAlignment.MiddleRight:
+                case ContentAlignment.BottomRight:
+                    x = targetRect.Right - drawWidth;
+                    break;
+            }
+
+            switch (alignment)
+            {
+                case ContentAlignment.TopLeft:
+                case ContentAlignment.TopCenter:
+                case ContentAlignment.TopRight:
+                    y = targetRect.Top;
+                    break;
+
+                case ContentAlignment.MiddleLeft:
+                case ContentAlignment.MiddleCenter:
+                case ContentAlignment.MiddleRight:
+                    y = targetRect.Top + (targetRect.Height - drawHeight) / 2;
+                    break;
+
+                case ContentAlignment.BottomLeft:
+                case ContentAlignment.BottomCenter:
+                case ContentAlignment.BottomRight:
+                    y = targetRect.Bottom - drawHeight;
+                    break;
+            }
+
+            return new Point(x, y);
+        }
     }
     public static class BitmapTagExtension
     {
