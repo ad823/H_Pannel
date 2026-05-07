@@ -23,7 +23,7 @@ namespace H_Pannel_lib
             type1,
             constom,
             type2,
-
+            type3,
         }
 
         private string outputAdress = "";

@@ -262,11 +262,16 @@ namespace H_Pannel_lib
             comboBox_圖片4.Text = CurrentStorage.Picture4_Name;
             comboBox_圖片5.Text = CurrentStorage.Picture5_Name;
 
-            this.rJ_RatioButton_預設樣式1.CheckedChanged += RJ_RatioButton_預設樣式1_CheckedChanged;
-            this.rJ_RatioButton_自定義.CheckedChanged += RJ_RatioButton_自定義_CheckedChanged;
+            this.rJ_RatioButton_預設樣式1.CheckedChanged += RJ_RatioButton_CheckedChanged;
+            this.rJ_RatioButton_預設樣式3.CheckedChanged += RJ_RatioButton_CheckedChanged;
+            this.rJ_RatioButton_自定義.CheckedChanged += RJ_RatioButton_CheckedChanged;
             if (currentStorage.Enum_drawType == Storage.enum_DrawType.type1)
             {
                 rJ_RatioButton_預設樣式1.Checked = true;
+            }
+            if (currentStorage.Enum_drawType == Storage.enum_DrawType.type3)
+            {
+                rJ_RatioButton_預設樣式3.Checked = true;
             }
             if (currentStorage.Enum_drawType == Storage.enum_DrawType.constom)
             {
@@ -676,32 +681,28 @@ namespace H_Pannel_lib
             this.DrawToPictureBox();
         }
 
-        private void RJ_RatioButton_自定義_CheckedChanged(object sender, EventArgs e)
+        private void RJ_RatioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (this.rJ_RatioButton_自定義.Checked)
             {
                 currentStorage.Enum_drawType = Storage.enum_DrawType.constom;
-                panel_選擇項目.Enabled = true;
-                panel_字體.Enabled = true;
-                panel_字體型態.Enabled = true;
-                panel_邊框大小.Enabled = true;
-                groupBox_對齊方式.Enabled = true;
-                DrawToPictureBox();
             }
-        }
-        private void RJ_RatioButton_預設樣式1_CheckedChanged(object sender, EventArgs e)
-        {
             if (this.rJ_RatioButton_預設樣式1.Checked)
             {
                 currentStorage.Enum_drawType = Storage.enum_DrawType.type1;
-                panel_選擇項目.Enabled = true;
-                panel_字體.Enabled = true;
-                panel_字體型態.Enabled = true;
-                panel_邊框大小.Enabled = true;
-                groupBox_對齊方式.Enabled = true;
-                DrawToPictureBox();
             }
+            if (this.rJ_RatioButton_預設樣式3.Checked)
+            {
+                currentStorage.Enum_drawType = Storage.enum_DrawType.type3;
+            }
+            panel_選擇項目.Enabled = true;
+            panel_字體.Enabled = true;
+            panel_字體型態.Enabled = true;
+            panel_邊框大小.Enabled = true;
+            groupBox_對齊方式.Enabled = true;
+            DrawToPictureBox();
         }
+   
 
         public void DrawToPictureBox()
         {

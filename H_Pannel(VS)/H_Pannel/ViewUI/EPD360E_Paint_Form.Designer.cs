@@ -54,6 +54,15 @@ namespace H_Pannel_lib
             this.button_對齊靠下 = new System.Windows.Forms.Button();
             this.button_對齊靠上 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBox_圖片5 = new System.Windows.Forms.ComboBox();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBox_圖片4 = new System.Windows.Forms.ComboBox();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBox_圖片3 = new System.Windows.Forms.ComboBox();
             this.checkBox_QRCode = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -96,15 +105,7 @@ namespace H_Pannel_lib
             this.rJ_Lable1 = new MyUI.RJ_Lable();
             this.comboBox_選擇項目 = new System.Windows.Forms.ComboBox();
             this.fontDialog = new System.Windows.Forms.FontDialog();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox_圖片3 = new System.Windows.Forms.ComboBox();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboBox_圖片4 = new System.Windows.Forms.ComboBox();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.comboBox_圖片5 = new System.Windows.Forms.ComboBox();
+            this.rJ_RatioButton_預設樣式3 = new MyUI.RJ_RatioButton();
             this.panel1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -114,6 +115,9 @@ namespace H_Pannel_lib
             this.groupBox2.SuspendLayout();
             this.groupBox_對齊方式.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.panel9.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -121,9 +125,6 @@ namespace H_Pannel_lib
             this.panel_字體型態.SuspendLayout();
             this.panel_字體.SuspendLayout();
             this.panel_選擇項目.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel6.SuspendLayout();
-            this.panel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkBox_藥碼
@@ -146,6 +147,7 @@ namespace H_Pannel_lib
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rJ_RatioButton_預設樣式3);
             this.panel1.Controls.Add(this.groupBox5);
             this.panel1.Controls.Add(this.groupBox4);
             this.panel1.Controls.Add(this.groupBox3);
@@ -300,7 +302,7 @@ namespace H_Pannel_lib
             // 
             this.rJ_RatioButton_自定義.AutoSize = true;
             this.rJ_RatioButton_自定義.CheckColor = System.Drawing.Color.MediumSlateBlue;
-            this.rJ_RatioButton_自定義.Location = new System.Drawing.Point(738, 409);
+            this.rJ_RatioButton_自定義.Location = new System.Drawing.Point(829, 409);
             this.rJ_RatioButton_自定義.MinimumSize = new System.Drawing.Size(0, 21);
             this.rJ_RatioButton_自定義.Name = "rJ_RatioButton_自定義";
             this.rJ_RatioButton_自定義.Size = new System.Drawing.Size(71, 21);
@@ -469,6 +471,87 @@ namespace H_Pannel_lib
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "顯示";
+            // 
+            // panel9
+            // 
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel9.Controls.Add(this.label5);
+            this.panel9.Controls.Add(this.comboBox_圖片5);
+            this.panel9.Location = new System.Drawing.Point(372, 218);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(228, 44);
+            this.panel9.TabIndex = 32;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 11);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(56, 21);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "圖片5:";
+            // 
+            // comboBox_圖片5
+            // 
+            this.comboBox_圖片5.FormattingEnabled = true;
+            this.comboBox_圖片5.Location = new System.Drawing.Point(70, 7);
+            this.comboBox_圖片5.Name = "comboBox_圖片5";
+            this.comboBox_圖片5.Size = new System.Drawing.Size(139, 29);
+            this.comboBox_圖片5.TabIndex = 23;
+            // 
+            // panel6
+            // 
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.label4);
+            this.panel6.Controls.Add(this.comboBox_圖片4);
+            this.panel6.Location = new System.Drawing.Point(372, 168);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(228, 44);
+            this.panel6.TabIndex = 31;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 11);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(56, 21);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "圖片4:";
+            // 
+            // comboBox_圖片4
+            // 
+            this.comboBox_圖片4.FormattingEnabled = true;
+            this.comboBox_圖片4.Location = new System.Drawing.Point(70, 7);
+            this.comboBox_圖片4.Name = "comboBox_圖片4";
+            this.comboBox_圖片4.Size = new System.Drawing.Size(139, 29);
+            this.comboBox_圖片4.TabIndex = 23;
+            // 
+            // panel5
+            // 
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.label3);
+            this.panel5.Controls.Add(this.comboBox_圖片3);
+            this.panel5.Location = new System.Drawing.Point(372, 118);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(228, 44);
+            this.panel5.TabIndex = 30;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 11);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 21);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "圖片3:";
+            // 
+            // comboBox_圖片3
+            // 
+            this.comboBox_圖片3.FormattingEnabled = true;
+            this.comboBox_圖片3.Location = new System.Drawing.Point(70, 7);
+            this.comboBox_圖片3.Name = "comboBox_圖片3";
+            this.comboBox_圖片3.Size = new System.Drawing.Size(139, 29);
+            this.comboBox_圖片3.TabIndex = 23;
             // 
             // checkBox_QRCode
             // 
@@ -1017,86 +1100,19 @@ namespace H_Pannel_lib
             this.comboBox_選擇項目.Size = new System.Drawing.Size(353, 35);
             this.comboBox_選擇項目.TabIndex = 1;
             // 
-            // panel5
+            // rJ_RatioButton_預設樣式3
             // 
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.label3);
-            this.panel5.Controls.Add(this.comboBox_圖片3);
-            this.panel5.Location = new System.Drawing.Point(372, 118);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(228, 44);
-            this.panel5.TabIndex = 30;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 11);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 21);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "圖片3:";
-            // 
-            // comboBox_圖片3
-            // 
-            this.comboBox_圖片3.FormattingEnabled = true;
-            this.comboBox_圖片3.Location = new System.Drawing.Point(70, 7);
-            this.comboBox_圖片3.Name = "comboBox_圖片3";
-            this.comboBox_圖片3.Size = new System.Drawing.Size(139, 29);
-            this.comboBox_圖片3.TabIndex = 23;
-            // 
-            // panel6
-            // 
-            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel6.Controls.Add(this.label4);
-            this.panel6.Controls.Add(this.comboBox_圖片4);
-            this.panel6.Location = new System.Drawing.Point(372, 168);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(228, 44);
-            this.panel6.TabIndex = 31;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 11);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(56, 21);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "圖片4:";
-            // 
-            // comboBox_圖片4
-            // 
-            this.comboBox_圖片4.FormattingEnabled = true;
-            this.comboBox_圖片4.Location = new System.Drawing.Point(70, 7);
-            this.comboBox_圖片4.Name = "comboBox_圖片4";
-            this.comboBox_圖片4.Size = new System.Drawing.Size(139, 29);
-            this.comboBox_圖片4.TabIndex = 23;
-            // 
-            // panel9
-            // 
-            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel9.Controls.Add(this.label5);
-            this.panel9.Controls.Add(this.comboBox_圖片5);
-            this.panel9.Location = new System.Drawing.Point(372, 218);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(228, 44);
-            this.panel9.TabIndex = 32;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 11);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(56, 21);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "圖片5:";
-            // 
-            // comboBox_圖片5
-            // 
-            this.comboBox_圖片5.FormattingEnabled = true;
-            this.comboBox_圖片5.Location = new System.Drawing.Point(70, 7);
-            this.comboBox_圖片5.Name = "comboBox_圖片5";
-            this.comboBox_圖片5.Size = new System.Drawing.Size(139, 29);
-            this.comboBox_圖片5.TabIndex = 23;
+            this.rJ_RatioButton_預設樣式3.AutoSize = true;
+            this.rJ_RatioButton_預設樣式3.CheckColor = System.Drawing.Color.MediumSlateBlue;
+            this.rJ_RatioButton_預設樣式3.Location = new System.Drawing.Point(734, 409);
+            this.rJ_RatioButton_預設樣式3.MinimumSize = new System.Drawing.Size(0, 21);
+            this.rJ_RatioButton_預設樣式3.Name = "rJ_RatioButton_預設樣式3";
+            this.rJ_RatioButton_預設樣式3.Size = new System.Drawing.Size(89, 21);
+            this.rJ_RatioButton_預設樣式3.TabIndex = 12;
+            this.rJ_RatioButton_預設樣式3.TabStop = true;
+            this.rJ_RatioButton_預設樣式3.Text = "預設樣式3";
+            this.rJ_RatioButton_預設樣式3.UncheckColor = System.Drawing.Color.Gray;
+            this.rJ_RatioButton_預設樣式3.UseVisualStyleBackColor = true;
             // 
             // EPD360E_Paint_Form
             // 
@@ -1122,6 +1138,12 @@ namespace H_Pannel_lib
             this.groupBox_對齊方式.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
@@ -1133,12 +1155,6 @@ namespace H_Pannel_lib
             this.panel_字體.ResumeLayout(false);
             this.panel_字體.PerformLayout();
             this.panel_選擇項目.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
-            this.panel9.ResumeLayout(false);
-            this.panel9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1221,5 +1237,6 @@ namespace H_Pannel_lib
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox_圖片3;
+        private MyUI.RJ_RatioButton rJ_RatioButton_預設樣式3;
     }
 }

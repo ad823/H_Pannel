@@ -7953,6 +7953,11 @@ namespace H_Pannel_lib
                 Bitmap bitmap = GetBitmapType_2(storage, scale);
                 return bitmap;
             }
+            else if (storage.Enum_drawType == Storage.enum_DrawType.type3)
+            {
+                Bitmap bitmap = GetBitmapType_3(storage, scale);
+                return bitmap;
+            }
             else
             {
                 return Get_Storage_bmp(storage, new StoragePanel.enum_ValueName().GetEnumNames(), scale);
@@ -8489,6 +8494,553 @@ namespace H_Pannel_lib
             bitmap = null;
             return bitmap_buf;
         }
+        static public Bitmap GetBitmapType_3(Storage storage, double scale = 1)
+        {
+            if (storage == null) return null;
+            if (storage.PanelSize.Width <= 0 || storage.PanelSize.Height <= 0) return null;
+
+            Bitmap bitmap = new Bitmap(
+                storage.PanelSize.Width,
+                storage.PanelSize.Height,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb
+            );
+
+            int panelWidth = bitmap.Width;
+            int panelHeight = bitmap.Height;
+
+            Color borderColor = Color.RoyalBlue;
+            Color iconBarBackColor = Color.White;
+            Color mainBackColor = storage.IsWarning ? Color.Red : Color.White;
+            Color mainForeColor = storage.IsWarning ? Color.White : Color.Black;
+            Color leftBlockBackColor = Color.White;
+            Color leftBlockForeColor = Color.Black;
+
+            // =============================
+            // 方案 A：3.6 吋 / 2.9 吋 分開版型
+            // =============================
+            bool is36Inch = panelWidth >= 360;
+
+            int iconBarHeight;
+            int nameHeight;
+            int chineseNameHeight;
+            int scientificNameHeight;
+            int leftBottomWidth;
+            int codeCellHeight;
+
+            if (is36Inch)
+            {
+                // 3.6 吋
+                iconBarHeight = 45;
+                nameHeight = 70;
+                chineseNameHeight = 70;
+                scientificNameHeight = 70;
+                leftBottomWidth = 100;
+            }
+            else
+            {
+                // 2.9 吋
+                iconBarHeight = 20;
+                nameHeight = 35;
+                chineseNameHeight = 25;
+                scientificNameHeight = 25;
+                leftBottomWidth = 50;
+            }
+
+            int bottomY = iconBarHeight + nameHeight + chineseNameHeight + scientificNameHeight;
+            int bottomHeight = panelHeight - bottomY;
+            if (bottomHeight < 40) bottomHeight = 40;
+
+            codeCellHeight = Math.Max(is36Inch ? 24 : 20, (int)(bottomHeight * 0.24f));
+            int qrCellHeight = bottomHeight - codeCellHeight;
+            if (qrCellHeight < 20) qrCellHeight = 20;
+
+            Rectangle rectIconBar = new Rectangle(0, 0, panelWidth, iconBarHeight);
+            Rectangle rectName = new Rectangle(0, rectIconBar.Bottom, panelWidth, nameHeight);
+            Rectangle rectChineseName = new Rectangle(0, rectName.Bottom, panelWidth, chineseNameHeight);
+            Rectangle rectScientificName = new Rectangle(0, rectChineseName.Bottom, panelWidth, scientificNameHeight);
+
+            Rectangle rectBottom = new Rectangle(0, bottomY, panelWidth, panelHeight - bottomY);
+            Rectangle rectBottomLeftCode = new Rectangle(0, bottomY, leftBottomWidth, codeCellHeight);
+            Rectangle rectBottomLeftQR = new Rectangle(0, rectBottomLeftCode.Bottom, leftBottomWidth, panelHeight - rectBottomLeftCode.Bottom);
+            Rectangle rectBottomRight = new Rectangle(leftBottomWidth, bottomY, panelWidth - leftBottomWidth, panelHeight - bottomY);
+
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.CompositingMode = CompositingMode.SourceOver;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+
+                // =============================
+                // 背景
+                // =============================
+                g.Clear(Color.White);
+
+                using (SolidBrush brushIconBar = new SolidBrush(iconBarBackColor))
+                using (SolidBrush brushMain = new SolidBrush(mainBackColor))
+                using (SolidBrush brushLeft = new SolidBrush(leftBlockBackColor))
+                {
+                    g.FillRectangle(brushIconBar, rectIconBar);
+                    g.FillRectangle(brushMain, rectName);
+                    g.FillRectangle(brushMain, rectChineseName);
+                    g.FillRectangle(brushMain, rectScientificName);
+                    g.FillRectangle(brushLeft, rectBottomLeftCode);
+                    g.FillRectangle(brushLeft, rectBottomLeftQR);
+                    g.FillRectangle(brushMain, rectBottomRight);
+                }
+
+                // =============================
+                // 外框 / 分隔線
+                // =============================
+                using (Pen pen = new Pen(borderColor, 1.5f))
+                {
+                    g.DrawRectangle(pen, 0, 0, panelWidth - 1, panelHeight - 1);
+
+                    g.DrawLine(pen, 0, rectIconBar.Bottom, panelWidth, rectIconBar.Bottom);
+                    g.DrawLine(pen, 0, rectName.Bottom, panelWidth, rectName.Bottom);
+                    g.DrawLine(pen, 0, rectChineseName.Bottom, panelWidth, rectChineseName.Bottom);
+                    g.DrawLine(pen, 0, rectScientificName.Bottom, panelWidth, rectScientificName.Bottom);
+
+                    g.DrawLine(pen, leftBottomWidth, rectBottom.Top, leftBottomWidth, rectBottom.Bottom);
+                    g.DrawLine(pen, 0, rectBottomLeftCode.Bottom, leftBottomWidth, rectBottomLeftCode.Bottom);
+                }
+
+                // =============================
+                // 上方 icon bar
+                // =============================
+                DrawType3IconBar(g, storage, rectIconBar, borderColor, is36Inch);
+
+                // =============================
+                // 主藥名 / 中文名 / 學名
+                // =============================
+                float nameMinFont = is36Inch ? 10f : 8f;
+                float chineseMinFont = is36Inch ? 9f : 7.5f;
+                float scientificMinFont = is36Inch ? 8f : 7f;
+
+                DrawTextAutoFit(
+                    g,
+                    storage.Name,
+                    storage.Name_font ?? new Font("Arial", is36Inch ? 16 : 13, FontStyle.Bold),
+                    mainForeColor,
+                    InflateRect(rectName, is36Inch ? 6 : 4, 2),
+                    StringAlignment.Near,
+                    StringAlignment.Center,
+                    nameMinFont
+                );
+
+                DrawTextAutoFit(
+                    g,
+                    storage.ChineseName,
+                    storage.ChineseName_font ?? new Font("Arial", is36Inch ? 14 : 11, FontStyle.Bold),
+                    mainForeColor,
+                    InflateRect(rectChineseName, is36Inch ? 6 : 4, 2),
+                    StringAlignment.Near,
+                    StringAlignment.Center,
+                    chineseMinFont
+                );
+
+                DrawTextAutoFit(
+                    g,
+                    storage.Scientific_Name,
+                    storage.Scientific_Name_font ?? new Font("Arial", is36Inch ? 12 : 10, FontStyle.Bold),
+                    mainForeColor,
+                    InflateRect(rectScientificName, is36Inch ? 6 : 4, 2),
+                    StringAlignment.Near,
+                    StringAlignment.Center,
+                    scientificMinFont
+                );
+
+                // =============================
+                // 左下 Code
+                // =============================
+                DrawTextAutoFit(
+                    g,
+                    storage.Code,
+                    storage.Code_font ?? new Font("Arial", is36Inch ? 10 : 8.5f, FontStyle.Bold),
+                    leftBlockForeColor,
+                    InflateRect(rectBottomLeftCode, 2, 1),
+                    StringAlignment.Center,
+                    StringAlignment.Center,
+                    is36Inch ? 8f : 7f
+                );
+
+                // =============================
+                // 左下 QRCode
+                // =============================
+                if (storage.QRCode.StringIsEmpty()) storage.QRCode = storage.Code;
+
+                Rectangle qrDrawRect = new Rectangle(
+                    rectBottomLeftQR.X + (is36Inch ? 6 : 4),
+                    rectBottomLeftQR.Y + (is36Inch ? 6 : 4),
+                    rectBottomLeftQR.Width - (is36Inch ? 12 : 8),
+                    rectBottomLeftQR.Height - (is36Inch ? 12 : 8)
+                );
+
+                if (qrDrawRect.Width > 10 && qrDrawRect.Height > 10)
+                {
+                    using (Bitmap bitmap_QRCode = Communication.CreateQRCode(storage.QRCode, qrDrawRect.Width, qrDrawRect.Height))
+                    {
+                        if (bitmap_QRCode != null)
+                        {
+                            g.DrawImage(bitmap_QRCode, qrDrawRect);
+                        }
+                    }
+                }
+
+                // =============================
+                // 右下 CustomText1 + IP
+                // =============================
+                string ipShort = GetShortIP(storage.IP);
+                int ipReserveHeight = 0;
+
+                if (ipShort.StringIsEmpty() == false)
+                {
+                    using (Font ipFont = new Font("微軟正黑體", is36Inch ? 8f : 7f, FontStyle.Bold))
+                    {
+                        Size ipSize = TextRenderer.MeasureText(ipShort, ipFont, new Size(1000, 1000), TextFormatFlags.NoPadding);
+                        ipReserveHeight = ipSize.Height + 2;
+                    }
+                }
+
+                RectangleF rectCustomText = new RectangleF(
+                    rectBottomRight.X + (is36Inch ? 6 : 4),
+                    rectBottomRight.Y + (is36Inch ? 4 : 2),
+                    rectBottomRight.Width - (is36Inch ? 12 : 8),
+                    rectBottomRight.Height - (is36Inch ? 8 : 4) - ipReserveHeight
+                );
+
+                Font customBaseFont = storage.CustomText1_font ?? storage.CustomText1_font ?? new Font("Arial", is36Inch ? 12 : 10, FontStyle.Bold);
+                DrawTextAutoFit(
+                    g,
+                    storage.CustomText1,
+                    customBaseFont,
+                    mainForeColor,
+                    rectCustomText,
+                    StringAlignment.Near,
+                    StringAlignment.Near,
+                    is36Inch ? 8f : 7f
+                );
+
+                if (ipShort.StringIsEmpty() == false)
+                {
+                    using (Font ipFont = new Font("微軟正黑體", is36Inch ? 8f : 7f, FontStyle.Bold))
+                    using (SolidBrush brush = new SolidBrush(mainForeColor))
+                    {
+                        Size ipSize = TextRenderer.MeasureText(ipShort, ipFont, new Size(1000, 1000), TextFormatFlags.NoPadding);
+                        float ipX = rectBottomRight.Right - ipSize.Width - 4;
+                        float ipY = rectBottomRight.Bottom - ipSize.Height - 2;
+                        g.DrawString(ipShort, ipFont, brush, ipX, ipY);
+                    }
+                }
+            }
+
+            int outputWidth = (int)(storage.PanelSize.Width * scale);
+            int outputHeight = (int)(storage.PanelSize.Height * scale);
+
+            if (outputWidth <= 0) outputWidth = storage.PanelSize.Width;
+            if (outputHeight <= 0) outputHeight = storage.PanelSize.Height;
+
+            Bitmap bitmapBuf = null;
+
+            using (Bitmap flattenedFinal = Device.FlattenAlphaToBackgroundByPixel(bitmap, Color.White))
+            {
+                bitmapBuf = ScaleImageToBackground(flattenedFinal, outputWidth, outputHeight, Color.White);
+            }
+
+            bitmap.Dispose();
+            bitmap = null;
+
+            return bitmapBuf;
+        }
+
+        /// <summary>
+        /// 繪製 Type3 上方 icon bar
+        /// </summary>
+        private static void DrawType3IconBar(Graphics g, Storage storage, Rectangle rect, Color borderColor, bool is36Inch)
+        {
+            int padding = is36Inch ? 4 : 2;
+            int tempX = padding;
+            int iconY = rect.Y + padding;
+            int iconHeight = rect.Height - padding * 2;
+            int iconSize = Math.Max(is36Inch ? 20 : 16, iconHeight);
+            int iconGap = is36Inch ? 4 : 2;
+
+            bool hasDrugKind = storage.DRUGKIND.StringIsEmpty() == false && storage.DRUGKIND != "N";
+            bool hasAnesthetic = storage.IsAnesthetic;
+            bool hasShapeSimilar = storage.IsShapeSimilar;
+            bool hasSoundSimilar = storage.IsSoundSimilar;
+
+            string[] pictureNames = new string[]
+            {
+        storage.Picture1_Name,
+        storage.Picture2_Name,
+        storage.Picture3_Name,
+        storage.Picture4_Name,
+        storage.Picture5_Name
+            };
+
+         
+
+            for (int i = 0; i < pictureNames.Length; i++)
+            {
+                string pictureName = pictureNames[i];
+
+                if (pictureName.StringIsEmpty()) continue;
+                if (pictureName == "無") continue;
+                if (pictureName == "None") continue;
+                if (tempX >= rect.Right - 4) break;
+
+                int pictureWidth = DrawPictureFixedHeight(
+                    g,
+                    pictureName,
+                    tempX,
+                    iconY,
+                    iconHeight,
+                    storage.Code,
+                    0,
+                    Color.White
+                );
+
+                if (pictureWidth > 0)
+                {
+                    tempX += pictureWidth + iconGap;
+                }
+            }
+            using (Font iconFont = new Font("Arial", is36Inch ? Math.Max(9f, iconHeight * 0.38f) : Math.Max(7f, iconHeight * 0.34f), FontStyle.Bold))
+            {
+                if (hasDrugKind && tempX + iconSize <= rect.Right)
+                {
+                    DrawHexagonText(g, new Point(tempX, iconY), iconSize, $"管{storage.DRUGKIND}", iconFont, Color.White, Color.Black, Color.Red);
+                    tempX += iconSize + iconGap;
+                }
+
+                if (hasAnesthetic && tempX + iconSize <= rect.Right)
+                {
+                    DrawCircleText(g, new Point(tempX, iconY), iconSize, "麻", iconFont, Color.White, Color.Black, Color.Red);
+                    tempX += iconSize + iconGap;
+                }
+
+                if (hasShapeSimilar && tempX + iconSize <= rect.Right)
+                {
+                    DrawSquareText(g, new Point(tempX, iconY), iconSize, "形", iconFont, Color.Black, Color.Black, Color.White);
+                    tempX += iconSize + iconGap;
+                }
+
+                if (hasSoundSimilar && tempX + iconSize <= rect.Right)
+                {
+                    DrawSquareText(g, new Point(tempX, iconY), iconSize, "音", iconFont, Color.Black, Color.Black, Color.White);
+                    tempX += iconSize + iconGap;
+                }
+            }
+            string pregnancyValue = GetPropertyValueAsString(storage,
+                "Pregnancy",
+                "PregnancyCategory",
+                "PregnancyCode",
+                "PregnancyLevel",
+                "PregnantLevel",
+                "孕",
+                "懷孕分級"
+            );
+
+            string breastfeedingValue = GetPropertyValueAsString(storage,
+                "Breastfeeding",
+                "BreastFeeding",
+                "Lactation",
+                "BreastfeedingCategory",
+                "BreastfeedingCode",
+                "BreastfeedingLevel",
+                "哺",
+                "哺乳分級"
+            );
+
+            using (Font badgeFont = new Font("Arial", is36Inch ? Math.Max(9f, iconHeight * 0.42f) : Math.Max(7f, iconHeight * 0.34f), FontStyle.Bold))
+            {
+                if (pregnancyValue.StringIsEmpty() == false && tempX < rect.Right - 10)
+                {
+                    int badgeWidth = DrawBadge(
+                        g,
+                        $"孕:{pregnancyValue}",
+                        badgeFont,
+                        tempX,
+                        rect.Y + 2,
+                        Color.Lime,
+                        Color.Black,
+                        borderColor,
+                        rect.Height - 4
+                    );
+                    tempX += badgeWidth + iconGap;
+                }
+
+                if (breastfeedingValue.StringIsEmpty() == false && tempX < rect.Right - 10)
+                {
+                    int badgeWidth = DrawBadge(
+                        g,
+                        $"哺:{breastfeedingValue}",
+                        badgeFont,
+                        tempX,
+                        rect.Y + 2,
+                        Color.Yellow,
+                        Color.Black,
+                        borderColor,
+                        rect.Height - 4
+                    );
+                    tempX += badgeWidth + iconGap;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 在指定範圍內自動縮字並可換行
+        /// </summary>
+        private static void DrawTextAutoFit(
+            Graphics g,
+            string text,
+            Font baseFont,
+            Color color,
+            RectangleF rect,
+            StringAlignment align,
+            StringAlignment lineAlign,
+            float minFontSize = 8f)
+        {
+            if (text.StringIsEmpty()) return;
+            if (rect.Width <= 2 || rect.Height <= 2) return;
+
+            FontFamily family = baseFont != null ? baseFont.FontFamily : FontFamily.GenericSansSerif;
+            FontStyle style = baseFont != null ? baseFont.Style : FontStyle.Regular;
+            float startSize = baseFont != null ? baseFont.Size : 12f;
+
+            using (StringFormat sf = new StringFormat())
+            {
+                sf.Alignment = align;
+                sf.LineAlignment = lineAlign;
+                sf.Trimming = StringTrimming.EllipsisCharacter;
+                sf.FormatFlags = 0;
+
+                Font drawFont = null;
+
+                for (float f = startSize; f >= minFontSize; f -= 0.5f)
+                {
+                    using (Font testFont = new Font(family, f, style, GraphicsUnit.Point))
+                    {
+                        SizeF size = g.MeasureString(text, testFont, new SizeF(rect.Width, rect.Height), sf);
+                        if (size.Height <= rect.Height + 1)
+                        {
+                            drawFont = new Font(family, f, style, GraphicsUnit.Point);
+                            break;
+                        }
+                    }
+                }
+
+                if (drawFont == null)
+                {
+                    drawFont = new Font(family, minFontSize, style, GraphicsUnit.Point);
+                }
+
+                using (drawFont)
+                using (SolidBrush brush = new SolidBrush(color))
+                {
+                    g.DrawString(text, drawFont, brush, rect, sf);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 繪製彩色小標籤，並回傳實際寬度
+        /// </summary>
+        private static int DrawBadge(Graphics g, string text, Font font, int x, int y, Color backColor, Color foreColor, Color borderColor, int height)
+        {
+            if (text.StringIsEmpty()) return 0;
+
+            int padX = 6;
+
+            Size size = TextRenderer.MeasureText(
+                text,
+                font,
+                new Size(1000, 1000),
+                TextFormatFlags.SingleLine | TextFormatFlags.NoPadding
+            );
+
+            int width = size.Width + padX * 2;
+            Rectangle rect = new Rectangle(x, y, width, height);
+
+            using (SolidBrush brush = new SolidBrush(backColor))
+            using (Pen pen = new Pen(borderColor, 1))
+            using (SolidBrush textBrush = new SolidBrush(foreColor))
+            using (StringFormat sf = new StringFormat())
+            {
+                sf.Alignment = StringAlignment.Center;
+                sf.LineAlignment = StringAlignment.Center;
+
+                g.FillRectangle(brush, rect);
+                g.DrawRectangle(pen, rect);
+                g.DrawString(text, font, textBrush, rect, sf);
+            }
+
+            return width;
+        }
+
+        /// <summary>
+        /// 依多個可能欄位名稱取得屬性值
+        /// </summary>
+        private static string GetPropertyValueAsString(object target, params string[] propertyNames)
+        {
+            if (target == null) return string.Empty;
+            if (propertyNames == null || propertyNames.Length == 0) return string.Empty;
+
+            Type type = target.GetType();
+
+            foreach (string name in propertyNames)
+            {
+                PropertyInfo prop = type.GetProperty(
+                    name,
+                    BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase
+                );
+
+                if (prop != null)
+                {
+                    object value = prop.GetValue(target, null);
+                    if (value != null)
+                    {
+                        string result = value.ToString();
+                        if (result.StringIsEmpty() == false)
+                        {
+                            return result.Trim();
+                        }
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// 取 IP 後兩段顯示
+        /// </summary>
+        private static string GetShortIP(string ip)
+        {
+            if (ip.StringIsEmpty()) return string.Empty;
+
+            string[] ipArray = ip.Split('.');
+            if (ipArray.Length == 4)
+            {
+                return ipArray[2] + "." + ipArray[3];
+            }
+
+            return ip;
+        }
+
+        private static RectangleF InflateRect(Rectangle rect, int padX, int padY)
+        {
+            return new RectangleF(
+                rect.X + padX,
+                rect.Y + padY,
+                rect.Width - padX * 2,
+                rect.Height - padY * 2
+            );
+        }
+
         static public Bitmap EPD420_GetBitmap(Drawer drawer)
         {
             Bitmap bitmap = new Bitmap(drawer.PannelWidth, drawer.PannelHeight);
@@ -10599,13 +11151,17 @@ namespace H_Pannel_lib
         }
 
         /// <summary>
-        /// 繪製六邊形文字標籤
+        /// 繪製可變寬度六邊形文字標籤
+        /// topLeft: 左上角
+        /// height: 標籤高度
+        /// 回傳: 實際繪製寬度
         /// </summary>
-        public static void DrawHexagonText(Graphics g, Point topLeft, int size, string text, Font font, Color textColor, Color borderColor, Color backColor)
+        public static int DrawHexagonText(Graphics g, Point topLeft, int height, string text, Font font, Color textColor, Color borderColor, Color backColor)
         {
-            if (g == null) return;
-            if (font == null) return;
-            if (size <= 0) return;
+            if (g == null) return 0;
+            if (font == null) return 0;
+            if (height <= 0) return 0;
+            if (string.IsNullOrWhiteSpace(text)) return 0;
 
             ApplyHighQualityGraphics(g);
 
@@ -10614,37 +11170,45 @@ namespace H_Pannel_lib
             using (Brush textBrush = new SolidBrush(textColor))
             using (StringFormat sf = CreateCenterStringFormat())
             {
-                float centerX = topLeft.X + size / 2f;
-                float centerY = topLeft.Y + size / 2f;
+                // 先量文字大小
+                SizeF textSize = g.MeasureString(text, font, 1000, sf);
 
-                // 內縮，避免外框被 Bitmap 邊界裁切
-                float radius = size / 2f - borderPen.Width;
+                float padLeftRight = height * 0.05f;   // 文字左右內距
+                float tipWidth = height * 0.22f;       // 左右尖角寬度
+                float bodyWidth = textSize.Width + padLeftRight * 2;
 
-                if (radius <= 0) return;
+                // 六邊形總寬 = 中間矩形寬 + 左右尖角
+                float totalWidth = bodyWidth + tipWidth * 2;
 
-                PointF[] hexagonVertices = new PointF[6];
+                // 避免太窄
+                float minWidth = height * 1.15f;
+                if (totalWidth < minWidth) totalWidth = minWidth;
 
-                for (int i = 0; i < 6; i++)
+                float x = topLeft.X;
+                float y = topLeft.Y;
+                float h = height;
+                float w = totalWidth;
+
+                float halfH = h / 2f;
+
+                // 左右尖角的可變寬六邊形
+                PointF[] hexagonVertices = new PointF[]
                 {
-                    // -30 度：左右尖角六邊形
-                    double angle = Math.PI / 180.0 * (60 * i - 30);
+            new PointF(x + tipWidth, y),           // 左上
+            new PointF(x + w - tipWidth, y),       // 右上
+            new PointF(x + w, y + halfH),          // 右中尖角
+            new PointF(x + w - tipWidth, y + h),   // 右下
+            new PointF(x + tipWidth, y + h),       // 左下
+            new PointF(x, y + halfH)               // 左中尖角
+                };
 
-                    float x = centerX + radius * (float)Math.Cos(angle);
-                    float y = centerY + radius * (float)Math.Sin(angle);
-
-                    hexagonVertices[i] = new PointF(x, y);
-                }
-
-                // 先填背景
                 g.FillPolygon(backBrush, hexagonVertices);
-
-                // 再畫外框
                 g.DrawPolygon(borderPen, hexagonVertices);
 
-                RectangleF textRect = new RectangleF(topLeft.X, topLeft.Y, size, size);
-
-                // 文字置中
+                RectangleF textRect = new RectangleF(x + tipWidth * 0.35f, y, w - tipWidth * 0.7f, h);
                 g.DrawString(text, font, textBrush, textRect, sf);
+
+                return (int)Math.Ceiling(w);
             }
         }
 
