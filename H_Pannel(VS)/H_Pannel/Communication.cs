@@ -8828,10 +8828,23 @@ namespace H_Pannel_lib
             }
             using (Font iconFont = new Font("Arial", is36Inch ? Math.Max(9f, iconHeight * 0.38f) : Math.Max(7f, iconHeight * 0.34f), FontStyle.Bold))
             {
-                if (hasDrugKind && tempX + iconSize <= rect.Right)
+                string drugKindText = $"管{storage.DRUGKIND}";
+                int hexWidth = MeasureHexagonTextWidth(g, iconSize, drugKindText, iconFont);
+
+                if (hasDrugKind && tempX + hexWidth <= rect.Right)
                 {
-                    DrawHexagonText(g, new Point(tempX, iconY), iconSize, $"管{storage.DRUGKIND}", iconFont, Color.White, Color.Black, Color.Red);
-                    tempX += iconSize + iconGap;
+                    DrawHexagonText(
+                        g,
+                        new Point(tempX, iconY),
+                        iconSize,
+                        drugKindText,
+                        iconFont,
+                        Color.White,
+                        Color.Black,
+                        Color.Red
+                    );
+
+                    tempX += hexWidth + iconGap;
                 }
 
                 if (hasAnesthetic && tempX + iconSize <= rect.Right)
@@ -8908,7 +8921,28 @@ namespace H_Pannel_lib
                 }
             }
         }
+        public static int MeasureHexagonTextWidth(Graphics g, int height, string text, Font font)
+        {
+            if (g == null) return 0;
+            if (font == null) return 0;
+            if (height <= 0) return 0;
+            if (string.IsNullOrWhiteSpace(text)) return 0;
 
+            using (StringFormat sf = CreateCenterStringFormat())
+            {
+                SizeF textSize = g.MeasureString(text, font, 1000, sf);
+
+                float padLeftRight = height * 0.30f;
+                float tipWidth = height * 0.20f;
+                float bodyWidth = textSize.Width + padLeftRight * 2;
+                float totalWidth = bodyWidth + tipWidth * 2;
+
+                float minWidth = height * 1.15f;
+                if (totalWidth < minWidth) totalWidth = minWidth;
+
+                return (int)Math.Ceiling(totalWidth);
+            }
+        }
         /// <summary>
         /// 在指定範圍內自動縮字並可換行
         /// </summary>
