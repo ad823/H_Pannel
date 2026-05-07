@@ -8527,7 +8527,7 @@ namespace H_Pannel_lib
             int leftBottomWidth;
             int codeCellHeight;
 
-            if (is36Inch)
+            if (storage.DeviceType.GetEnumName().Contains("360"))
             {
                 // 3.6 吋
                 iconBarHeight = 45;
@@ -8536,9 +8536,27 @@ namespace H_Pannel_lib
                 scientificNameHeight = 70;
                 leftBottomWidth = 100;
             }
-            else
+            else if (storage.DeviceType.GetEnumName().Contains("290"))
             {
                 // 2.9 吋
+                iconBarHeight = 20;
+                nameHeight = 25;
+                chineseNameHeight = 20;
+                scientificNameHeight = 20;
+                leftBottomWidth = 50;
+            }
+            else if (storage.DeviceType.GetEnumName().Contains("266"))
+            {
+                // 2.66 吋
+                iconBarHeight = 20;
+                nameHeight = 35;
+                chineseNameHeight = 25;
+                scientificNameHeight = 25;
+                leftBottomWidth = 50;
+      
+            }
+            else
+            {
                 iconBarHeight = 20;
                 nameHeight = 35;
                 chineseNameHeight = 25;
