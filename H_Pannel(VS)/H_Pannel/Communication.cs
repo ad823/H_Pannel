@@ -9229,151 +9229,372 @@ namespace H_Pannel_lib
             g.Dispose();
             return bitmap;
         }
+        #region EPD583_GetBitmap
+        /// <summary>
+        /// 583 面板繪圖
+        /// </summary>
         static public Bitmap EPD583_GetBitmap(Drawer drawer)
         {
             Bitmap bitmap = new Bitmap(DrawerUI_EPD_583.Pannel_Width, DrawerUI_EPD_583.Pannel_Height);
-            Graphics g = Graphics.FromImage(bitmap);
-            List<Box[]> Boxes = drawer.Boxes;
-            for (int i = 0; i < Boxes.Count; i++)
+
+            using (Graphics g = Graphics.FromImage(bitmap))
             {
-                for (int k = 0; k < Boxes[i].Length; k++)
+                ApplyHighQualityGraphics(g);
+                g.Clear(Color.White);
+
+                List<Box[]> boxes = drawer.Boxes;
+
+                for (int i = 0; i < boxes.Count; i++)
                 {
-                    Rectangle rect = DrawerUI_EPD_583.Get_Box_Combine(drawer, Boxes[i][k]);
-                    Box _box = Boxes[i][k];
-                    if (Boxes[i][k].Slave == false)
+                    for (int k = 0; k < boxes[i].Length; k++)
                     {
-                        float posy = 0;
-                        Color backgroundColor = (_box.IsWarning ? Color.Red : Color.White);
-                        Color foreColor = (_box.IsWarning ? Color.White : Color.Black);
-                        g.FillRectangle(new SolidBrush(backgroundColor), rect);
-                        g.DrawRectangle(new Pen(Color.Black, _box.Pen_Width), rect);
+                        Box box = boxes[i][k];
+                        if (box == null) continue;
+                        if (box.Slave) continue;
 
-                        g.SmoothingMode = SmoothingMode.HighQuality; //使繪圖質量最高，即消除鋸齒
-                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                        g.CompositingQuality = CompositingQuality.HighQuality;
-                        g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
-
-                        _box.SetValue(Device.ValueName.藥品碼, Device.ValueType.ForeColor, foreColor);
-                        _box.SetValue(Device.ValueName.藥品碼, Device.ValueType.BackColor, backgroundColor);
-
-                        _box.SetValue(Device.ValueName.藥品名稱, Device.ValueType.ForeColor, foreColor);
-                        _box.SetValue(Device.ValueName.藥品名稱, Device.ValueType.BackColor, backgroundColor);
-
-                        _box.SetValue(Device.ValueName.藥品學名, Device.ValueType.ForeColor, foreColor);
-                        _box.SetValue(Device.ValueName.藥品學名, Device.ValueType.BackColor, backgroundColor);
-
-                        _box.SetValue(Device.ValueName.藥品中文名稱, Device.ValueType.ForeColor, foreColor);
-                        _box.SetValue(Device.ValueName.藥品中文名稱, Device.ValueType.BackColor, backgroundColor);
-
-                        _box.SetValue(Device.ValueName.包裝單位, Device.ValueType.ForeColor, foreColor);
-                        _box.SetValue(Device.ValueName.包裝單位, Device.ValueType.BackColor, backgroundColor);
-
-                        _box.SetValue(Device.ValueName.效期, Device.ValueType.ForeColor, foreColor);
-                        _box.SetValue(Device.ValueName.效期, Device.ValueType.BackColor, backgroundColor);
-
-                        _box.SetValue(Device.ValueName.庫存, Device.ValueType.ForeColor, foreColor);
-                        _box.SetValue(Device.ValueName.庫存, Device.ValueType.BackColor, backgroundColor);
-
-
-                        if ((_box.DRUGKIND.StringIsEmpty() == false && _box.DRUGKIND != "N")|| _box.IsAnesthetic || _box.IsShapeSimilar || _box.IsSoundSimilar
-                            || (_box.Picture1_Name.StringIsEmpty() == false && _box.Picture1_Name != "無" && _box.Picture1_Name != "None") || (_box.Picture2_Name.StringIsEmpty() == false && _box.Picture2_Name != "無" && _box.Picture1_Name != "None"))
-                        {
-                            int temp_height = (int)g.MeasureString(_box.Name, _box.Name_font, new Size(10000, 10000), StringFormat.GenericDefault).Height;
-                            int temp_x = 2;
-                            posy += 2;
-
-                            // 背景白底
-                            g.FillRectangle(Brushes.White, new Rectangle(rect.X + temp_x, rect.Y + (int)posy, rect.Width, temp_height));
-
-                            Font labelFont = new Font("Arial", _box.Name_font.Size);
-
-                            // 管制藥
-                            if (_box.DRUGKIND.StringIsEmpty() == false && _box.DRUGKIND != "N")
-                            {
-                                DrawDrugKindHexagon(g, new Point(rect.X + temp_x, rect.Y + (int)posy), temp_height, $"管{_box.DRUGKIND}", labelFont);
-                                temp_x += (temp_height + 5);
-                            }
-                            // 麻醉藥
-                            if (_box.IsAnesthetic)
-                            {
-                                DrawAnestheticCircle(g, new Point(rect.X + temp_x, rect.Y + (int)posy), temp_height, labelFont);
-                                temp_x += (temp_height + 5);
-                            }
-                            // 形似藥
-                            if (_box.IsShapeSimilar)
-                            {
-                                DrawShapeSimilarSquare(g, new Point(rect.X + temp_x, rect.Y + (int)posy), temp_height, labelFont);
-                                temp_x += (temp_height + 5);
-                            }
-                            // 音似藥
-                            if (_box.IsSoundSimilar)
-                            {
-                                DrawSoundSimilarSquare(g, new Point(rect.X + temp_x, rect.Y + (int)posy), temp_height, labelFont);
-                                temp_x += (temp_height + 5);
-                            }
-                            if (_box.Picture1_Name.StringIsEmpty() == false && _box.Picture1_Name != "無")
-                            {
-                                DrawPicture(g, _box.Picture1_Name, new Rectangle(rect.X + temp_x, rect.Y + (int)posy, temp_height, temp_height));
-                                temp_x += (temp_height + 5);
-                            }
-                            if (_box.Picture2_Name.StringIsEmpty() == false && _box.Picture2_Name != "無")
-                            {
-                                DrawPicture(g, _box.Picture2_Name, new Rectangle(rect.X + temp_x, rect.Y + (int)posy, temp_height, temp_height));
-                                temp_x += (temp_height + 5);
-                            }
-                            posy += temp_height;
-                        }
-
-
-                        SizeF size_Name = g.MeasureString(_box.Name, _box.Name_font, new Size(rect.Width, rect.Height), StringFormat.GenericDefault);
-                        size_Name = new SizeF((int)size_Name.Width, (int)size_Name.Height);
-                        g.DrawString(_box.Name, _box.Name_font, new SolidBrush(foreColor), new RectangleF(rect.X, rect.Y + posy, rect.Width, rect.Height), StringFormat.GenericDefault);
-                        posy += size_Name.Height;
-                        posy += 3;
-
-                        if (_box.Validity_period_Visable)
-                        {
-                            for (int m = 0; m < _box.List_Validity_period.Count; m++)
-                            {
-                                if (_box.List_Inventory[m] == "00") continue;
-                                string str = $"{_box.List_Validity_period[m]} [{_box.List_Inventory[m]}]";
-                                _box.Validity_period_font = new Font(_box.Validity_period_font, FontStyle.Bold);
-                                SizeF size_Validity_period = TextRenderer.MeasureText(str, _box.Validity_period_font);
-                                Color Validity_foreColor = (_box.IsWarning ? Color.White : Color.Black);
-
-                                g.DrawString(str, _box.Validity_period_font, new SolidBrush(Validity_foreColor), rect.X + 5, rect.Y + posy);
-                                Color color_pen = _box.IsWarning ? Color.White : Color.Red;
-                                g.DrawRectangle(new Pen(new SolidBrush(color_pen), 1), rect.X + 5, rect.Y + posy, size_Validity_period.Width, size_Validity_period.Height);
-                                posy += size_Validity_period.Height;
-                            }
-                        }
-
-                        SizeF size_Code = TextRenderer.MeasureText($"{_box.Code}[{_box.Inventory}]", _box.Code_font);
-                        string Code_Inventory = "";
-                        if (_box.Code_Visable) Code_Inventory += $"{_box.Code}";
-                        if (_box.Inventory_Visable) Code_Inventory += $"[{_box.Inventory}]";
-                        if (_box.Code.StringIsEmpty() == false)
-                        {
-                            if (_box.Code_Visable || _box.Inventory_Visable)
-                            {
-                                g.DrawString($"{Code_Inventory}", _box.Code_font, new SolidBrush(foreColor), rect.X, ((rect.Y + rect.Height) - size_Code.Height));
-                            }
-
-                        }
+                        Rectangle rect = DrawerUI_EPD_583.Get_Box_Combine(drawer, box);
+                        DrawEPD583_Box(g, rect, box);
                     }
+                }
 
+                DrawEPD583_IP(g, drawer);
+            }
 
+            return bitmap;
+        }
+
+        /// <summary>
+        /// 繪製單一 Box
+        /// </summary>
+        private static void DrawEPD583_Box(Graphics g, Rectangle rect, Box box)
+        {
+            float posy = 0;
+
+            Color backgroundColor = box.IsWarning ? Color.Red : Color.White;
+            Color foreColor = box.IsWarning ? Color.White : Color.Black;
+
+            using (SolidBrush backBrush = new SolidBrush(backgroundColor))
+            using (Pen borderPen = new Pen(Color.Black, box.Pen_Width))
+            {
+                g.FillRectangle(backBrush, rect);
+                g.DrawRectangle(borderPen, rect);
+            }
+
+            SetEPD583_BoxTextColor(box, foreColor, backgroundColor);
+
+            // =============================
+            // 底部 Code/Inventory 預留高度
+            // =============================
+            string codeInventory = BuildEPD583_CodeInventory(box);
+            SizeF sizeCodeInventory = SizeF.Empty;
+
+            if (codeInventory.StringIsEmpty() == false)
+            {
+                sizeCodeInventory = TextRenderer.MeasureText(codeInventory, box.Code_font);
+            }
+
+            float bottomReservedHeight = codeInventory.StringIsEmpty() ? 0 : (sizeCodeInventory.Height + 4);
+
+            // =============================
+            // Icon 區固定高度
+            // =============================
+            int iconBarHeight = Math.Min(28, Math.Max(18, rect.Height / 6));
+
+            bool hasAnyIcon =
+                (box.DRUGKIND.StringIsEmpty() == false && box.DRUGKIND != "N") ||
+                box.IsAnesthetic ||
+                box.IsShapeSimilar ||
+                box.IsSoundSimilar ||
+                IsValidPictureName(box.Picture1_Name) ||
+                IsValidPictureName(box.Picture2_Name) ||
+                IsValidPictureName(box.Picture3_Name) ||
+                IsValidPictureName(box.Picture4_Name) ||
+                IsValidPictureName(box.Picture5_Name);
+
+            if (hasAnyIcon)
+            {
+                Rectangle iconRect = new Rectangle(rect.X + 2, rect.Y + 2, rect.Width - 4, iconBarHeight);
+
+                using (SolidBrush whiteBrush = new SolidBrush(Color.White))
+                {
+                    g.FillRectangle(whiteBrush, iconRect);
+                }
+
+                using (Font labelFont = new Font("Arial", Math.Max(8f, iconBarHeight * 0.55f), FontStyle.Bold))
+                {
+                    DrawEPD583_IconBar(g, iconRect, box, labelFont);
+                }
+
+                posy += iconBarHeight + 2;
+            }
+
+            // =============================
+            // 藥名
+            // =============================
+            SizeF sizeName = g.MeasureString(box.Name, box.Name_font, new Size(rect.Width, rect.Height), StringFormat.GenericDefault);
+            sizeName = new SizeF((int)sizeName.Width, (int)sizeName.Height);
+
+            using (SolidBrush foreBrush = new SolidBrush(foreColor))
+            {
+                g.DrawString(
+                    box.Name,
+                    box.Name_font,
+                    foreBrush,
+                    new RectangleF(rect.X, rect.Y + posy, rect.Width, rect.Height),
+                    StringFormat.GenericDefault
+                );
+            }
+
+            posy += sizeName.Height;
+            posy += 3;
+
+            // =============================
+            // 效期：依剩餘高度停止
+            // =============================
+            if (box.Validity_period_Visable)
+            {
+                Color validityForeColor = box.IsWarning ? Color.White : Color.Black;
+                Color validityBorderColor = box.IsWarning ? Color.White : Color.Red;
+
+                for (int m = 0; m < box.List_Validity_period.Count; m++)
+                {
+                    if (m >= box.List_Inventory.Count) break;
+                    if (box.List_Inventory[m] == "00") continue;
+
+                    string str = $"{box.List_Validity_period[m]} [{box.List_Inventory[m]}]";
+
+                    using (Font validityFont = new Font(box.Validity_period_font, FontStyle.Bold))
+                    {
+                        SizeF sizeValidity = TextRenderer.MeasureText(str, validityFont);
+
+                        float nextBottom = rect.Y + posy + sizeValidity.Height;
+                        float allowedBottom = rect.Bottom - bottomReservedHeight;
+
+                        if (nextBottom > allowedBottom)
+                        {
+                            break;
+                        }
+
+                        using (SolidBrush validityBrush = new SolidBrush(validityForeColor))
+                        using (Pen validityPen = new Pen(validityBorderColor, 1))
+                        {
+                            g.DrawString(str, validityFont, validityBrush, rect.X + 5, rect.Y + posy);
+                            g.DrawRectangle(validityPen, rect.X + 5, rect.Y + posy, sizeValidity.Width, sizeValidity.Height);
+                        }
+
+                        posy += sizeValidity.Height;
+                    }
                 }
             }
-            string[] ip_array = drawer.IP.Split('.');
-            if (ip_array.Length == 4)
+
+            // =============================
+            // 底部 Code + Inventory
+            // =============================
+            if (codeInventory.StringIsEmpty() == false)
             {
-                string ip = ip_array[2] + "." + ip_array[3];
-                SizeF size_IP = TextRenderer.MeasureText(ip, new Font("微軟正黑體", 10, FontStyle.Bold));
-                g.DrawString(ip, new Font("微軟正黑體", 8, FontStyle.Bold), new SolidBrush(Color.Black), (DrawerUI_EPD_583.Pannel_Width - size_IP.Width), (DrawerUI_EPD_583.Pannel_Height - size_IP.Height));
+                using (SolidBrush foreBrush = new SolidBrush(foreColor))
+                {
+                    g.DrawString(
+                        codeInventory,
+                        box.Code_font,
+                        foreBrush,
+                        rect.X,
+                        rect.Bottom - sizeCodeInventory.Height
+                    );
+                }
             }
-            g.Dispose();
-            return bitmap;
+        }
+
+        /// <summary>
+        /// 繪製 583 的 Icon Bar
+        /// </summary>
+        private static void DrawEPD583_IconBar(Graphics g, Rectangle rect, Box box, Font labelFont)
+        {
+            int tempX = rect.X;
+            int iconY = rect.Y;
+            int iconSize = rect.Height;
+            int gap = 5;
+
+            // 管制藥
+            if (box.DRUGKIND.StringIsEmpty() == false && box.DRUGKIND != "N")
+            {
+                int hexWidth = DrawDrugKindHexagon(
+                    g,
+                    new Point(tempX, iconY),
+                    iconSize,
+                    $"管{box.DRUGKIND}",
+                    labelFont
+                );
+
+                if (hexWidth > 0)
+                {
+                    tempX += hexWidth + gap;
+                }
+            }
+
+            // 麻醉藥
+            if (box.IsAnesthetic && tempX + iconSize <= rect.Right)
+            {
+                int circleWidth = DrawAnestheticCircle(
+                    g,
+                    new Point(tempX, iconY),
+                    iconSize,
+                    labelFont
+                );
+
+                tempX += circleWidth + gap;
+            }
+
+            // 形似藥
+            if (box.IsShapeSimilar && tempX + iconSize <= rect.Right)
+            {
+                int squareWidth = DrawShapeSimilarSquare(
+                    g,
+                    new Point(tempX, iconY),
+                    iconSize,
+                    labelFont
+                );
+
+                tempX += squareWidth + gap;
+            }
+
+            // 音似藥
+            if (box.IsSoundSimilar && tempX + iconSize <= rect.Right)
+            {
+                int squareWidth = DrawSoundSimilarSquare(
+                    g,
+                    new Point(tempX, iconY),
+                    iconSize,
+                    labelFont
+                );
+
+                tempX += squareWidth + gap;
+            }
+
+            // Picture1 ~ Picture5
+            string[] pictureNames = new string[]
+            {
+        box.Picture1_Name,
+        box.Picture2_Name,
+        box.Picture3_Name,
+        box.Picture4_Name,
+        box.Picture5_Name
+            };
+
+            for (int i = 0; i < pictureNames.Length; i++)
+            {
+                if (IsValidPictureName(pictureNames[i]) == false) continue;
+                if (tempX + iconSize > rect.Right) break;
+
+                DrawPicture(g, pictureNames[i], new Rectangle(tempX, iconY, iconSize, iconSize));
+                tempX += iconSize + gap;
+            }
+        }
+
+        /// <summary>
+        /// 設定 Box 各欄位顏色
+        /// </summary>
+        private static void SetEPD583_BoxTextColor(Box box, Color foreColor, Color backColor)
+        {
+            box.SetValue(Device.ValueName.藥品碼, Device.ValueType.ForeColor, foreColor);
+            box.SetValue(Device.ValueName.藥品碼, Device.ValueType.BackColor, backColor);
+
+            box.SetValue(Device.ValueName.藥品名稱, Device.ValueType.ForeColor, foreColor);
+            box.SetValue(Device.ValueName.藥品名稱, Device.ValueType.BackColor, backColor);
+
+            box.SetValue(Device.ValueName.藥品學名, Device.ValueType.ForeColor, foreColor);
+            box.SetValue(Device.ValueName.藥品學名, Device.ValueType.BackColor, backColor);
+
+            box.SetValue(Device.ValueName.藥品中文名稱, Device.ValueType.ForeColor, foreColor);
+            box.SetValue(Device.ValueName.藥品中文名稱, Device.ValueType.BackColor, backColor);
+
+            box.SetValue(Device.ValueName.包裝單位, Device.ValueType.ForeColor, foreColor);
+            box.SetValue(Device.ValueName.包裝單位, Device.ValueType.BackColor, backColor);
+
+            box.SetValue(Device.ValueName.效期, Device.ValueType.ForeColor, foreColor);
+            box.SetValue(Device.ValueName.效期, Device.ValueType.BackColor, backColor);
+
+            box.SetValue(Device.ValueName.庫存, Device.ValueType.ForeColor, foreColor);
+            box.SetValue(Device.ValueName.庫存, Device.ValueType.BackColor, backColor);
+        }
+
+        /// <summary>
+        /// 建立底部 Code + Inventory 字串
+        /// </summary>
+        private static string BuildEPD583_CodeInventory(Box box)
+        {
+            string result = "";
+
+            if (box.Code_Visable)
+            {
+                result += box.Code;
+            }
+
+            if (box.Inventory_Visable)
+            {
+                result += $"[{box.Inventory}]";
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 判斷圖片名稱是否有效
+        /// </summary>
+        private static bool IsValidPictureName(string pictureName)
+        {
+            if (pictureName.StringIsEmpty()) return false;
+            if (pictureName == "無") return false;
+            if (pictureName == "None") return false;
+            return true;
+        }
+
+        /// <summary>
+        /// 繪製 583 右下角 IP
+        /// </summary>
+        private static void DrawEPD583_IP(Graphics g, Drawer drawer)
+        {
+            string[] ipArray = drawer.IP.Split('.');
+            if (ipArray.Length != 4) return;
+
+            string ip = ipArray[2] + "." + ipArray[3];
+
+            using (Font ipMeasureFont = new Font("微軟正黑體", 10, FontStyle.Bold))
+            using (Font ipDrawFont = new Font("微軟正黑體", 8, FontStyle.Bold))
+            using (SolidBrush brush = new SolidBrush(Color.Black))
+            {
+                SizeF sizeIP = TextRenderer.MeasureText(ip, ipMeasureFont);
+                g.DrawString(
+                    ip,
+                    ipDrawFont,
+                    brush,
+                    DrawerUI_EPD_583.Pannel_Width - sizeIP.Width,
+                    DrawerUI_EPD_583.Pannel_Height - sizeIP.Height
+                );
+            }
+        }
+
+        #endregion
+        private static void DrawEPD583DrawerIP(Graphics g, Drawer drawer)
+        {
+            string[] ipArray = drawer.IP.Split('.');
+            if (ipArray.Length != 4) return;
+
+            string ip = ipArray[2] + "." + ipArray[3];
+
+            using (Font ipMeasureFont = new Font("微軟正黑體", 10, FontStyle.Bold))
+            using (Font ipDrawFont = new Font("微軟正黑體", 8, FontStyle.Bold))
+            using (SolidBrush brush = new SolidBrush(Color.Black))
+            {
+                SizeF sizeIP = TextRenderer.MeasureText(ip, ipMeasureFont);
+                g.DrawString(
+                    ip,
+                    ipDrawFont,
+                    brush,
+                    DrawerUI_EPD_583.Pannel_Width - sizeIP.Width,
+                    DrawerUI_EPD_583.Pannel_Height - sizeIP.Height
+                );
+            }
         }
         static public Bitmap EPD730_GetBitmap(Drawer drawer)
         {
@@ -11086,92 +11307,39 @@ namespace H_Pannel_lib
         #region 對外函式 - 繪製到 Graphics
 
         /// <summary>
-        /// 繪製「管制藥 DRUGKIND」六邊形標籤
+        /// 繪製「管制藥 DRUGKIND」六邊形標籤，回傳實際寬度
         /// </summary>
-        public static void DrawDrugKindHexagon(Graphics g, Point topLeft, int size, string text, Font font)
+        public static int DrawDrugKindHexagon(Graphics g, Point topLeft, int size, string text, Font font)
         {
-            DrawHexagonText(g, topLeft, size, text, font, Color.White, Color.Black, Color.Red);
+            return DrawHexagonText(g, topLeft, size, text, font, Color.White, Color.Black, Color.Red);
         }
 
         /// <summary>
-        /// 繪製「麻醉藥」圓形標籤
+        /// 繪製「麻醉藥」圓形標籤，回傳實際寬度
         /// </summary>
-        public static void DrawAnestheticCircle(Graphics g, Point topLeft, int size, Font font)
+        public static int DrawAnestheticCircle(Graphics g, Point topLeft, int size, Font font)
         {
             DrawCircleText(g, topLeft, size, "麻", font, Color.White, Color.Black, Color.Red);
+            return size;
         }
 
         /// <summary>
-        /// 繪製「形似藥」方形標籤
+        /// 繪製「形似藥」方形標籤，回傳實際寬度
         /// </summary>
-        public static void DrawShapeSimilarSquare(Graphics g, Point topLeft, int size, Font font)
+        public static int DrawShapeSimilarSquare(Graphics g, Point topLeft, int size, Font font)
         {
             DrawSquareText(g, topLeft, size, "形", font, Color.White, Color.Black, Color.Black);
+            return size;
         }
 
         /// <summary>
-        /// 繪製「音似藥」方形標籤
+        /// 繪製「音似藥」方形標籤，回傳實際寬度
         /// </summary>
-        public static void DrawSoundSimilarSquare(Graphics g, Point topLeft, int size, Font font)
+        public static int DrawSoundSimilarSquare(Graphics g, Point topLeft, int size, Font font)
         {
             DrawSquareText(g, topLeft, size, "音", font, Color.White, Color.Black, Color.Black);
+            return size;
         }
-
-        #endregion
-
-        #region 對外函式 - 回傳 Bitmap
-
-        /// <summary>
-        /// 產生「管制藥 DRUGKIND」六邊形標籤 Bitmap
-        /// </summary>
-        public static Bitmap GetDrugKindHexagonBitmap(int size, string text, Font font)
-        {
-            return CreateBitmap(size, size, g =>
-            {
-                int padding = 2;
-                DrawDrugKindHexagon(g, new Point(padding, padding), size - padding * 2, text, font);
-            });
-        }
-
-        /// <summary>
-        /// 產生「麻醉藥」圓形標籤 Bitmap
-        /// </summary>
-        public static Bitmap GetAnestheticCircleBitmap(int size, Font font)
-        {
-            return CreateBitmap(size, size, g =>
-            {
-                int padding = 2;
-                DrawAnestheticCircle(g, new Point(padding, padding), size - padding * 2, font);
-            });
-        }
-
-        /// <summary>
-        /// 產生「形似藥」方形標籤 Bitmap
-        /// </summary>
-        public static Bitmap GetShapeSimilarSquareBitmap(int size, Font font)
-        {
-            return CreateBitmap(size, size, g =>
-            {
-                int padding = 2;
-                DrawShapeSimilarSquare(g, new Point(padding, padding), size - padding * 2, font);
-            });
-        }
-
-        /// <summary>
-        /// 產生「音似藥」方形標籤 Bitmap
-        /// </summary>
-        public static Bitmap GetSoundSimilarSquareBitmap(int size, Font font)
-        {
-            return CreateBitmap(size, size, g =>
-            {
-                int padding = 2;
-                DrawSoundSimilarSquare(g, new Point(padding, padding), size - padding * 2, font);
-            });
-        }
-
-        #endregion
-
-        #region 基礎繪圖函式
 
         /// <summary>
         /// 繪製圓形文字標籤
@@ -11225,7 +11393,8 @@ namespace H_Pannel_lib
                 // 先量文字大小
                 SizeF textSize = g.MeasureString(text, font, 1000, sf);
 
-                float padLeftRight = height * 0.05f;   // 文字左右內距
+                // ===== 這三個值可微調外觀 =====
+                float padLeftRight = height * 0.18f;   // 文字左右留白
                 float tipWidth = height * 0.22f;       // 左右尖角寬度
                 float bodyWidth = textSize.Width + padLeftRight * 2;
 
@@ -11240,7 +11409,6 @@ namespace H_Pannel_lib
                 float y = topLeft.Y;
                 float h = height;
                 float w = totalWidth;
-
                 float halfH = h / 2f;
 
                 // 左右尖角的可變寬六邊形
@@ -11257,7 +11425,13 @@ namespace H_Pannel_lib
                 g.FillPolygon(backBrush, hexagonVertices);
                 g.DrawPolygon(borderPen, hexagonVertices);
 
-                RectangleF textRect = new RectangleF(x + tipWidth * 0.35f, y, w - tipWidth * 0.7f, h);
+                RectangleF textRect = new RectangleF(
+                    x + tipWidth * 0.35f,
+                    y,
+                    w - tipWidth * 0.7f,
+                    h
+                );
+
                 g.DrawString(text, font, textBrush, textRect, sf);
 
                 return (int)Math.Ceiling(w);
@@ -11291,6 +11465,58 @@ namespace H_Pannel_lib
                 // 文字置中
                 g.DrawString(text, font, textBrush, rect, sf);
             }
+        }
+
+        #endregion
+
+        #region 對外函式 - 回傳 Bitmap
+
+        /// <summary>
+        /// 產生「管制藥 DRUGKIND」六邊形標籤 Bitmap
+        /// </summary>
+        public static Bitmap GetDrugKindHexagonBitmap(int size, string text, Font font)
+        {
+            return CreateBitmap(size, size, g =>
+            {
+                int padding = 2;
+                DrawDrugKindHexagon(g, new Point(padding, padding), size - padding * 2, text, font);
+            });
+        }
+
+        /// <summary>
+        /// 產生「麻醉藥」圓形標籤 Bitmap
+        /// </summary>
+        public static Bitmap GetAnestheticCircleBitmap(int size, Font font)
+        {
+            return CreateBitmap(size, size, g =>
+            {
+                int padding = 2;
+                DrawAnestheticCircle(g, new Point(padding, padding), size - padding * 2, font);
+            });
+        }
+
+        /// <summary>
+        /// 產生「形似藥」方形標籤 Bitmap
+        /// </summary>
+        public static Bitmap GetShapeSimilarSquareBitmap(int size, Font font)
+        {
+            return CreateBitmap(size, size, g =>
+            {
+                int padding = 2;
+                DrawShapeSimilarSquare(g, new Point(padding, padding), size - padding * 2, font);
+            });
+        }
+
+        /// <summary>
+        /// 產生「音似藥」方形標籤 Bitmap
+        /// </summary>
+        public static Bitmap GetSoundSimilarSquareBitmap(int size, Font font)
+        {
+            return CreateBitmap(size, size, g =>
+            {
+                int padding = 2;
+                DrawSoundSimilarSquare(g, new Point(padding, padding), size - padding * 2, font);
+            });
         }
 
         #endregion
