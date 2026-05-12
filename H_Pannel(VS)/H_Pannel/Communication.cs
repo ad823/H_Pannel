@@ -8065,8 +8065,8 @@ namespace H_Pannel_lib
                 {
                     int temp_x = 0;
 
-                    int iconBarHeight = 40;
-                    int iconSize = 40;
+                    int iconBarHeight = 20;
+                    int iconSize = 20;
                     int iconGap = 10;
                     int iconY = 0;
 
@@ -8088,22 +8088,29 @@ namespace H_Pannel_lib
                         }
                     }
 
-                    using (Font iconFont = new Font("Arial", 14))
+                    using (Font iconFont = new Font("Arial", 10))
                     {
                         if (hasDrugKind && temp_x < Pannel_Width)
                         {
-                            DrawHexagonText(
-                                g,
-                                new Point(temp_x, iconY),
-                                iconSize,
-                                storage.DRUGKIND,
-                                iconFont,
-                                Color.White,
-                                Color.Black,
-                                Color.Red
-                            );
+                            string drugKindText = $"管{storage.DRUGKIND}";
+                            int hexWidth = MeasureHexagonTextWidth(g, iconSize, drugKindText, iconFont);
 
-                            temp_x += iconSize + iconGap;
+                            if (hasDrugKind && temp_x + hexWidth <= rect.Right)
+                            {
+                                DrawHexagonText(
+                                    g,
+                                    new Point(temp_x, iconY),
+                                    iconSize,
+                                    drugKindText,
+                                    iconFont,
+                                    Color.White,
+                                    Color.Black,
+                                    Color.Red
+                                );
+
+                                temp_x += hexWidth + iconGap;
+                            }
+                           
                         }
 
                         if (hasAnesthetic && temp_x < Pannel_Width)
@@ -8530,7 +8537,7 @@ namespace H_Pannel_lib
             if (storage.DeviceType.GetEnumName().Contains("360"))
             {
                 // 3.6 吋
-                iconBarHeight = 45;
+                iconBarHeight = 80;
                 nameHeight = 70;
                 chineseNameHeight = 70;
                 scientificNameHeight = 70;
