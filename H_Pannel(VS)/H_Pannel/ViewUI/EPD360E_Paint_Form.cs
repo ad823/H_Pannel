@@ -208,7 +208,7 @@ namespace H_Pannel_lib
             this.button_文本1_儲存.Click += Button_文本1_儲存_Click;
             this.button_文本2_儲存.Click += Button_文本2_儲存_Click;
             this.button_文本3_儲存.Click += Button_文本3_儲存_Click;
-
+            this.button_重置.Click += Button_重置_Click;
             rJ_TextBox_文本1.Texts = currentStorage.CustomText1;
             rJ_TextBox_文本2.Texts = currentStorage.CustomText2;
             rJ_TextBox_文本3.Texts = currentStorage.CustomText3;
@@ -490,6 +490,14 @@ namespace H_Pannel_lib
                 this.DrawToPictureBox();
             }));
             await task;
+        }
+        private void Button_重置_Click(object sender, EventArgs e)
+        {
+            Storage.ValueName valueName = (GetSelectValueName());
+            CurrentStorage.SetValue(valueName, Device.ValueType.Position, new Point());
+            CurrentStorage.SetValue(valueName, Device.ValueType.Width, 50);
+            CurrentStorage.SetValue(valueName, Device.ValueType.Height, 20);
+            this.DrawToPictureBox();
         }
         private void RJ_Pannel_文字背景顏色_Click(object sender, EventArgs e)
         {

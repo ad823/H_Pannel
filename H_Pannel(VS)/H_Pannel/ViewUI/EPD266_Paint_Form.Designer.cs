@@ -31,6 +31,7 @@ namespace H_Pannel_lib
         {
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rJ_RatioButton_預設樣式3 = new MyUI.RJ_RatioButton();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.button_文本3_儲存 = new System.Windows.Forms.Button();
             this.rJ_TextBox_文本3 = new MyUI.RJ_TextBox();
@@ -103,7 +104,7 @@ namespace H_Pannel_lib
             this.rJ_Lable1 = new MyUI.RJ_Lable();
             this.comboBox_選擇項目 = new System.Windows.Forms.ComboBox();
             this.fontDialog = new System.Windows.Forms.FontDialog();
-            this.rJ_RatioButton_預設樣式3 = new MyUI.RJ_RatioButton();
+            this.button_重置 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -147,6 +148,20 @@ namespace H_Pannel_lib
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(958, 351);
             this.panel1.TabIndex = 3;
+            // 
+            // rJ_RatioButton_預設樣式3
+            // 
+            this.rJ_RatioButton_預設樣式3.AutoSize = true;
+            this.rJ_RatioButton_預設樣式3.CheckColor = System.Drawing.Color.MediumSlateBlue;
+            this.rJ_RatioButton_預設樣式3.Location = new System.Drawing.Point(128, 322);
+            this.rJ_RatioButton_預設樣式3.MinimumSize = new System.Drawing.Size(0, 21);
+            this.rJ_RatioButton_預設樣式3.Name = "rJ_RatioButton_預設樣式3";
+            this.rJ_RatioButton_預設樣式3.Size = new System.Drawing.Size(89, 21);
+            this.rJ_RatioButton_預設樣式3.TabIndex = 15;
+            this.rJ_RatioButton_預設樣式3.TabStop = true;
+            this.rJ_RatioButton_預設樣式3.Text = "預設樣式3";
+            this.rJ_RatioButton_預設樣式3.UncheckColor = System.Drawing.Color.Gray;
+            this.rJ_RatioButton_預設樣式3.UseVisualStyleBackColor = true;
             // 
             // groupBox5
             // 
@@ -1028,6 +1043,7 @@ namespace H_Pannel_lib
             // 
             // panel_選擇項目
             // 
+            this.panel_選擇項目.Controls.Add(this.button_重置);
             this.panel_選擇項目.Controls.Add(this.rJ_Lable1);
             this.panel_選擇項目.Controls.Add(this.comboBox_選擇項目);
             this.panel_選擇項目.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1067,19 +1083,15 @@ namespace H_Pannel_lib
             this.comboBox_選擇項目.Size = new System.Drawing.Size(353, 35);
             this.comboBox_選擇項目.TabIndex = 1;
             // 
-            // rJ_RatioButton_預設樣式3
+            // button_重置
             // 
-            this.rJ_RatioButton_預設樣式3.AutoSize = true;
-            this.rJ_RatioButton_預設樣式3.CheckColor = System.Drawing.Color.MediumSlateBlue;
-            this.rJ_RatioButton_預設樣式3.Location = new System.Drawing.Point(128, 322);
-            this.rJ_RatioButton_預設樣式3.MinimumSize = new System.Drawing.Size(0, 21);
-            this.rJ_RatioButton_預設樣式3.Name = "rJ_RatioButton_預設樣式3";
-            this.rJ_RatioButton_預設樣式3.Size = new System.Drawing.Size(89, 21);
-            this.rJ_RatioButton_預設樣式3.TabIndex = 15;
-            this.rJ_RatioButton_預設樣式3.TabStop = true;
-            this.rJ_RatioButton_預設樣式3.Text = "預設樣式3";
-            this.rJ_RatioButton_預設樣式3.UncheckColor = System.Drawing.Color.Gray;
-            this.rJ_RatioButton_預設樣式3.UseVisualStyleBackColor = true;
+            this.button_重置.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button_重置.Location = new System.Drawing.Point(497, 11);
+            this.button_重置.Name = "button_重置";
+            this.button_重置.Size = new System.Drawing.Size(47, 34);
+            this.button_重置.TabIndex = 10;
+            this.button_重置.Text = "重置";
+            this.button_重置.UseVisualStyleBackColor = true;
             // 
             // EPD266_Paint_Form
             // 
@@ -1203,5 +1215,6 @@ namespace H_Pannel_lib
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox_圖片3;
         private MyUI.RJ_RatioButton rJ_RatioButton_預設樣式3;
+        private System.Windows.Forms.Button button_重置;
     }
 }

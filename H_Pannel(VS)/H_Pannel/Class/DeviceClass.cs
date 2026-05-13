@@ -3365,6 +3365,12 @@ namespace H_Pannel_lib
             }
             else if (valueType == ValueType.Visable)
             {
+                if(vlaueClass.Title.Contains("圖片"))
+                {
+                    string[] strs = new enum_PictureType().GetEnumNames();
+                    if (strs.Contains(vlaueClass.Value)) return true;
+                    else return false;
+                }
                 return vlaueClass.Visable;
             }
             return null;
@@ -3740,9 +3746,9 @@ namespace H_Pannel_lib
                         vlaueClass.Height = this.Picture1_Height;
                         vlaueClass.HorizontalAlignment = this.Picture1_HorizontalAlignment;
                         vlaueClass.BorderSize = this.Picture1_BorderSize;
-                        vlaueClass.BorderColor = this.Picture1_BorderColor;
-                        vlaueClass.Visable = this.Picture1_Visable;
-
+                        vlaueClass.BorderColor = this.Picture1_BorderColor;               
+                        string[] strs = new enum_PictureType().GetEnumNames();
+                        vlaueClass.Visable = strs.Contains(vlaueClass.Value) && vlaueClass.Value != "無" && vlaueClass.Value != "None";
                         if (vlaueClass.Value.StringIsEmpty())
                         {
                             vlaueClass.Value = "None";
@@ -3765,7 +3771,8 @@ namespace H_Pannel_lib
                         vlaueClass.BorderSize = this.Picture2_BorderSize;
                         vlaueClass.BorderColor = this.Picture2_BorderColor;
                         vlaueClass.Visable = this.Picture2_Visable;
-
+                        string[] strs = new enum_PictureType().GetEnumNames();
+                        vlaueClass.Visable = strs.Contains(vlaueClass.Value) && vlaueClass.Value != "無" && vlaueClass.Value != "None";
                         if (vlaueClass.Value.StringIsEmpty())
                         {
                             vlaueClass.Value = "None";
@@ -3786,8 +3793,8 @@ namespace H_Pannel_lib
                         vlaueClass.HorizontalAlignment = this.Picture3_HorizontalAlignment;
                         vlaueClass.BorderSize = this.Picture3_BorderSize;
                         vlaueClass.BorderColor = this.Picture3_BorderColor;
-                        vlaueClass.Visable = this.Picture3_Visable;
-
+                        string[] strs = new enum_PictureType().GetEnumNames();
+                        vlaueClass.Visable = strs.Contains(vlaueClass.Value) && vlaueClass.Value != "無" && vlaueClass.Value != "None";
                         if (vlaueClass.Value.StringIsEmpty())
                         {
                             vlaueClass.Value = "None";
@@ -3808,7 +3815,8 @@ namespace H_Pannel_lib
                         vlaueClass.HorizontalAlignment = this.Picture4_HorizontalAlignment;
                         vlaueClass.BorderSize = this.Picture4_BorderSize;
                         vlaueClass.BorderColor = this.Picture4_BorderColor;
-                        vlaueClass.Visable = this.Picture4_Visable;
+                        string[] strs = new enum_PictureType().GetEnumNames();
+                        vlaueClass.Visable = strs.Contains(vlaueClass.Value) && vlaueClass.Value != "無" && vlaueClass.Value != "None";
 
                         if (vlaueClass.Value.StringIsEmpty())
                         {
@@ -3830,7 +3838,8 @@ namespace H_Pannel_lib
                         vlaueClass.HorizontalAlignment = this.Picture5_HorizontalAlignment;
                         vlaueClass.BorderSize = this.Picture5_BorderSize;
                         vlaueClass.BorderColor = this.Picture5_BorderColor;
-                        vlaueClass.Visable = this.Picture5_Visable;
+                        string[] strs = new enum_PictureType().GetEnumNames();
+                        vlaueClass.Visable = strs.Contains(vlaueClass.Value) && vlaueClass.Value != "無" && vlaueClass.Value != "None";
 
                         if (vlaueClass.Value.StringIsEmpty())
                         {
