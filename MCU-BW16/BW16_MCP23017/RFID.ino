@@ -8,6 +8,28 @@ byte rFID_Enable_buf = -1;
 bool RFID_Init = true;
 String CardID_temp = "";
 int RFID_Error = 0;
+
+void Clear_RFID_485_RX()
+{
+    while(mySerial_485.available())
+    {
+        mySerial_485.read();
+    }
+}
+
+bool RFID_Check_CRC(int len)
+{
+    return Get_CRC16(RFID_RX , len) == 0;
+}
+
+String RFID_ByteToHex(byte value)
+{
+    String hex = String(value, HEX);
+    if(hex.length() < 2) hex = "0" + hex;
+    hex.toUpperCase();
+    return hex;
+}
+
 void sub_RFID_program()
 {
     rFID_Enable = Get_RFID_Enable();
@@ -85,7 +107,6 @@ String Get_7CardID(byte station)
    tx[7] = (CRC >> 8);
    byte flag_rx_ok = 0;
    byte read_temp;
-   bool flag_rx_Start = false;
    while(true)
    {
      if(retry >= 3) 
@@ -94,7 +115,7 @@ String Get_7CardID(byte station)
         break;
      }
      flag_rx_ok = 0;
-     flag_rx_Start = false;
+     Clear_RFID_485_RX();
      Set_RS485_Tx_Enable();
      mySerial_485.write(tx , 8);
      mySerial_485.flush();     
@@ -111,31 +132,55 @@ String Get_7CardID(byte station)
         if (mySerial_485.available())
         {
           read_temp = mySerial_485.read();
-          if(read_temp == station)
+
+          if(RFID_len == 0 && read_temp != station)
           {
-             flag_rx_Start = true;
+             continue;
           }
-          if(flag_rx_Start)
+
+          if(RFID_len < RFID_RX_SIZE)
           {
             RFID_RX[RFID_len] = read_temp;
 //            if(flag_udp_232back)printf("value: %d , RFID_len : %d \n" ,read_temp,RFID_len);
             RFID_len++;
             MyTimer_RFID.TickStop();
             MyTimer_RFID.StartTickTime(100);
-            
           }
-          
-         
+          else
+          {
+             RFID_len = 0;
+             break;
+          }
+
+          if(RFID_len == 2 && RFID_RX[1] != 0x03)
+          {
+             RFID_len = 0;
+             MyTimer_RFID.TickStop();
+             MyTimer_RFID.StartTickTime(100);
+             continue;
+          }
+
+          if(RFID_len == 3 && RFID_RX[2] != 0x08)
+          {
+             RFID_len = 0;
+             MyTimer_RFID.TickStop();
+             MyTimer_RFID.StartTickTime(100);
+             continue;
+          }
         }
-        if(RFID_len >= 13)
+        if(RFID_len == 13)
         {
+           flag_rx_ok = 0;
            if(station == RFID_RX[0]) flag_rx_ok++;
            if(0x03 == RFID_RX[1]) flag_rx_ok++;
            if(0x08 == RFID_RX[2]) flag_rx_ok++;  
-           if(flag_rx_ok == 3)
+           if(RFID_Check_CRC(13)) flag_rx_ok++;
+           if(flag_rx_ok == 4)
            {
               break;    
            }
+           RFID_len = 0;
+           flag_rx_ok = 0;
         } 
         if (MyTimer_RFID.IsTimeOut())
         {
@@ -144,33 +189,15 @@ String Get_7CardID(byte station)
         }
         delay(1);
      }
-     if(flag_rx_ok == 3)
+     if(flag_rx_ok == 4)
      {
-        String HEX_0 =  String(RFID_RX[3], HEX); 
-        String HEX_1 =  String(RFID_RX[4], HEX); 
-        String HEX_2 =  String(RFID_RX[5], HEX); 
-        String HEX_3 =  String(RFID_RX[6], HEX); 
-        String HEX_4 =  String(RFID_RX[7], HEX); 
-        String HEX_5 =  String(RFID_RX[8], HEX); 
-        String HEX_6 =  String(RFID_RX[9], HEX); 
-        String HEX_7 =  String(RFID_RX[10], HEX); 
-        if(HEX_0.length() < 2)HEX_0 = "0" + HEX_0;
-        if(HEX_1.length() < 2)HEX_1 = "0" + HEX_1;
-        if(HEX_2.length() < 2)HEX_2 = "0" + HEX_2;
-        if(HEX_3.length() < 2)HEX_3 = "0" + HEX_3;
-        if(HEX_4.length() < 2)HEX_4 = "0" + HEX_4;
-        if(HEX_5.length() < 2)HEX_5 = "0" + HEX_5;
-        if(HEX_6.length() < 2)HEX_6 = "0" + HEX_6;
-        if(HEX_7.length() < 2)HEX_7 = "0" + HEX_7;
-        HEX_0.toUpperCase();
-        HEX_1.toUpperCase();
-        HEX_2.toUpperCase();
-        HEX_3.toUpperCase();
-        HEX_4.toUpperCase();
-        HEX_5.toUpperCase();
-        HEX_6.toUpperCase();
-        HEX_7.toUpperCase();
-        HEX_7 = "00";
+        String HEX_0 = RFID_ByteToHex(RFID_RX[3]);
+        String HEX_1 = RFID_ByteToHex(RFID_RX[4]);
+        String HEX_2 = RFID_ByteToHex(RFID_RX[5]);
+        String HEX_3 = RFID_ByteToHex(RFID_RX[6]);
+        String HEX_4 = RFID_ByteToHex(RFID_RX[7]);
+        String HEX_5 = RFID_ByteToHex(RFID_RX[8]);
+        String HEX_6 = RFID_ByteToHex(RFID_RX[9]);
         RFID_Error = 0;
         String CardID = HEX_0 + HEX_1 + HEX_2 + HEX_3 + HEX_4 + HEX_5 + HEX_6;
         if(flag_udp_232back)
@@ -203,10 +230,12 @@ bool Set_Beep(byte station)
    tx[6] = CRC;
    tx[7] = (CRC >> 8);
    byte flag_rx_ok = 0;
+   byte read_temp;
    while(true)
    {
      if(retry >= 2) break;
      flag_rx_ok = 0;
+     Clear_RFID_485_RX();
      Set_RS485_Tx_Enable();
      mySerial_485.write(tx , 8);     
      mySerial_485.flush();
@@ -222,13 +251,27 @@ bool Set_Beep(byte station)
      {
           if (mySerial_485.available())
           {
-            RFID_RX[RFID_len] = mySerial_485.read();
-            RFID_len++;
-            MyTimer_RFID.TickStop();
-            MyTimer_RFID.StartTickTime(5);
+            read_temp = mySerial_485.read();
+            if(RFID_len == 0 && read_temp != station)
+            {
+               continue;
+            }
+            if(RFID_len < RFID_RX_SIZE)
+            {
+               RFID_RX[RFID_len] = read_temp;
+               RFID_len++;
+               MyTimer_RFID.TickStop();
+               MyTimer_RFID.StartTickTime(5);
+            }
+            else
+            {
+               RFID_len = 0;
+               break;
+            }
           }
           if(RFID_len == 8)
           {
+             flag_rx_ok = 0;
              for(int i = 0 ; i < RFID_len ; i++)
              {
                  if(tx[i]== RFID_RX[i])
@@ -236,10 +279,12 @@ bool Set_Beep(byte station)
                     flag_rx_ok++;
                  }
              }
-             if(flag_rx_ok == 8)
+             if(flag_rx_ok == 8 && RFID_Check_CRC(8))
              {
                 break;
              }
+             RFID_len = 0;
+             flag_rx_ok = 0;
           }  
           if (MyTimer_RFID.IsTimeOut())
           {
@@ -262,10 +307,11 @@ bool Set_Beep(byte station)
 }
 void Set_RS485_Rx_Enable()
 {
-    delay(2);
     digitalWrite(PIN_485_Tx_Eanble, LOW);
+    delayMicroseconds(100);
 }
 void Set_RS485_Tx_Enable()
 {
     digitalWrite(PIN_485_Tx_Eanble, HIGH);
+    delayMicroseconds(100);
 }
