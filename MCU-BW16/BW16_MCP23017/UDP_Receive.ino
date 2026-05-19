@@ -107,6 +107,7 @@ void onPacketCallBack()
         if(*(UdpRead + UdpRead_len - 1) == 3)
         {
           
+#if 0
           if (*(UdpRead + 1) == 'L')
           {
             int len = UdpRead_len - 5;
@@ -128,7 +129,8 @@ void onPacketCallBack()
             flag_WS2812B_Refresh = true;
             Get_Checksum_UDP();
           }
-          else if(*(UdpRead + 1) == 'F')
+#endif
+          if(*(UdpRead + 1) == 'F')
           {                  
               int ms_L = *(UdpRead + 2);
               int ms_H = *(UdpRead + 3);  
@@ -143,6 +145,7 @@ void onPacketCallBack()
               wiFiConfig.Set_UDP_SemdTime(ms);                                           
               Get_Checksum_UDP();
           }
+#if 0
           else if (*(UdpRead + 1) == 'O')
           {           
             int num_L = *(UdpRead + 2);
@@ -157,6 +160,7 @@ void onPacketCallBack()
 //            }
             Send_Bytes(myWS2812.rgbBuffer, num ,Udp.remoteIP(), wiFiConfig.localport);                    
           }
+#endif
           else if(*(UdpRead + 1) == 'B')
           {                  
               String serverIP = wiFiConfig.server_IPAdress_str;

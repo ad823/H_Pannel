@@ -9,20 +9,15 @@
 #include "Input.h" 
 #include "WiFiConfig.h"
 #include "MyJPEGDecoder.h"
-#include "MyWS2812.h"
 #include <ArduinoJson.h>
-#include <SPI.h>
-#include <SD.h>
 #include <SoftwareSerial.h>
 #include "DFRobot_MCP23017.h"
 
-#define NUM_WS2812B_CRGB  450
-#define NUM_OF_LEDS NUM_WS2812B_CRGB
 #define SYSTEM_LED_PIN PA30
 #define PIN_485_Tx_Eanble PB3
 MyTimer MyTimer_UART1_IsConnected;
 bool UART1_IsConnected = false;
-bool flag_udp_232back = false;
+bool flag_udp_232back = true;
 bool flag_JsonSend = false;
 bool flag_writeMode = false;
 
@@ -30,8 +25,8 @@ bool flag_CardID_IsChanged = false;
 String CardID[5];
 String CardID_buf[5];
 byte station = 0;
-//#define RFID
-#define IO
+#define RFID
+//#define IO
 
 #ifdef RFID
 int MCU_TYPE = 1;
@@ -47,13 +42,10 @@ IPAddress ServerIp;
 int Serverport;
 String GetwayStr;
 
-bool flag_WS2812B_Refresh = false;
-MyWS2812 myWS2812;
-
 byte* framebuffer;
 
 MyTimer MyTimer_BoardInit;
-bool flag_boradInit = false;
+bool flag_boradInit = true;
 MyLED MyLED_IS_Connented;
 
 TaskHandle_t Core0Task1Handle;
@@ -64,7 +56,7 @@ TaskHandle_t Core0Task4Handle;
 SoftwareSerial mySerial(PA8, PA7); // RX, TX
 SoftwareSerial mySerial_485(PB2, PB1); // RX, TX
 
-String Version = "Ver 1.0.9";
+String Version = "Ver 1.0.10(Beta)";
 
 void setup() 
 {
@@ -89,9 +81,6 @@ void setup()
     UDP_SemdTime = wiFiConfig.Get_UDP_SemdTime();
     GetwayStr = wiFiConfig.Get_Gateway_Str();
     station = wiFiConfig.Get_Station();
-    SPI.begin(); //SCLK, MISO, MOSI, SS
-    myWS2812.Init(NUM_WS2812B_CRGB);
-
     mySerial.print("Dynamic memory size: ");
     mySerial.println(os_get_free_heap_size_arduino());
     mySerial.println();
